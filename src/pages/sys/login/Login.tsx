@@ -21,7 +21,7 @@ function Login() {
   return (
     <Layout className="relative flex !min-h-screen !w-full !flex-row">
       <div
-        className="hidden grow flex-col items-center justify-around bg-center  bg-no-repeat md:flex"
+        className="hidden grow flex-col items-center justify-around bg-center bg-no-repeat md:flex"
         style={{
           background: '#0c2345',
         }}
@@ -33,7 +33,7 @@ function Login() {
         {/* <p className="text-3xl font-bold text-[#37466E]"> {t('sys.login.quote')}</p> */}
       </div>
 
-      <div className="m-auto flex !h-screen w-full max-w-[480px] flex-col justify-center px-[16px] lg:px-[64px]">
+      <div className="m-auto flex !h-screen w-full max-w-[580px] flex-col justify-center px-[16px] lg:px-[64px]">
         <LoginStateProvider>
           <LoginForm />
           <RegisterForm />

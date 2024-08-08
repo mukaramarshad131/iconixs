@@ -17,6 +17,9 @@ import worker from './_mock';
 import './locales/i18n';
 // tailwind css
 import './theme/index.css';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql, useMutation } from '@apollo/client';
+
+
 
 const charAt = `
     ███████╗██╗      █████╗ ███████╗██╗  ██╗ 
@@ -44,7 +47,39 @@ const queryClient = new QueryClient({
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
+
+
+
+const client = new ApolloClient({
+  uri: 'https://staging-api.gethealthie.com/graphql',
+  headers: {
+    authorization: 'Basic gh_sbox_vaTJwbPilbOhNBRqdkWgchep0fvgvfdBPQdTTIskPdLe2UilevnpQw8MBk5rUDdc',
+    authorizationsource: 'API',
+  },
+  cache: new InMemoryCache(),
+});
+
+
+
+
+client
+  .query({
+    query: gql`
+      query GetLocations {
+        locations {
+          id
+          name
+          description
+          photo
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+
+
 root.render(
+  <ApolloProvider client={client}>
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -53,7 +88,8 @@ root.render(
         <App />
       </Suspense>
     </QueryClientProvider>
-  </HelmetProvider>,
+  </HelmetProvider>
+  </ApolloProvider>,
 );
 
 // 🥵 start service worker mock in development mode

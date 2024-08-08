@@ -1,7 +1,10 @@
-import { Col, Row, Select, Form, Input } from 'antd';
+import { useMutation } from '@apollo/client';
+import { Select, Form, Input, Button } from 'antd';
 import React from 'react';
 
 import Card from '@/components/card';
+import { INTAKE_FORM } from '@/graphql/query';
+import { useUserInfo } from '@/store/userStore';
 
 const { TextArea } = Input;
 // type FieldType = {
@@ -16,6 +19,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 const questions = [
   {
+    name: 'q1',
     label: 'Do any of the following apply to you?',
     options: [
       'Past, current, or suspected prostate cancer',
@@ -30,6 +34,7 @@ const questions = [
     ],
   },
   {
+    name: 'q2',
     label: 'Do any of the following apply to you?',
     options: [
       'Decreased sexual vigor and libido ',
@@ -44,6 +49,7 @@ const questions = [
     ],
   },
   {
+    name: 'q3',
     label: 'Do any of the following conditions or situations apply to you?',
     options: [
       'Liver disease',
@@ -63,6 +69,7 @@ const questions = [
     ],
   },
   {
+    name: 'q4',
     label: 'Do any of the following conditions or situations apply to you?',
     options: [
       'Low levels of testosterone on prior labs',
@@ -73,6 +80,7 @@ const questions = [
     ],
   },
   {
+    name: 'q5',
     label:
       'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
     options: [
@@ -88,19 +96,64 @@ const questions = [
   },
 ];
 
-export function SelectSizesDemo({ options, label }: any) {
+export function SelectSizesDemo({ options, label, name }: any) {
   const children = [];
   for (let i = 0; i < options.length; i++) {
     children.push(<Option key={i.toString(36) + i}>{options[i]}</Option>);
   }
 
+  const [
+    intakeFormFunction,
+    { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
+  ] = useMutation(INTAKE_FORM);
+
   // function handleChange(value) {
   //   console.log(`Selected: ${value}`);
   // }
 
+  const handleQuestionerForm = () => {
+    // intakeFormFunction({ variables: { ...intakeFormPayload } });
+  };
+  // const intakeFormPayload = {
+  //   input: {
+  //     custom_module_form_id: '1499919', // Form id for staging
+  //     form_answers: [
+  //       {
+  //         custom_module_id: '12880693',
+  //         label: 'Do any of the following apply to you?',
+  //         answer: 'qwerty', // HTML format for the intake
+  //       },
+  //       {
+  //         custom_module_id: '12880694',
+  //         label: 'Do any of the following apply to you?',
+  //         answer: '<value here>',
+  //       },
+  //       {
+  //         custom_module_id: '12880695',
+  //         label: 'Do any of the following conditions or situations apply to you?',
+  //         answer: 'jksdrei',
+  //       },
+  //       {
+  //         custom_module_id: '12880696',
+  //         label: 'Do any of the following conditions or situations apply to you?',
+  //         answer: 'jksdrei',
+  //       },
+  //       {
+  //         custom_module_id: '12880697',
+  //         label:
+  //           'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
+  //         answer: 'jksdrei',
+  //       },
+  //     ],
+  //     name: 'Iconix SOAP Note',
+  //     set_initial_answers: true,
+  //     user_id: '1322391', // Patiend ID from CreatePatient mutation response
+  //   },
+  // };
+
   return (
     <div>
-      <Form.Item label={label}>
+      <Form.Item label={label} name={name}>
         <Select
           mode="multiple"
           placeholder="Please select"
@@ -110,6 +163,7 @@ export function SelectSizesDemo({ options, label }: any) {
         >
           {children}
         </Select>
+        <Button onClick={handleQuestionerForm}>BBBB</Button>
       </Form.Item>
       <br />
     </div>
@@ -117,6 +171,22 @@ export function SelectSizesDemo({ options, label }: any) {
 }
 
 export default function GeneralTab() {
+  const [form] = Form.useForm();
+  const { id } = useUserInfo();
+  const onGenderChange = (value: string) => {
+    switch (value) {
+      case 'male':
+        form.setFieldsValue({ note: 'Hi, man!' });
+        break;
+      case 'female':
+        form.setFieldsValue({ note: 'Hi, lady!' });
+        break;
+      case 'other':
+        form.setFieldsValue({ note: 'Hi there!' });
+        break;
+      default:
+    }
+  };
   // const { notification } = App.useApp();
   // const { username, email } = useUserInfo();
   // const initFormValues = {
@@ -145,11 +215,67 @@ export default function GeneralTab() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     console.log('Change:', e.target.value);
   };
+  const onFinish = async (values: any) => {
+    console.log('values: ', values);
+    const intakeFormPayload = {
+      input: {
+        custom_module_form_id: '1499919', // Form id for staging
+        form_answers: [
+          {
+            custom_module_id: '12880693',
+            label: 'Do any of the following apply to you?',
+            answer: values.q1[0], // HTML format for the intake
+          },
+          {
+            custom_module_id: '12880694',
+            label: 'Do any of the following apply to you?',
+            answer: values.q2[0],
+          },
+          {
+            custom_module_id: '12880695',
+            label: 'Do any of the following conditions or situations apply to you?',
+            answer: values.q3[0],
+          },
+          {
+            custom_module_id: '12880696',
+            label: 'Do any of the following conditions or situations apply to you?',
+            answer: values.q4[0],
+          },
+          {
+            custom_module_id: '12880697',
+            label:
+              'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
+            answer: values.q5[0],
+          },
+        ],
+        name: 'Iconix SOAP Note',
+        set_initial_answers: true,
+        user_id: id, // Patiend ID from CreatePatient mutation response
+      },
+    };
+    console.log('intakeFormPayload: ', intakeFormPayload);
+  };
 
   return (
     <Card>
-      <Form layout="vertical">
-        <Row gutter={[16, 16]}>
+      <Form layout="vertical" form={form} onFinish={onFinish}>
+        {questions.map((field, index) => (
+          <Form.Item
+            key={index}
+            name={field.name}
+            label={field.label}
+            rules={[{ required: true, message: `${field.label} is required` }]}
+          >
+            <Select mode="multiple" placeholder={`Select ${field.label}`} allowClear>
+              {field.options.map((option, idx) => (
+                <Option key={idx} value={option}>
+                  {option}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        ))}
+        {/* <Row gutter={[16, 16]}>
           {questions.map((question, index) => (
             <Col span={12} lg={12}>
               <SelectSizesDemo key={index} {...question} />
@@ -163,6 +289,23 @@ export default function GeneralTab() {
             </Form.Item>
           </Col>
         </Row>
+        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+          <Select
+            mode="multiple"
+            placeholder="Select a option and change input text above"
+            onChange={onGenderChange}
+            allowClear
+          >
+            <Option value="male">male</Option>
+            <Option value="female">female</Option>
+            <Option value="other">other</Option>
+          </Select>
+        </Form.Item> */}
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="w-full">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </Card>
   );
