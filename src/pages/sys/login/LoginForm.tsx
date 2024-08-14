@@ -8,7 +8,7 @@ import { DEFAULT_USER } from '@/_mock/assets';
 import { UserPermissions, fakeRole } from '@/_mock/utils';
 import { SignInReq } from '@/api/services/userService';
 import { LOGIN_MUTATION } from '@/graphql/query';
-import { useSignIn, useUserActions } from '@/store/userStore';
+import { useUserActions } from '@/store/userStore';
 
 // import { useThemeToken } from '@/theme/hooks';
 
@@ -23,9 +23,12 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
 
   const { loginState, setLoginState } = useLoginStateContext();
-  const signIn = useSignIn();
-  const [mutateFunction, { data, loading: loginLoading, error: loginError }] =
-    useMutation(LOGIN_MUTATION);
+  // const signIn = useSignIn();
+  const [
+    mutateFunction,
+    // { data, loading: loginLoading, error: loginError }
+  ] = useMutation(LOGIN_MUTATION);
+
   if (loginState !== LoginStateEnum.LOGIN) return null;
 
   const handleFinish = async ({ username, password }: SignInReq) => {

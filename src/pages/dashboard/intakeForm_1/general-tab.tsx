@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Select, Form, Input, Button } from 'antd';
+import { Select, Form, Input, Button, Row, Col } from 'antd';
 import React from 'react';
 
 import Card from '@/components/card';
@@ -7,15 +7,6 @@ import { INTAKE_FORM } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
 
 const { TextArea } = Input;
-// type FieldType = {
-//   name?: string;
-//   email?: string;
-//   phone?: string;
-//   address?: string;
-//   city?: string;
-//   code?: string;
-//   about: string;
-// };
 const { Option } = Select;
 const questions = [
   {
@@ -96,121 +87,14 @@ const questions = [
   },
 ];
 
-export function SelectSizesDemo({ options, label, name }: any) {
-  const children = [];
-  for (let i = 0; i < options.length; i++) {
-    children.push(<Option key={i.toString(36) + i}>{options[i]}</Option>);
-  }
-
+export default function GeneralTab() {
   const [
     intakeFormFunction,
-    { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
+    // { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
   ] = useMutation(INTAKE_FORM);
 
-  // function handleChange(value) {
-  //   console.log(`Selected: ${value}`);
-  // }
-
-  const handleQuestionerForm = () => {
-    // intakeFormFunction({ variables: { ...intakeFormPayload } });
-  };
-  // const intakeFormPayload = {
-  //   input: {
-  //     custom_module_form_id: '1499919', // Form id for staging
-  //     form_answers: [
-  //       {
-  //         custom_module_id: '12880693',
-  //         label: 'Do any of the following apply to you?',
-  //         answer: 'qwerty', // HTML format for the intake
-  //       },
-  //       {
-  //         custom_module_id: '12880694',
-  //         label: 'Do any of the following apply to you?',
-  //         answer: '<value here>',
-  //       },
-  //       {
-  //         custom_module_id: '12880695',
-  //         label: 'Do any of the following conditions or situations apply to you?',
-  //         answer: 'jksdrei',
-  //       },
-  //       {
-  //         custom_module_id: '12880696',
-  //         label: 'Do any of the following conditions or situations apply to you?',
-  //         answer: 'jksdrei',
-  //       },
-  //       {
-  //         custom_module_id: '12880697',
-  //         label:
-  //           'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
-  //         answer: 'jksdrei',
-  //       },
-  //     ],
-  //     name: 'Iconix SOAP Note',
-  //     set_initial_answers: true,
-  //     user_id: '1322391', // Patiend ID from CreatePatient mutation response
-  //   },
-  // };
-
-  return (
-    <div>
-      <Form.Item label={label} name={name}>
-        <Select
-          mode="multiple"
-          placeholder="Please select"
-          defaultValue={[]}
-          // onChange={handleChange}
-          style={{ width: '100%' }}
-        >
-          {children}
-        </Select>
-        <Button onClick={handleQuestionerForm}>BBBB</Button>
-      </Form.Item>
-      <br />
-    </div>
-  );
-}
-
-export default function GeneralTab() {
   const [form] = Form.useForm();
   const { id } = useUserInfo();
-  const onGenderChange = (value: string) => {
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({ note: 'Hi, man!' });
-        break;
-      case 'female':
-        form.setFieldsValue({ note: 'Hi, lady!' });
-        break;
-      case 'other':
-        form.setFieldsValue({ note: 'Hi there!' });
-        break;
-      default:
-    }
-  };
-  // const { notification } = App.useApp();
-  // const { username, email } = useUserInfo();
-  // const initFormValues = {
-  //   name: username,
-  //   email,
-  //   phone: faker.phone.number(),
-  //   address: faker.location.county(),
-  //   city: faker.location.city(),
-  //   code: faker.location.zipCode(),
-  //   about: faker.lorem.paragraphs(),
-  // };
-  // const handleClick = () => {
-  //   notification.success({
-  //     message: 'Update success!',
-  //     duration: 3,
-  //   });
-  // };
-
-  // interface DataType {
-  //   key: string;
-  //   name: string;
-  //   money: string;
-  //   address: string;
-  // }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     console.log('Change:', e.target.value);
@@ -253,6 +137,7 @@ export default function GeneralTab() {
         user_id: id, // Patiend ID from CreatePatient mutation response
       },
     };
+    await intakeFormFunction({ variables: { ...intakeFormPayload } });
     console.log('intakeFormPayload: ', intakeFormPayload);
   };
 
@@ -275,13 +160,6 @@ export default function GeneralTab() {
             </Select>
           </Form.Item>
         ))}
-        {/* <Row gutter={[16, 16]}>
-          {questions.map((question, index) => (
-            <Col span={12} lg={12}>
-              <SelectSizesDemo key={index} {...question} />
-            </Col>
-          ))}
-        </Row>
         <Row>
           <Col span={24} lg={24}>
             <Form.Item label="TextArea">
@@ -289,18 +167,6 @@ export default function GeneralTab() {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-          <Select
-            mode="multiple"
-            placeholder="Select a option and change input text above"
-            onChange={onGenderChange}
-            allowClear
-          >
-            <Option value="male">male</Option>
-            <Option value="female">female</Option>
-            <Option value="other">other</Option>
-          </Select>
-        </Form.Item> */}
         <Form.Item>
           <Button type="primary" htmlType="submit" className="w-full">
             Submit

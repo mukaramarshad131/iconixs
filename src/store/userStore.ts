@@ -58,12 +58,12 @@ export const useSignIn = () => {
 
   const signIn = async (data: SignInReq) => {
     try {
-      const payload = {
-        ...data,
-        tokenAPI: true,
-        multipleAPI: true,
-        dietitian_id: '1322376',
-      };
+      // const payload = {
+      //   ...data,
+      //   tokenAPI: true,
+      //   multipleAPI: true,
+      //   dietitian_id: '1322376',
+      // };
       const res = await signInMutation.mutateAsync(data);
       const { user, accessToken, refreshToken } = res;
       console.log('res: ', res);

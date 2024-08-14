@@ -17,7 +17,7 @@ import worker from './_mock';
 import './locales/i18n';
 // tailwind css
 import './theme/index.css';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, useMutation } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 
 
 
