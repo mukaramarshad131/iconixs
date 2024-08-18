@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { DEFAULT_USER } from '@/_mock/assets';
 import { UserPermissions, fakeRole } from '@/_mock/utils';
 import { SignInReq } from '@/api/services/userService';
-import { LOGIN_MUTATION } from '@/graphql/query';
+import { LOGIN_MUTATION, USER_QUERY } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
 
 // import { useThemeToken } from '@/theme/hooks';
@@ -28,6 +28,14 @@ function LoginForm() {
     mutateFunction,
     // { data, loading: loginLoading, error: loginError }
   ] = useMutation(LOGIN_MUTATION);
+
+  const {
+    loading: userLoading,
+    error,
+    data,
+  } = useQuery(USER_QUERY, {
+    variables: { id: '1477842' },
+  });
 
   if (loginState !== LoginStateEnum.LOGIN) return null;
 
@@ -75,6 +83,7 @@ function LoginForm() {
   return (
     <>
       <div className="mb-4 text-2xl font-bold xl:text-3xl">{t('sys.login.signInFormTitle')}</div>
+      {console.log('data: ', data)}
       <Form
         name="login"
         size="large"

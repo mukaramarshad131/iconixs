@@ -1,15 +1,17 @@
+import { useQuery } from '@apollo/client';
 import { CSSProperties, useState } from 'react';
 
 import CoverImage from '@/assets/images/cover/cover_4.jpg';
 import Card from '@/components/card';
 import { Iconify } from '@/components/icon';
+import { USER_QUERY } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
 import { useThemeToken } from '@/theme/hooks';
 
-import ConnectionsTab from './connections-tab';
+// import ConnectionsTab from './connections-tab';
 import ProfileTab from './profile-tab';
-import ProjectsTab from './projects-tab';
-import TeamsTab from './teams-tab';
+// import ProjectsTab from './projects-tab';
+// import TeamsTab from './teams-tab';
 
 function UserProfile() {
   const { avatar, username } = useUserInfo();
@@ -22,31 +24,40 @@ function UserProfile() {
     backgroundPosition: 'center center',
   };
 
+  const {
+    loading: userLoading,
+    error,
+    data,
+  } = useQuery(USER_QUERY, {
+    variables: { id: '1477842' },
+  });
+
   const tabs = [
     {
       icon: <Iconify icon="solar:user-id-bold" size={24} className="mr-2" />,
       title: 'Profile',
       content: <ProfileTab />,
     },
-    {
-      icon: <Iconify icon="mingcute:profile-fill" size={24} className="mr-2" />,
-      title: 'Teams',
-      content: <TeamsTab />,
-    },
-    {
-      icon: <Iconify icon="mingcute:profile-fill" size={24} className="mr-2" />,
-      title: 'Projects',
-      content: <ProjectsTab />,
-    },
-    {
-      icon: <Iconify icon="mingcute:profile-fill" size={24} className="mr-2" />,
-      title: 'Connections',
-      content: <ConnectionsTab />,
-    },
+    // {
+    //   icon: <Iconify icon="mingcute:profile-fill" size={24} className="mr-2" />,
+    //   title: 'Teams',
+    //   content: <TeamsTab />,
+    // },
+    // {
+    //   icon: <Iconify icon="mingcute:profile-fill" size={24} className="mr-2" />,
+    //   title: 'Projects',
+    //   content: <ProjectsTab />,
+    // },
+    // {
+    //   icon: <Iconify icon="mingcute:profile-fill" size={24} className="mr-2" />,
+    //   title: 'Connections',
+    //   content: <ConnectionsTab />,
+    // },
   ];
 
   return (
     <>
+      {console.log('data123: ', data)}
       <Card className="relative mb-6 h-[290px] flex-col rounded-2xl !p-0">
         <div style={bgStyle} className="h-full w-full">
           <div className="flex flex-col items-center justify-center pt-12 md:absolute md:bottom-6 md:left-6 md:flex-row md:pt-0">
@@ -56,7 +67,7 @@ function UserProfile() {
               style={{ color: '#fff' }}
             >
               <span className="mb-2 text-2xl font-medium">{username}</span>
-              <span className="text-center opacity-50 md:text-left">TS FullStack</span>
+              {/* <span className="text-center opacity-50 md:text-left">TS FullStack</span> */}
             </div>
           </div>
         </div>

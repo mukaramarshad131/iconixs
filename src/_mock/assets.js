@@ -57,6 +57,15 @@ const DASHBOARD_PERMISSION = {
     {
       id: '9710971640510357',
       parentId: '9100714781927703',
+      label: 'sys.menu.patientDetails',
+      name: 'Patient Details',
+      type: PermissionType.MENU,
+      route: 'patientDetails',
+      component: '/dashboard/patientDetails/index.tsx',
+    },
+    {
+      id: '9710971640510357',
+      parentId: '9100714781927703',
       label: 'sys.menu.intakeForm',
       name: 'Intake Form',
       type: PermissionType.MENU,
@@ -66,11 +75,11 @@ const DASHBOARD_PERMISSION = {
     {
       id: '9710971640510357',
       parentId: '9100714781927703',
-      label: 'sys.menu.intakeForm',
-      name: 'Intake Form',
+      label: 'sys.menu.appointment',
+      name: 'Appointment',
       type: PermissionType.MENU,
-      route: 'intakeForm_1',
-      component: '/dashboard/intakeForm_1/index.tsx',
+      route: 'appointment',
+      component: '/dashboard/appointment/index.tsx',
     },
     // {
     //   id: '9710971640510357',

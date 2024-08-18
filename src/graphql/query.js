@@ -1,5 +1,23 @@
 import { gql } from '@apollo/client';
 
+export const USER_QUERY = gql`
+  query User($id: ID!) {
+    user(id: $id) {
+      id
+      email
+      first_name
+      last_name
+      phone_number
+      dob
+      gender
+      height
+      weight
+      location {
+        city
+      }
+    }
+  }
+`;
 export const LOGIN_MUTATION = gql`
   mutation signIn($email: String, $password: String, $tokenAPI: Boolean, $multipleAPI: Boolean) {
     signIn(
@@ -15,6 +33,13 @@ export const LOGIN_MUTATION = gql`
         email
         first_name
         last_name
+        phone_number
+        dob
+        gender
+        height
+        location {
+          city
+        }
       }
 
       messages {

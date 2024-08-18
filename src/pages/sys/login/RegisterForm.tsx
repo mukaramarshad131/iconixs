@@ -4,37 +4,34 @@ import { Button, Form, Input, App, Radio, DatePicker, Row, Col } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { SIGNUP_MUTATION } from '@/graphql/query';
+import { SIGNUP_MUTATION, UPDATE_PATIENT, UPDATE_WEIGHT } from '@/graphql/query';
 
 import { ReturnButton } from './components/ReturnButton';
 import { LoginStateEnum, useLoginStateContext } from './providers/LoginStateProvider';
 
-// import type { DatePickerProps } from 'antd';
+import type { DatePickerProps } from 'antd';
 
 function RegisterForm() {
   const { t } = useTranslation();
-  // const [
-  //   // dob,
-  //   setDob,
-  // ] = useState('');
+  const [dob, setDob] = useState('');
   const { notification } = App.useApp();
   const [
     mutateFunction,
     //  { data, loading: signUpLoading, error }
   ] = useMutation(SIGNUP_MUTATION);
-  // const [
-  //   updateFunction,
-  //   // { data: updateData, loading: updateLoading, error: updateError }
-  // ] = useMutation(UPDATE_PATIENT);
+  const [
+    updateFunction,
+    // { data: updateData, loading: updateLoading, error: updateError }
+  ] = useMutation(UPDATE_PATIENT);
 
-  // const [
-  //   updateWeightFunction,
-  //   // { data: updateWeightData, loading: updateWeightLoading, error: updateWeightError },
-  // ] = useMutation(UPDATE_WEIGHT);
+  const [
+    updateWeightFunction,
+    // { data: updateWeightData, loading: updateWeightLoading, error: updateWeightError },
+  ] = useMutation(UPDATE_WEIGHT);
 
   // const [
   //   intakeFormFunction,
-  //   { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
+  //   // { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
   // ] = useMutation(INTAKE_FORM);
   const [loading, setLoading] = useState(false);
   // const signUpMutation = useMutation({
@@ -43,9 +40,9 @@ function RegisterForm() {
 
   const { loginState, backToLogin } = useLoginStateContext();
   if (loginState !== LoginStateEnum.REGISTER) return null;
-  // const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-  //   setDob(`${dateString}`);
-  // };
+  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
+    setDob(`${dateString}`);
+  };
   // const intakeFormPayload = {
   //   input: {
   //     custom_module_form_id: '1332293', // Form id for staging
@@ -110,34 +107,34 @@ function RegisterForm() {
         },
       } = await mutateFunction({ variables: { ...payload } });
       if (user?.id) {
-        // const updatePayload = {
-        //   input: {
-        //     id: user.id,
-        //     dietitian_id: '1322376',
-        //     dob: payload.dob,
-        //     height: payload.height,
-        //     phone_number: payload.phone,
-        //     additional_record_identifier: '',
-        //     gender: payload.gender,
-        //     location: {
-        //       state: 'IA',
-        //       city: 'Des Moines',
-        //       zip: '50309',
-        //       line1: payload.address,
-        //       line2: 'ria zee',
-        //     },
-        //     // 1432558
-        //   },
-        // };
-        // const updateWeightPayload = {
-        //   category: 'Weight',
-        //   type: 'MetricEntry',
-        //   metric_stat: payload.metric_stat,
-        //   user_id: user.id,
-        //   created_at: '1/7/2024',
-        // };
-        // const dd = await updateFunction({ variables: { ...updatePayload } });
-        // const weight = await updateWeightFunction({ variables: { ...updateWeightPayload } });
+        const updatePayload = {
+          input: {
+            id: user.id,
+            dietitian_id: '1322376',
+            dob: payload.dob,
+            height: payload.height,
+            phone_number: payload.phone,
+            additional_record_identifier: '',
+            gender: payload.gender,
+            location: {
+              state: 'IA',
+              city: 'Des Moines',
+              zip: '50309',
+              line1: payload.address,
+              line2: 'ria zee',
+            },
+            // 1432558
+          },
+        };
+        const updateWeightPayload = {
+          category: 'Weight',
+          type: 'MetricEntry',
+          metric_stat: payload.metric_stat,
+          user_id: user.id,
+          created_at: '1/7/2024',
+        };
+        await updateFunction({ variables: { ...updatePayload } });
+        await updateWeightFunction({ variables: { ...updateWeightPayload } });
         // const intakeForm = await intakeFormFunction({ variables: { ...intakeFormPayload } });
       }
       notification.success({
@@ -184,7 +181,7 @@ function RegisterForm() {
           <DatePicker
             placeholder="Date of Birth"
             format="YYYY-MM-DD"
-            // onChange={onDateChange}
+            onChange={onDateChange}
             style={{ width: '100%' }}
           />
         </Form.Item>

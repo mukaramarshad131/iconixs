@@ -86,8 +86,9 @@
       "dashboard": "Dashboard",
       "workbench": "Workbench",
       "analysis": "Analysis",
-      "intakeForm": "In Take Form",
-      "intakeForm_1": "In Take Form_1",
+      "patientDetails": "Patient Details",
+      "intakeForm": "Intake Form",
+      "appointment": "Appointment",
       "management": "Management",
       "user": {
         "index": "User",

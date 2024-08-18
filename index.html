@@ -4,10 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slash Admin</title>
-    <script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="iconix-test" ></script>
+    <script src="https://js.chargebee.com/v2/chargebee.js"></script>
+    <script>
+        Chargebee.init({
+            site: 'mannar-test',
+            publishableKey: 'test___dev__cdF5IUqCBwUNpKZrueN3KcfAnBcdsKX1xK'
+        })
+    </script>
+    <!-- <script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="iconix-test" ></script> -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- <span data-cb-type="checkout" data-cb-item-0="ico-trt-cypionate-inj-USD-Monthly" >subscribe</span>
+    <script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="iconix-test" ></script> -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

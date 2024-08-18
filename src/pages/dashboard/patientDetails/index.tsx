@@ -1,8 +1,6 @@
-// import { useThemeToken } from '@/theme/hooks';
-
 import GeneralTab from './general-tab';
 
-function IntakeForm() {
+function PatientDetails() {
   // const theme = useThemeToken();
   return (
     <div className="p-2">
@@ -11,4 +9,4 @@ function IntakeForm() {
   );
 }
 
-export default IntakeForm;
+export default PatientDetails;
