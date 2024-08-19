@@ -9,11 +9,9 @@ import { SIGNUP_MUTATION, UPDATE_PATIENT, UPDATE_WEIGHT } from '@/graphql/query'
 import { ReturnButton } from './components/ReturnButton';
 import { LoginStateEnum, useLoginStateContext } from './providers/LoginStateProvider';
 
-import type { DatePickerProps } from 'antd';
-
 function RegisterForm() {
   const { t } = useTranslation();
-  const [dob, setDob] = useState('');
+  // const [dob, setDob] = useState('');
   const { notification } = App.useApp();
   const [
     mutateFunction,
@@ -40,9 +38,10 @@ function RegisterForm() {
 
   const { loginState, backToLogin } = useLoginStateContext();
   if (loginState !== LoginStateEnum.REGISTER) return null;
-  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-    setDob(`${dateString}`);
-  };
+  // const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
+  //   console.log('date: ', date);
+  //   setDob(`${dateString}`);
+  // };
   // const intakeFormPayload = {
   //   input: {
   //     custom_module_form_id: '1332293', // Form id for staging
@@ -178,12 +177,7 @@ function RegisterForm() {
           <Input placeholder={t('sys.login.email')} />
         </Form.Item>
         <Form.Item name="dob">
-          <DatePicker
-            placeholder="Date of Birth"
-            format="YYYY-MM-DD"
-            onChange={onDateChange}
-            style={{ width: '100%' }}
-          />
+          <DatePicker placeholder="Date of Birth" format="YYYY-MM-DD" style={{ width: '100%' }} />
         </Form.Item>
         <Form.Item name="gender">
           <Radio.Group>

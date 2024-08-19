@@ -25,8 +25,8 @@ function UserProfile() {
   };
 
   const {
-    loading: userLoading,
-    error,
+    // loading: userLoading,
+    // error,
     data,
   } = useQuery(USER_QUERY, {
     variables: { id: '1477842' },

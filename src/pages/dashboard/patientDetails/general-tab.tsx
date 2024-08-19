@@ -6,8 +6,6 @@ import Card from '@/components/card';
 import { USER_QUERY, UPDATE_WEIGHT, UPDATE_PATIENT } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
 
-import type { DatePickerProps } from 'antd';
-
 // const onCheckBoxChange: CheckboxProps['onChange'] = (e) => {
 //   console.log(`checked = ${e.target.checked}`);
 // };
@@ -50,7 +48,7 @@ export default function GeneralTab() {
     weight: userData?.user?.weight,
     // dob: userData?.user?.dob,
   };
-  const dateFormat = 'YYYY/MM/DD';
+  // const dateFormat = 'YYYY/MM/DD';
   const [updateFunction] = useMutation(UPDATE_PATIENT);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
 
@@ -67,23 +65,23 @@ export default function GeneralTab() {
   //   setValue(e.target.value);
   // };
   // const msk = dayjs(initFormValues.dob, dateFormat);
-  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  // const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
+  //   console.log(date, dateString);
+  // };
   // useEffect(() => {
   //   console.log('Effact', userData);
   //   initFormValues = {
   //     ...userData?.user
   //   }
   // }, [userLoading, userData]);
-  const { TextArea } = Input;
+  // const { TextArea } = Input;
 
-  interface DataType {
-    key: string;
-    name: string;
-    money: string;
-    address: string;
-  }
+  // interface DataType {
+  //   key: string;
+  //   name: string;
+  //   money: string;
+  //   address: string;
+  // }
 
   const onFinish = async (values: any) => {
     const payload = {
@@ -194,7 +192,6 @@ export default function GeneralTab() {
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
-                  {initFormValues.dob}
                   <Form.Item label="Date of Birth:" name="dob">
                     {/* <DatePicker defaultValue={dayjs(initFormValues.dob).format('YYYY-MM-DD')} /> */}
                     <DatePicker />
