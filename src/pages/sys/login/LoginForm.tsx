@@ -34,7 +34,7 @@ function LoginForm() {
     // error,
     data,
   } = useQuery(USER_QUERY, {
-    variables: { id: '1477842' },
+    variables: { id: '1412694' },
   });
 
   if (loginState !== LoginStateEnum.LOGIN) return null;
@@ -69,6 +69,9 @@ function LoginForm() {
           ...msk,
           ...signUser.user,
           username: `${signUser.user.first_name} ${signUser.user.last_name}`,
+          firstName: signUser.user.first_name,
+          lastName: signUser.user.last_name,
+          phoneNumber: signUser.user.phone_number,
         };
         setUserToken({ accessToken, refreshToken });
         setUserInfo(test);

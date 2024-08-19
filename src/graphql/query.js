@@ -14,10 +14,67 @@ export const USER_QUERY = gql`
       weight
       location {
         city
+        line1
+        line2
+        state
+        zip
+        country
       }
     }
   }
 `;
+
+export const APPOINTMENT_QUERY = gql`
+  query Appointment($id: ID!) {
+    appointment(id: $id, include_deleted: true) {
+      appointment_type {
+        id
+        name
+      }
+      created_at
+      end
+      external_videochat_url
+      id
+      initiator_id
+      pm_status
+      pm_status_changed_at
+      pm_status_last_changed_by_id
+      provider {
+        id
+        name
+        organization {
+          id
+        }
+      }
+      start
+      user {
+        active_tags {
+          id
+          name
+        }
+        id
+        email
+        first_name
+        last_name
+        sex
+        dob
+        location {
+          city
+          country
+          line1
+          line2
+          state
+          zip
+        }
+        phone_number
+      }
+      user_id
+      zoom_join_url
+      zoom_start_url
+    }
+  }
+`;
+
 export const LOGIN_MUTATION = gql`
   mutation signIn($email: String, $password: String, $tokenAPI: Boolean, $multipleAPI: Boolean) {
     signIn(

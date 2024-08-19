@@ -17,9 +17,13 @@ type FieldType = {
   phone_number?: string;
   gender?: string;
   height?: string;
-  city: string;
   dob?: string;
   weight?: string;
+  city: string;
+  zip?: string;
+  state?: string;
+  country?: string;
+  line1?: string;
 };
 export default function GeneralTab() {
   const { notification } = App.useApp();
@@ -46,6 +50,11 @@ export default function GeneralTab() {
     height: userData?.user.height,
     city: userData?.user?.location?.city,
     weight: userData?.user?.weight,
+    zip: userData?.user?.location?.zip,
+    state: userData?.user?.location?.state,
+    country: userData?.user?.location?.country,
+    line1: userData?.user?.location?.line1,
+    // weight: userData?.user?.weight,
     // dob: userData?.user?.dob,
   };
   // const dateFormat = 'YYYY/MM/DD';
@@ -98,16 +107,19 @@ export default function GeneralTab() {
         id,
         dietitian_id: '1322376',
         dob: payload.dob,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
         height: payload.height,
         phone_number: payload.phone,
         additional_record_identifier: '',
         gender: payload.gender,
         location: {
-          state: 'IA',
+          state: payload.state,
           city: payload.city,
-          zip: '50309',
-          line1: 'MSK',
+          zip: payload.zip,
+          line1: payload.line1,
           line2: 'ria zee',
+          country: payload?.country,
         },
         // 1432558
       },
@@ -230,19 +242,19 @@ export default function GeneralTab() {
             </Row> */}
 
               <Row gutter={16}>
-                <Col span={12}>
+                {/* <Col span={12}>
                   <Form.Item<FieldType> label="Address" name="city">
                     <Input />
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Street Address:" name="city">
-                    <Input />
+                  <Form.Item<FieldType> label="Street:" name="line1">
+                    <Input value={initFormValues.line1} />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Apt./Unit #:" name="city">
-                    <Input />
+                  <Form.Item<FieldType> label="Country:" name="country">
+                    <Input value={initFormValues.country} />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -251,13 +263,13 @@ export default function GeneralTab() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="State:" name="city">
-                    <Input />
+                  <Form.Item<FieldType> label="State:" name="state">
+                    <Input value={initFormValues.state} />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Zip Code:" name="city">
-                    <Input />
+                  <Form.Item<FieldType> label="Zip Code:" name="zip">
+                    <Input value={initFormValues.zip} />
                   </Form.Item>
                 </Col>
               </Row>
