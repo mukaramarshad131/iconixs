@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { Col, Form, Input, Row, Radio, Button, DatePicker, App } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Card from '@/components/card';
 import { USER_QUERY, UPDATE_WEIGHT, UPDATE_PATIENT } from '@/graphql/query';
@@ -28,6 +29,7 @@ type FieldType = {
 export default function GeneralTab() {
   const { notification } = App.useApp();
 
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const {
     //  username,
@@ -109,7 +111,7 @@ export default function GeneralTab() {
         dob: payload.dob,
         first_name: payload.first_name,
         last_name: payload.last_name,
-        height: payload.height,
+        height: `${payload.height}`,
         phone_number: payload.phone,
         additional_record_identifier: '',
         gender: payload.gender,
@@ -148,25 +150,6 @@ export default function GeneralTab() {
   };
   return (
     <Row gutter={[16, 16]}>
-      {/* <Col span={24} lg={8}>
-        <Card className="flex-col !px-6 !pb-10 !pt-20">
-          <UploadAvatar defaultAvatar={avatar} />
-
-          <Space className="py-6">
-            <div>Public Profile</div>
-            <Switch size="small" />
-          </Space>
-
-          <Button type="primary" danger>
-            Delete User
-          </Button>
-        </Card>
-      </Col> */}
-
-      {/* <iframe
-        src="https://express.care-staging.openloophealth.com/book-appointment?appointmentTypeId=156071&providerId=1322376"
-        title="W3Schools Free Online Web Tutorials"
-      /> */}
       <Col span={24} lg={24}>
         {!userLoading && (
           <Card>
@@ -179,38 +162,64 @@ export default function GeneralTab() {
             >
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="First Name" name="first_name">
+                  <Form.Item<FieldType>
+                    label="First Name"
+                    name="first_name"
+                    rules={[{ required: true, message: t('sys.login.firstNamePlaceholder') }]}
+                  >
                     <Input value={initFormValues.first_name} />
                   </Form.Item>
                 </Col>
 
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Last Name" name="last_name">
+                  <Form.Item<FieldType>
+                    label="Last Name"
+                    name="last_name"
+                    rules={[{ required: true, message: t('sys.login.lastNamePlaceholder') }]}
+                  >
                     <Input value={initFormValues.last_name} />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Email:" name="email">
+                  <Form.Item<FieldType>
+                    label="Email:"
+                    name="email"
+                    rules={[
+                      { required: true, type: 'email', message: t('sys.login.emaildPlaceholder') },
+                    ]}
+                  >
                     <Input value={initFormValues.email} />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Phone" name="phone_number">
+                  <Form.Item<FieldType>
+                    label="Phone"
+                    name="phone_number"
+                    rules={[{ required: true, message: t('sys.login.mobilePlaceholder') }]}
+                  >
                     <Input value={initFormValues.phone_number} />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item label="Date of Birth:" name="dob">
+                  <Form.Item
+                    label="Date of Birth:"
+                    name="dob"
+                    rules={[{ message: t('sys.login.dobPlaceholder') }]}
+                  >
                     {/* <DatePicker defaultValue={dayjs(initFormValues.dob).format('YYYY-MM-DD')} /> */}
                     <DatePicker />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Gender" name="gender">
+                  <Form.Item
+                    label="Gender"
+                    name="gender"
+                    rules={[{ required: true, message: t('sys.login.genderPlaceholder') }]}
+                  >
                     <Radio.Group value={initFormValues.gender}>
                       <Radio value="Female"> Female </Radio>
                       <Radio value="Male"> Male </Radio>
@@ -218,13 +227,21 @@ export default function GeneralTab() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Height" name="height">
+                  <Form.Item<FieldType>
+                    label="Height"
+                    name="height"
+                    rules={[{ required: true, message: t('sys.login.heightPlaceholder') }]}
+                  >
                     <Input name="height" value={initFormValues.height} />
                   </Form.Item>
                 </Col>
 
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Weight" name="weight">
+                  <Form.Item<FieldType>
+                    label="Weight"
+                    name="weight"
+                    rules={[{ required: true, message: t('sys.login.weightPlaceholder') }]}
+                  >
                     <Input value={initFormValues.weight} />
                   </Form.Item>
                 </Col>
@@ -248,28 +265,49 @@ export default function GeneralTab() {
                   </Form.Item>
                 </Col> */}
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Street:" name="line1">
+                  <Form.Item<FieldType>
+                    label="Street:"
+                    name="line1"
+                    rules={[{ required: true, message: t('sys.login.streetPlaceholder') }]}
+                  >
                     <Input value={initFormValues.line1} />
                   </Form.Item>
                 </Col>
+
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Country:" name="country">
-                    <Input value={initFormValues.country} />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item<FieldType> label="City:" name="city">
+                  <Form.Item<FieldType>
+                    label="City:"
+                    name="city"
+                    rules={[{ required: true, message: t('sys.login.cityPlaceholder') }]}
+                  >
                     <Input value={initFormValues.city} />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="State:" name="state">
+                  <Form.Item<FieldType>
+                    label="State:"
+                    name="state"
+                    rules={[{ required: true, message: t('sys.login.statePlaceholder') }]}
+                  >
                     <Input value={initFormValues.state} />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item<FieldType> label="Zip Code:" name="zip">
+                  <Form.Item<FieldType>
+                    label="Zip Code:"
+                    name="zip"
+                    rules={[{ required: true, message: t('sys.login.zipPlaceholder') }]}
+                  >
                     <Input value={initFormValues.zip} />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item<FieldType>
+                    label="Country:"
+                    name="country"
+                    rules={[{ required: true, message: t('sys.login.countryPlaceholder') }]}
+                  >
+                    <Input value={initFormValues.country} />
                   </Form.Item>
                 </Col>
               </Row>

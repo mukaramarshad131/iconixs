@@ -102,9 +102,16 @@ function RegisterForm() {
     try {
       const {
         data: {
-          signUp: { user },
+          signUp: { user, messages = [] },
         },
       } = await mutateFunction({ variables: { ...payload } });
+      if (messages.length > 0) {
+        notification.error({
+          message: messages[0].message,
+          duration: 3,
+        });
+        return 0;
+      }
       if (user?.id) {
         const updatePayload = {
           input: {
@@ -156,7 +163,7 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="first_name"
-              rules={[{ required: true, message: t('sys.login.accountPlaceholder') }]}
+              rules={[{ required: true, message: t('sys.login.firstNamePlaceholder') }]}
             >
               <Input placeholder="Enter First Name" />
             </Form.Item>
@@ -164,7 +171,7 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="last_name"
-              rules={[{ required: true, message: t('sys.login.accountPlaceholder') }]}
+              rules={[{ required: true, message: t('sys.login.lastNamePlaceholder') }]}
             >
               <Input placeholder="Enter Last Name" />
             </Form.Item>
@@ -172,14 +179,17 @@ function RegisterForm() {
         </Row>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: t('sys.login.emaildPlaceholder') }]}
+          rules={[{ required: true, type: 'email', message: t('sys.login.emaildPlaceholder') }]}
         >
           <Input placeholder={t('sys.login.email')} />
         </Form.Item>
-        <Form.Item name="dob">
+        <Form.Item name="dob" rules={[{ required: true, message: t('sys.login.dobPlaceholder') }]}>
           <DatePicker placeholder="Date of Birth" format="YYYY-MM-DD" style={{ width: '100%' }} />
         </Form.Item>
-        <Form.Item name="gender">
+        <Form.Item
+          name="gender"
+          rules={[{ required: true, message: t('sys.login.genderPlaceholder') }]}
+        >
           <Radio.Group>
             <Radio value="Female"> Female </Radio>
             <Radio value="Male"> Male </Radio>
@@ -189,7 +199,7 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="height"
-              rules={[{ required: true, message: t('sys.login.accountPlaceholder') }]}
+              rules={[{ required: true, message: t('sys.login.heightPlaceholder') }]}
             >
               <Input placeholder="Height" />
             </Form.Item>
@@ -197,7 +207,7 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="metric_stat"
-              rules={[{ required: true, message: t('sys.login.accountPlaceholder') }]}
+              rules={[{ required: true, message: t('sys.login.weightPlaceholder') }]}
             >
               <Input placeholder="Weight" />
             </Form.Item>
@@ -207,7 +217,7 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="address"
-              rules={[{ required: true, message: t('sys.login.accountPlaceholder') }]}
+              rules={[{ required: true, message: t('sys.login.addressPlaceholder') }]}
             >
               <Input placeholder="Address" />
             </Form.Item>
@@ -215,7 +225,7 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="phone"
-              rules={[{ required: true, message: t('sys.login.accountPlaceholder') }]}
+              rules={[{ required: true, message: t('sys.login.mobilePlaceholder') }]}
             >
               <Input placeholder="Phone Number" />
             </Form.Item>
@@ -225,7 +235,25 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="password"
-              rules={[{ required: true, message: t('sys.login.passwordPlaceholder') }]}
+              // rules={[{ required: true, message: t('sys.login.passwordPlaceholder') }]}
+              rules={[
+                { required: true },
+
+                {
+                  validator: (rule, value) => {
+                    const hasUppercase = /[A-Z]/.test(value);
+                    const hasLowercase = /[a-z]/.test(value);
+                    const hasNumber = /[0-9]/.test(value);
+                    const hasSpecialChar = /[^a-zA-Z0-9 ]/.test(value);
+
+                    if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecialChar) {
+                      console.log(rule);
+                      return Promise.reject(t('sys.login.passwordComplexity'));
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <Input.Password type="password" placeholder={t('sys.login.password')} />
             </Form.Item>

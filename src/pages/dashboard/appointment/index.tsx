@@ -12,6 +12,7 @@ function Appointment() {
   } = useQuery(APPOINTMENT_QUERY, {
     variables: { id },
   });
+  console.log('id12345: ', id);
   console.log('appointmentData: ', appointmentData);
 
   return (
