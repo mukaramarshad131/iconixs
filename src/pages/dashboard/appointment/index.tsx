@@ -10,7 +10,7 @@ function Appointment() {
     // error,
     data: appointmentData,
   } = useQuery(APPOINTMENT_QUERY, {
-    variables: { id },
+    variables: { id: '664304' },
   });
   console.log('id12345: ', id);
   console.log('appointmentData: ', appointmentData);

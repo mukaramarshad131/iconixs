@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd';
+import { Button, Checkbox, Col, Divider, Form, Input, Row, App } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { LoginStateEnum, useLoginStateContext } from './providers/LoginStateProv
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 function LoginForm() {
+  const { notification } = App.useApp();
   const { t } = useTranslation();
   const navigatge = useNavigate();
   const { setUserToken, setUserInfo } = useUserActions();
@@ -64,7 +65,15 @@ function LoginForm() {
       const {
         data: { signIn: signUser },
       } = await mutateFunction({ variables: { ...login } });
-      if (signUser.user) {
+      if (signUser?.messages?.length > 0) {
+        console.log('messages: ');
+        notification.error({
+          message: signUser.messages[0].message,
+          duration: 3,
+        });
+        return 0;
+      }
+      if (signUser?.user) {
         const test = {
           ...msk,
           ...signUser.user,
