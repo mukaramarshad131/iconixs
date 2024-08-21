@@ -235,7 +235,6 @@ function RegisterForm() {
           <Col span={12}>
             <Form.Item
               name="password"
-              // rules={[{ required: true, message: t('sys.login.passwordPlaceholder') }]}
               rules={[
                 { required: true },
 
