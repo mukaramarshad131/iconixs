@@ -81,6 +81,15 @@ const DASHBOARD_PERMISSION = {
       route: 'appointment',
       component: '/dashboard/appointment/index.tsx',
     },
+    {
+      id: '9710971640510357',
+      parentId: '9100714781927703',
+      label: 'sys.menu.checkout',
+      name: 'Check Out',
+      type: PermissionType.MENU,
+      route: 'checkout',
+      component: '/dashboard/checkout/index.tsx',
+    },
     // {
     //   id: '9710971640510357',
     //   parentId: '9100714781927703',

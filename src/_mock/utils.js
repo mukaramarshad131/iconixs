@@ -148,6 +148,15 @@ export const UserPermissions = () => {
           route: 'appointment',
           component: '/dashboard/appointment/index.tsx',
         },
+        {
+          id: '9710971640510357',
+          parentId: '9100714781927703',
+          label: 'sys.menu.checkout',
+          name: 'Check Out',
+          type: 1,
+          route: 'checkout',
+          component: '/dashboard/checkout/index.tsx',
+        },
       ],
     },
     {
