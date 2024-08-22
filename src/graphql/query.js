@@ -23,7 +23,52 @@ export const USER_QUERY = gql`
     }
   }
 `;
+export const APPOINTMENTS_QUERY = gql`
+  query appointments(
+    $user_id: ID
+    $filter: String
+    $order_by: AppointmentOrderKeys
+    $should_paginate: Boolean
+    $offset: Int
+    $is_active: Boolean
+    $with_all_statuses: Boolean
+  ) {
+    appointmentsCount(user_id: $user_id, filter: $filter, is_org: true, is_active: $is_active)
+    appointments(
+      is_active: $is_active
+      user_id: $user_id
+      filter: $filter
+      is_org: true
+      order_by: $order_by
+      should_paginate: $should_paginate
+      offset: $offset
+      with_all_statuses: $with_all_statuses
+    ) {
+      id
+      date
+      contact_type
+      length
+      location
+      provider {
+        id
+        full_name
+      }
 
+      appointment_type {
+        name
+        id
+      }
+
+      attendees {
+        id
+        full_name
+        first_name
+        avatar_url
+        phone_number
+      }
+    }
+  }
+`;
 export const APPOINTMENT_QUERY = gql`
   query Appointment($id: ID!) {
     appointment(id: $id, include_deleted: true) {
@@ -96,6 +141,11 @@ export const LOGIN_MUTATION = gql`
         height
         location {
           city
+          line1
+          line2
+          state
+          zip
+          country
         }
       }
 

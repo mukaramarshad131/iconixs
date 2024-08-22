@@ -16,6 +16,11 @@ export interface UserInfo {
   avatar?: string;
   role?: Role;
   status?: BasicStatus;
+  zip?: string;
+  state?: string;
+  country?: string;
+  lin1?: string;
+  line2?: string;
   permissions?: Permission[];
 }
 

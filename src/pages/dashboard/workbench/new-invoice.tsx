@@ -1,49 +1,69 @@
+import { useQuery } from '@apollo/client';
 import { Space, Typography } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 
 import Card from '@/components/card';
 import { IconButton, Iconify } from '@/components/icon';
 import Scrollbar from '@/components/scrollbar';
-import ProTag from '@/theme/antd/components/tag';
+import { APPOINTMENTS_QUERY } from '@/graphql/query';
+import { useUserInfo } from '@/store/userStore';
 
 interface DataType {
-  key: string;
-  id: string;
-  category: string;
-  price: string;
-  status: string;
+  key?: string;
+  id?: string;
+  contact_type?: string;
+  date?: string;
+  location?: string;
+  attendees?: any[];
+  provider?: {
+    full_name: string;
+  };
+  category?: string;
+  price?: string;
+  status?: string;
 }
 
 export default function NewInvoice() {
+  const { id } = useUserInfo();
+  const { data: appointmentListing } = useQuery(APPOINTMENTS_QUERY, {
+    variables: {
+      user_id: id,
+      filter: 'all',
+      order_by: 'DATE_DESC',
+      should_paginate: false,
+      is_active: true,
+      with_all_statuses: true,
+    },
+  });
   const columns: ColumnsType<DataType> = [
     {
-      title: 'InvoiceId',
+      title: 'Appointment Id',
       dataIndex: 'id',
       key: 'id',
       render: (text) => <span>{text}</span>,
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
+      title: 'Attendees',
+      dataIndex: 'attendees',
+      key: 'attendees',
+      render: (text) => <span>{text[0].full_name}</span>,
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
+      title: 'Contact Type',
+      dataIndex: 'contact_type',
+      key: 'contact_type',
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
       render: (text) => <span>{text}</span>,
     },
     {
-      title: 'Status',
-      key: 'status',
-      dataIndex: 'status',
-      render: (_status) => {
-        const status = _status as string;
-        let color = 'success';
-        if (status === 'Progress') color = 'gold';
-        if (status === 'Out of Date') color = 'red';
-        return <ProTag color={color}>{status}</ProTag>;
-      },
+      title: 'Provider',
+      dataIndex: 'provider',
+      key: 'provider',
+      render: (text) => <span>{text.full_name}</span>,
     },
     {
       title: 'Action',
@@ -58,52 +78,14 @@ export default function NewInvoice() {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      id: 'INV-1990',
-      category: 'Android',
-      price: '$83.74',
-      status: 'Paid',
-    },
-    {
-      key: '2',
-      id: 'INV-1991',
-      category: 'Mac',
-      price: '$97.14',
-      status: 'Out of Date',
-    },
-    {
-      key: '3',
-      id: 'INV-1992',
-      category: 'Windows',
-      price: '$68.71',
-      status: 'Progress',
-    },
-    {
-      key: '4',
-      id: 'INV-1993',
-      category: 'Android',
-      price: '$85.21',
-      status: 'Paid',
-    },
-    {
-      key: '5',
-      id: 'INV-1994',
-      category: 'Mac',
-      price: '$53.17',
-      status: 'Paid',
-    },
-  ];
-
   return (
     <Card className="flex-col">
       <header className="self-start">
-        <Typography.Title level={5}>New Invoice</Typography.Title>
+        <Typography.Title level={5}>New Appointments</Typography.Title>
       </header>
       <main className="w-full">
         <Scrollbar>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={appointmentListing?.appointments ?? []} />
         </Scrollbar>
       </main>
     </Card>

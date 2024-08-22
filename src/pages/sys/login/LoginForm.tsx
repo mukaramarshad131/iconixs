@@ -81,6 +81,12 @@ function LoginForm() {
           firstName: signUser.user.first_name,
           lastName: signUser.user.last_name,
           phoneNumber: signUser.user.phone_number,
+          city: signUser.user?.location?.city,
+          line1: signUser.user?.location?.line1,
+          line2: signUser.user?.location?.line2,
+          state: signUser.user?.location?.state,
+          zip: signUser.user?.location?.zip,
+          country: signUser.user?.location?.country,
         };
         setUserToken({ accessToken, refreshToken });
         setUserInfo(test);
