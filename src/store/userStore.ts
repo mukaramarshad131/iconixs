@@ -6,7 +6,7 @@ import { create } from 'zustand';
 import userService, { SignInReq } from '@/api/services/userService';
 import { getItem, removeItem, setItem } from '@/utils/storage';
 
-import { UserInfo, UserToken } from '#/entity';
+import { UserInfo, UserPlan, UserToken } from '#/entity';
 import { StorageEnum } from '#/enum';
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
@@ -14,10 +14,12 @@ const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 type UserStore = {
   userInfo: Partial<UserInfo>;
   userToken: UserToken;
+  userPlan: UserPlan;
   // 使用 actions 命名空间来存放所有的 action
   actions: {
     setUserInfo: (userInfo: UserInfo) => void;
     setUserToken: (token: UserToken) => void;
+    setUserPlan: (planId: UserPlan) => void;
     clearUserInfoAndToken: () => void;
   };
 };
@@ -25,6 +27,7 @@ type UserStore = {
 const useUserStore = create<UserStore>((set) => ({
   userInfo: getItem<UserInfo>(StorageEnum.User) || {},
   userToken: getItem<UserToken>(StorageEnum.Token) || {},
+  userPlan: getItem<UserPlan>(StorageEnum.Plan) || {},
   actions: {
     setUserInfo: (userInfo) => {
       set({ userInfo });
@@ -33,6 +36,10 @@ const useUserStore = create<UserStore>((set) => ({
     setUserToken: (userToken) => {
       set({ userToken });
       setItem(StorageEnum.Token, userToken);
+    },
+    setUserPlan: (userPlan) => {
+      set({ userPlan });
+      setItem(StorageEnum.Plan, userPlan);
     },
     clearUserInfoAndToken() {
       set({ userInfo: {}, userToken: {} });
@@ -44,6 +51,7 @@ const useUserStore = create<UserStore>((set) => ({
 
 export const useUserInfo = () => useUserStore((state) => state.userInfo);
 export const useUserToken = () => useUserStore((state) => state.userToken);
+export const useUserPlan = () => useUserStore((state) => state.userPlan);
 export const useUserPermission = () => useUserStore((state) => state.userInfo.permissions);
 export const useUserActions = () => useUserStore((state) => state.actions);
 

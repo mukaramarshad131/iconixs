@@ -19,7 +19,7 @@ function LoginForm() {
   const { notification } = App.useApp();
   const { t } = useTranslation();
   const navigatge = useNavigate();
-  const { setUserToken, setUserInfo } = useUserActions();
+  const { setUserToken, setUserInfo, setUserPlan } = useUserActions();
   // const themeToken = useThemeToken();
   const [loading, setLoading] = useState(false);
 
@@ -89,6 +89,7 @@ function LoginForm() {
           country: signUser.user?.location?.country,
         };
         setUserToken({ accessToken, refreshToken });
+        setUserPlan({ planId: 'ico-trt-cypionate-inj' });
         setUserInfo(test);
         navigatge(HOMEPAGE, { replace: true });
       }

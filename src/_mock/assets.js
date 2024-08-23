@@ -84,6 +84,15 @@ const DASHBOARD_PERMISSION = {
     {
       id: '9710971640510357',
       parentId: '9100714781927703',
+      label: 'sys.menu.packages',
+      name: 'Packages',
+      type: PermissionType.MENU,
+      route: 'packages',
+      component: '/dashboard/packages/index.tsx',
+    },
+    {
+      id: '9710971640510357',
+      parentId: '9100714781927703',
       label: 'sys.menu.checkout',
       name: 'Check Out',
       type: PermissionType.MENU,
@@ -543,7 +552,7 @@ export const ROLE_LIST = [ADMIN_ROLE, TEST_ROLE];
  */
 export const DEFAULT_USER = {
   id: 'b34719e1-ce46-457e-9575-99505ecee828',
-  username: 'mo@gmail.com',
+  username: 'michel@gmail.com',
   email: faker.internet.email(),
   avatar: faker.image.avatarLegacy(),
   createdAt: faker.date.anytime(),

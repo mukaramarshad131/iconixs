@@ -151,6 +151,15 @@ export const UserPermissions = () => {
         {
           id: '9710971640510357',
           parentId: '9100714781927703',
+          label: 'sys.menu.packages',
+          name: 'Packages',
+          type: 1,
+          route: 'packages',
+          component: '/dashboard/packages/index.tsx',
+        },
+        {
+          id: '9710971640510357',
+          parentId: '9100714781927703',
           label: 'sys.menu.checkout',
           name: 'Check Out',
           type: 1,

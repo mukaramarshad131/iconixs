@@ -4,7 +4,9 @@ export interface UserToken {
   accessToken?: string;
   refreshToken?: string;
 }
-
+export interface UserPlan {
+  planId?: string;
+}
 export interface UserInfo {
   id: string;
   email: string;
