@@ -95,9 +95,8 @@
     },
     "menu": {
       "dashboard": "Dashboard",
-      "workbench": "Workbench",
-      "analysis": "Analysis",
       "patientDetails": "Patient Details",
+      "analysis": "Analysis",
       "intakeForm": "Intake Form",
       "appointment": "Appointment",
       "packages": "Packages",
