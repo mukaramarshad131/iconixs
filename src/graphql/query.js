@@ -220,3 +220,61 @@ export const INTAKE_FORM = gql`
     }
   }
 `;
+
+export const CREATE_OPEN_LOOP_INVOICE = gql`
+  mutation createRequestedPayment(
+    $recipient_id: ID # e.g "61"
+    $offering_id: ID # e.g "11"
+    $price: String # can be left blank since it will default to the price of the package
+    $invoice_type: String # "offering"
+  ) {
+    createRequestedPayment(
+      input: {
+        recipient_id: $recipient_id
+        offering_id: $offering_id
+        price: $price
+        invoice_type: $invoice_type
+      }
+    ) {
+      requestedPayment {
+        id
+      }
+      messages {
+        field
+        message
+      }
+    }
+  }
+`;
+export const OPEN_LOOP_INVOICE_LIST = gql`
+  query requestedPayments(
+    $offset: Int
+    $keywords: String
+    $sort_by: String
+    $only_unpaid: Boolean
+    $sender_id: ID
+    $status_filter: String
+    $preview: Boolean
+  ) {
+    requestedPayments(
+      offset: $offset
+      keywords: $keywords
+      sort_by: $sort_by
+      only_unpaid: $only_unpaid
+      sender_id: $sender_id
+      status_filter: $status_filter
+      preview: $preview
+    ) {
+      id
+      price
+      status
+      invoice_id
+      recipient {
+        id
+      }
+      sender {
+        id
+      }
+    }
+  }
+`;

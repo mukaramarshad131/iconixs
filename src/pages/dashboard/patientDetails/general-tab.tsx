@@ -35,6 +35,7 @@ export default function GeneralTab() {
     //  username,
     id,
   } = useUserInfo();
+
   const {
     loading: userLoading,
     // error: userError,
@@ -42,7 +43,7 @@ export default function GeneralTab() {
   } = useQuery(USER_QUERY, {
     variables: { id },
   });
-  // const [value, setValue] = useState(1);
+
   const initFormValues = {
     first_name: userData?.user.first_name,
     last_name: userData?.user.last_name,
@@ -56,10 +57,8 @@ export default function GeneralTab() {
     state: userData?.user?.location?.state,
     country: userData?.user?.location?.country,
     line1: userData?.user?.location?.line1,
-    // weight: userData?.user?.weight,
-    // dob: userData?.user?.dob,
   };
-  // const dateFormat = 'YYYY/MM/DD';
+
   const [updateFunction] = useMutation(UPDATE_PATIENT);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
 
@@ -148,6 +147,7 @@ export default function GeneralTab() {
       setLoading(false);
     }
   };
+
   return (
     <Row gutter={[16, 16]}>
       <Col span={24} lg={24}>
