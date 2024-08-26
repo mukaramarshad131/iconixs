@@ -105,7 +105,7 @@ function RegisterForm() {
           signUp: { user, messages = [] },
         },
       } = await mutateFunction({ variables: { ...payload } });
-      if (messages.length > 0) {
+      if (messages?.length > 0) {
         notification.error({
           message: messages[0].message,
           duration: 3,

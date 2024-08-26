@@ -6,7 +6,7 @@ import { CircleLoading } from '@/components/loading';
 
 import { AppRouteObject } from '#/router';
 
-const HomePage = lazy(() => import(`@/pages/dashboard/workbench`));
+const HomePage = lazy(() => import(`@/pages/dashboard/patientDetails`));
 const Analysis = lazy(() => import('@/pages/dashboard/analysis'));
 
 const dashboard: AppRouteObject = {
@@ -25,12 +25,12 @@ const dashboard: AppRouteObject = {
   children: [
     {
       index: true,
-      element: <Navigate to="workbench" replace />,
+      element: <Navigate to="patientDetails" replace />,
     },
     {
-      path: 'workbench',
+      path: 'patientDetails',
       element: <HomePage />,
-      meta: { label: 'sys.menu.workbench', key: '/dashboard/workbench' },
+      meta: { label: 'sys.menu.patientDetails', key: '/dashboard/patientDetails' },
     },
     {
       path: 'analysis',

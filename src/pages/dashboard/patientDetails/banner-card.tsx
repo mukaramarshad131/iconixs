@@ -2,7 +2,6 @@ import { Col, Row } from 'antd';
 import Color from 'color';
 
 import Character3 from '@/assets/images/characters/character_3.png';
-import { Iconify } from '@/components/icon';
 import { useUserInfo } from '@/store/userStore';
 import { useThemeToken } from '@/theme/hooks';
 
@@ -35,26 +34,7 @@ export default function BannerCard() {
         >
           Welcome to join the Discord channel to discuss everything about Slash Admin, or you can
           visite my blog:
-          <div>
-            <a
-              href="https://blog.slashspaces.com"
-              target="_blank"
-              className="text-base opacity-80"
-              style={{ color: themeToken.colorPrimaryTextActive }}
-              rel="noreferrer"
-            >
-              👉 https://blog.slashspaces.com
-            </a>
-          </div>
         </div>
-        <button
-          className="font-mediumtext-black m-auto flex items-center justify-center rounded-lg px-2 py-1 shadow-none md:m-0"
-          style={{ backgroundColor: themeToken.colorPrimary, color: '#fff' }}
-          onClick={() => window.open('https://discord.gg/fXemAXVNDa')}
-        >
-          <Iconify icon="carbon:logo-discord" size={24} />
-          <span className="ml-2 font-black">Join Discord</span>
-        </button>
       </Col>
 
       <Col
