@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { Select, Form, Input, Button, Row, Col } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Card from '@/components/card';
 import { INTAKE_FORM } from '@/graphql/query';
@@ -88,6 +89,7 @@ const questions = [
 ];
 
 export default function GeneralTab() {
+  const navigate = useNavigate();
   const [
     intakeFormFunction,
     // { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
@@ -99,8 +101,7 @@ export default function GeneralTab() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     console.log('Change:', e.target.value);
   };
-  const onFinish = async (values: any) => {
-    console.log('values: ', values);
+  const OnFinish = async (values: any) => {
     const intakeFormPayload = {
       input: {
         custom_module_form_id: '1499919', // Form id for staging
@@ -137,13 +138,15 @@ export default function GeneralTab() {
         user_id: id, // Patiend ID from CreatePatient mutation response
       },
     };
-    await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    console.log('intakeFormPayload: ', intakeFormPayload);
+    const res = await intakeFormFunction({ variables: { ...intakeFormPayload } });
+    if (res) {
+      navigate('/dashboard/packages');
+    }
   };
 
   return (
     <Card>
-      <Form layout="vertical" form={form} onFinish={onFinish}>
+      <Form layout="vertical" form={form} onFinish={OnFinish}>
         {questions.map((field, index) => (
           <Form.Item
             key={index}

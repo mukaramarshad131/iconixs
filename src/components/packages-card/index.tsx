@@ -42,12 +42,12 @@ function PackagesCard() {
   return (
     <>
       <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3]">Packages Plan</h1>
-      <div className="mb-5 flex flex-wrap items-center justify-around gap-5">
+      <div className="mb-5 flex flex-wrap items-center justify-center gap-5">
         {businessPackages?.map((data: any) => {
           return (
             <Card
               key={data.id}
-              style={{ padding: '0px', height: 'auto', width: '330px' }}
+              style={{ padding: '0px', height: 400, width: 330 }}
               className="relative z-0 rounded bg-[#F3F4F5] shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]"
             >
               <Badge.Ribbon
@@ -93,7 +93,7 @@ function PackagesCard() {
                   </ul>
                 </p>
               </div>
-              <div className="flex items-center justify-center p-5">
+              <div className="absolute bottom-3 flex w-full items-center justify-center p-5">
                 <Button
                   onClick={() => handleCart(data.id)}
                   style={{

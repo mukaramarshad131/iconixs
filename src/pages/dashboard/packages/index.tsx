@@ -2,7 +2,7 @@ import PackagesCard from '@/components/packages-card';
 
 function Packages() {
   return (
-    <div>
+    <div className="pb-10">
       <PackagesCard />
     </div>
   );
