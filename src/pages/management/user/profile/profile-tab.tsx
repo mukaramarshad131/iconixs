@@ -1,224 +1,18 @@
-// import { faker } from '@faker-js/faker';
-// import { Row, Col, Typography, Timeline, Table, Space, Avatar, Progress } from 'antd';
 import { Row, Col, Typography } from 'antd';
-// import { ColumnsType } from 'antd/es/table';
-
-// import { fakeAvatars } from '@/_mock/utils';
-// import { useEffect } from 'react';
 
 import Card from '@/components/card';
-// import { IconButton, Iconify, SvgIcon } from '@/components/icon';
 import { Iconify } from '@/components/icon';
-// import Scrollbar from '@/components/scrollbar';
 import { useUserInfo } from '@/store/userStore';
-// import ProTag from '@/theme/antd/components/tag';
-// import { useThemeToken } from '@/theme/hooks';
 
-// interface DataType {
-//   key: string;
-//   avatar: string;
-//   name: string;
-//   date: string;
-//   leader: string;
-//   team: string[];
-//   status: number;
-// }
-
-// function ChargebeeComponent() {
-//   useEffect(() => {
-//     // Function to load the Chargebee script
-//     const loadChargebeeScript = () => {
-//       return new Promise((resolve, reject) => {
-//         const script = document.createElement('script');
-//         script.src = 'https://js.chargebee.com/v2/chargebee.js';
-//         script.dataset.cbSite = 'iconix-test';
-//         script.async = true;
-//         script.onload = () => resolve();
-//         script.onerror = () => reject(new Error('Chargebee script failed to load'));
-//         document.body.appendChild(script);
-//       });
-//     };
-
-//     // Function to add the Chargebee button
-//     const addChargebeeButton = () => {
-//       const span = document.createElement('span');
-//       span.dataset.cbType = 'checkout';
-//       span.dataset.cbItem0 = 'ico-trt-cypionate-inj-USD-Monthly';
-//       span.textContent = 'subscribe';
-//       document.getElementById('chargebee-container').appendChild(span);
-//     };
-
-//     // Load script and add button
-//     loadChargebeeScript()
-//       .then(() => {
-//         // Ensure the Chargebee script has loaded before adding the button
-//         addChargebeeButton();
-//       })
-//       .catch((error) => {
-//         console.error(error.message);
-//       });
-
-//     // Clean-up script when the component unmounts
-//     return () => {
-//       const script = document.querySelector(
-//         'script[src="https://js.chargebee.com/v2/chargebee.js"]',
-//       );
-//       if (script) {
-//         document.body.removeChild(script);
-//       }
-//     };
-//   }, []);
-
-//   return <div id="chargebee-container" />;
-// }
 export default function ProfileTab() {
   const { username, email, phoneNumber } = useUserInfo();
-  // const theme = useThemeToken();
+
   const AboutItems = [
     { icon: <Iconify icon="fa-solid:user" size={18} />, label: 'Full Name', val: username },
-    // { icon: <Iconify icon="eos-icons:role-binding" size={18} />, label: 'Role', val: 'Developer' },
     { icon: <Iconify icon="tabler:location-filled" size={18} />, label: 'Country', val: 'USA' },
-    // { icon: <Iconify icon="ion:language" size={18} />, label: 'Language', val: 'English' },
     { icon: <Iconify icon="ph:phone-fill" size={18} />, label: 'Contact', val: phoneNumber },
     { icon: <Iconify icon="ic:baseline-email" size={18} />, label: 'Email', val: email },
   ];
-
-  // const ConnectionsItems = [
-  //   {
-  //     avatar: faker.image.avatarLegacy(),
-  //     name: faker.person.fullName(),
-  //     connections: `${faker.number.int(100)} Connections`,
-  //     connected: faker.datatype.boolean(),
-  //   },
-
-  //   {
-  //     avatar: faker.image.avatarLegacy(),
-  //     name: faker.person.fullName(),
-  //     connections: `${faker.number.int(100)} Connections`,
-  //     connected: faker.datatype.boolean(),
-  //   },
-
-  //   {
-  //     avatar: faker.image.avatarLegacy(),
-  //     name: faker.person.fullName(),
-  //     connections: `${faker.number.int(100)} Connections`,
-  //     connected: faker.datatype.boolean(),
-  //   },
-
-  //   {
-  //     avatar: faker.image.avatarLegacy(),
-  //     name: faker.person.fullName(),
-  //     connections: `${faker.number.int(100)} Connections`,
-  //     connected: faker.datatype.boolean(),
-  //   },
-
-  //   {
-  //     avatar: faker.image.avatarLegacy(),
-  //     name: faker.person.fullName(),
-  //     connections: `${faker.number.int(100)} Connections`,
-  //     connected: faker.datatype.boolean(),
-  //   },
-  // ];
-
-  // const TeamItems = [
-  //   {
-  //     avatar: <Iconify icon="devicon:react" size={36} />,
-  //     name: 'React Developers',
-  //     members: `${faker.number.int(100)} Members`,
-  //     tag: <ProTag color="warning">Developer</ProTag>,
-  //   },
-  //   {
-  //     avatar: <Iconify icon="devicon:figma" size={36} />,
-  //     name: 'UI Designer',
-  //     members: `${faker.number.int(100)} Members`,
-  //     tag: <ProTag color="cyan">Designer</ProTag>,
-  //   },
-  //   {
-  //     avatar: <Iconify icon="logos:jest" size={36} />,
-  //     name: 'Test Team',
-  //     members: `${faker.number.int(100)} Members`,
-  //     tag: <ProTag color="success">Test</ProTag>,
-  //   },
-  //   {
-  //     avatar: <Iconify icon="logos:nestjs" size={36} />,
-  //     name: 'Nest.js Developers',
-  //     members: `${faker.number.int(100)} Members`,
-  //     tag: <ProTag color="warning">Developer</ProTag>,
-  //   },
-
-  //   {
-  //     avatar: <Iconify icon="logos:twitter" size={36} />,
-  //     name: 'Digital Marketing',
-  //     members: `${faker.number.int(100)} Members`,
-  //     tag: <ProTag>Marketing</ProTag>,
-  //   },
-  // ];
-
-  // const fakeProjectItems = () => {
-  //   const arr: DataType[] = [];
-  //   for (let i = 0; i <= 25; i += 1) {
-  //     arr.push({
-  //       key: faker.string.uuid(),
-  //       avatar: faker.image.urlPicsumPhotos(),
-  //       name: faker.company.buzzPhrase(),
-  //       date: faker.date.past().toDateString(),
-  //       leader: faker.person.fullName(),
-  //       team: fakeAvatars(faker.number.int({ min: 2, max: 5 })),
-  //       status: faker.number.int({ min: 50, max: 99 }),
-  //     });
-  //   }
-  //   return arr;
-  // };
-
-  // const ProjectColumns: ColumnsType<DataType> = [
-  //   {
-  //     title: 'NAME',
-  //     dataIndex: 'name',
-  //     render: (_, record) => (
-  //       <div className="flex items-center">
-  //         <img src={record.avatar} alt="" className="h-9 w-9 rounded-full" />
-  //         <div className="ml-2 flex flex-col">
-  //           <span className="font-semibold">{record.name}</span>
-  //           <span className="text-xs opacity-50">{record.date}</span>
-  //         </div>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: 'LEADER',
-  //     dataIndex: 'leader',
-  //     render: (val) => <span className="opacity-50">{val}</span>,
-  //   },
-  //   {
-  //     title: 'TEAM',
-  //     dataIndex: 'team',
-  //     render: (val: string[]) => (
-  //       <Avatar.Group>
-  //         {val.map((item, index) => (
-  //           <Avatar src={item} key={index} />
-  //         ))}
-  //       </Avatar.Group>
-  //     ),
-  //   },
-  //   {
-  //     title: 'STATUS',
-  //     dataIndex: 'status',
-  //     render: (val) => (
-  //       <Progress percent={val} strokeColor={theme.colorPrimary} trailColor="transparent" />
-  //     ),
-  //   },
-  //   {
-  //     title: 'ACTIONS',
-  //     dataIndex: 'action',
-  //     render: () => (
-  //       <Space size="middle">
-  //         <IconButton>
-  //           <Iconify icon="fontisto:more-v-a" />
-  //         </IconButton>
-  //       </Space>
-  //     ),
-  //   },
-  // ];
 
   return (
     <>
@@ -227,12 +21,6 @@ export default function ProfileTab() {
           <Card className="flex-col">
             <div className="flex w-full flex-col">
               <Typography.Title level={5}>About</Typography.Title>
-              {/* <script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="iconix-test" />
-              <span data-cb-type="checkout" data-cb-item-0="ico-trt-cypionate-inj-USD-Monthly">
-                subscribe
-              </span> */}
-              {/* <ChargebeeComponent /> */}
-              {/* <Typography.Text>{faker.lorem.paragraph()}</Typography.Text> */}
 
               <div className="mt-2 flex flex-col gap-4">
                 {AboutItems.map((item, index) => (

@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 
 import { APPOINTMENT_QUERY, APPOINTMENTS_QUERY } from '@/graphql/query';
-// import ChargeBeeWrapper from '@/pages/components/chagebee/ChargeBeeWrapper';
 import { useUserInfo } from '@/store/userStore';
 
 function Appointment() {
@@ -29,7 +28,6 @@ function Appointment() {
 
   return (
     <div className="p-2">
-      {/* <ChargeBeeWrapper /> */}
       <iframe
         style={{ width: '100%', height: '100vh' }}
         src={`https://express.care-staging.openloophealth.com/book-appointment?appointmentTypeId=156071&providerId=1322376&email=${email}&firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`}

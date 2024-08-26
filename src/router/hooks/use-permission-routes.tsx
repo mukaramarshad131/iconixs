@@ -79,7 +79,7 @@ function transformPermissionToMenuRoutes(
       path: route,
       meta: {
         label,
-        key: getCompleteRoute(permission, flattenedPermissions),
+        key: getCompleteRoute(permission, flattenedPermissions, ''),
         hideMenu: !!hide,
         hideTab,
         disabled: status === BasicStatus.DISABLE,
@@ -141,8 +141,7 @@ function transformPermissionToMenuRoutes(
  */
 function getCompleteRoute(permission: Permission, flattenedPermissions: Permission[], route = '') {
   const currentRoute = route ? `/${permission.route}${route}` : `/${permission.route}`;
-
-  if (permission.parentId) {
+  if (permission?.parentId) {
     const parentPermission = flattenedPermissions.find((p) => p.id === permission.parentId)!;
     return getCompleteRoute(parentPermission, flattenedPermissions, currentRoute);
   }

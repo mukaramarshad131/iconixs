@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { DEFAULT_USER } from '@/_mock/assets';
-import { UserPermissions, fakeRole } from '@/_mock/utils';
+import { UserPermissions, result } from '@/_mock/utils';
 import { SignInReq } from '@/api/services/userService';
 import { LOGIN_MUTATION, USER_QUERY } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
@@ -59,7 +59,7 @@ function LoginForm() {
         createdAt: '2023-12-28T06:33:44.883Z',
         updatedAt: '2024-08-06T14:47:47.014Z',
         password: '@Junaid@2024',
-        role: fakeRole(),
+        role: result,
         permissions: UserPermissions(),
       };
       const {

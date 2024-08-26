@@ -296,7 +296,7 @@ export const CREATE_OPEN_LOOP_INVOICE = gql`
     }
   }
 `;
-export const OPEN_LOOP_INVOICE_LIST = gql`
+export const OPEN_LOOP_INVOICES_LIST = gql`
   query requestedPayments(
     $offset: Int
     $keywords: String

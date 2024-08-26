@@ -1,6 +1,6 @@
 // react-query
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // react
 import { Analytics } from '@vercel/analytics/react';
 import { Suspense } from 'react';
@@ -18,18 +18,6 @@ import './locales/i18n';
 // tailwind css
 import './theme/index.css';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-
-
-
-const charAt = `
-    ███████╗██╗      █████╗ ███████╗██╗  ██╗ 
-    ██╔════╝██║     ██╔══██╗██╔════╝██║  ██║
-    ███████╗██║     ███████║███████╗███████║
-    ╚════██║██║     ██╔══██║╚════██║██╔══██║
-    ███████║███████╗██║  ██║███████║██║  ██║
-    ╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-  `;
-console.info(`%c${charAt}`, 'color: #5BE49B');
 
 // 创建一个 client
 const queryClient = new QueryClient({
@@ -82,7 +70,7 @@ root.render(
   <ApolloProvider client={client}>
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <Suspense>
         <Analytics />
         <App />

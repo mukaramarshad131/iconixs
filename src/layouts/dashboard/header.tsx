@@ -9,7 +9,6 @@ import { useResponsive, useThemeToken } from '@/theme/hooks';
 
 import AccountDropdown from '../_common/account-dropdown';
 import BreadCrumb from '../_common/bread-crumb';
-import SearchBar from '../_common/search-bar';
 
 import { NAV_COLLAPSED_WIDTH, NAV_WIDTH, HEADER_HEIGHT, OFFSET_HEADER_HEIGHT } from './config';
 import Nav from './nav';
@@ -69,7 +68,7 @@ export default function Header({ className = '', offsetTop = false }: Props) {
           </div>
 
           <div className="flex">
-            <SearchBar />
+            {/* <SearchBar /> */}
             {/* <LocalePicker />
             <IconButton onClick={() => window.open('https://github.com/d3george/slash-admin')}>
               <Iconify icon="mdi:github" size={24} />
