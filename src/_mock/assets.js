@@ -54,15 +54,6 @@ const DASHBOARD_PERMISSION = {
       route: 'patientDetails',
       component: '/dashboard/patientDetails/index.tsx',
     },
-    // {
-    //   id: '9710971640510357',
-    //   parentId: '9100714781927703',
-    //   label: 'sys.menu.patientDetails',
-    //   name: 'Patient Details',
-    //   type: PermissionType.MENU,
-    //   route: 'patientDetails',
-    //   component: '/dashboard/patientDetails/index.tsx',
-    // },
     {
       id: '9710971640510357',
       parentId: '9100714781927703',
@@ -98,17 +89,8 @@ const DASHBOARD_PERMISSION = {
       type: PermissionType.MENU,
       route: 'checkout',
       component: '/dashboard/checkout/index.tsx',
-    },
-    // {
-    //   id: '9710971640510357',
-    //   parentId: '9100714781927703',
-    //   label: 'sys.menu.analysis',
-    //   name: 'Analysis',
-    //   type: PermissionType.MENU,
-    //   route: 'analysis',
-    //   component: '/dashboard/analysis/index.tsx',
-    // },
-  ],
+    }
+  ]
 };
 const MANAGEMENT_PERMISSION = {
   id: '0901673425580518',
@@ -136,75 +118,10 @@ const MANAGEMENT_PERMISSION = {
           type: PermissionType.MENU,
           route: 'profile',
           component: '/management/user/profile/index.tsx',
-        },
-        // {
-        //   id: '2516598794787938',
-        //   parentId: '2781684678535711',
-        //   label: 'sys.menu.user.account',
-        //   name: 'Account',
-        //   type: PermissionType.MENU,
-        //   route: 'account',
-        //   component: '/management/user/account/index.tsx',
-        // },
-      ],
-    },
-    // {
-    //   id: '0249937641030250',
-    //   parentId: '0901673425580518',
-    //   label: 'sys.menu.system.index',
-    //   name: 'System',
-    //   type: PermissionType.CATALOGUE,
-    //   route: 'system',
-    //   children: [
-    //     {
-    //       id: '1985890042972842',
-    //       parentId: '0249937641030250',
-    //       label: 'sys.menu.system.organization',
-    //       name: 'Organization',
-    //       type: PermissionType.MENU,
-    //       route: 'organization',
-    //       component: '/management/system/organization/index.tsx',
-    //     },
-    //     {
-    //       id: '4359580910369984',
-    //       parentId: '0249937641030250',
-    //       label: 'sys.menu.system.permission',
-    //       name: 'Permission',
-    //       type: PermissionType.MENU,
-    //       route: 'permission',
-    //       component: '/management/system/permission/index.tsx',
-    //     },
-    //     {
-    //       id: '1689241785490759',
-    //       parentId: '0249937641030250',
-    //       label: 'sys.menu.system.role',
-    //       name: 'Role',
-    //       type: PermissionType.MENU,
-    //       route: 'role',
-    //       component: '/management/system/role/index.tsx',
-    //     },
-    //     {
-    //       id: '0157880245365433',
-    //       parentId: '0249937641030250',
-    //       label: 'sys.menu.system.user',
-    //       name: 'User',
-    //       type: PermissionType.MENU,
-    //       route: 'user',
-    //       component: '/management/system/user/index.tsx',
-    //     },
-    //     {
-    //       id: '0157880245365434',
-    //       parentId: '0249937641030250',
-    //       label: 'sys.menu.system.user_detail',
-    //       name: 'User Detail',
-    //       type: PermissionType.MENU,
-    //       route: 'user/:id',
-    //       component: '/management/system/user/detail.tsx',
-    //       hide: true,
-    //     },
-    //   ],
-    // },
-  ],
+        }
+      ]
+    }
+  ]
 };
 const COMPONENTS_PERMISSION = {
   id: '2271615060673773',
@@ -573,3 +490,22 @@ export const TEST_USER = {
   permissions: TEST_ROLE.permission,
 };
 export const USER_LIST = [DEFAULT_USER, TEST_USER];
+
+export const APPOINTMENT = {
+  id: '9710971640510357',
+  parentId: '9100714781927703',
+  label: 'sys.menu.appointment',
+  name: 'Appointment',
+  type: 1,
+  route: 'appointment',
+  component: '/dashboard/appointment/index.tsx',
+}
+export const PACKAGES = {
+  id: '9710971640510357',
+  parentId: '9100714781927703',
+  label: 'sys.menu.packages',
+  name: 'Packages',
+  type: 1,
+  route: 'packages',
+  component: '/dashboard/packages/index.tsx',
+}

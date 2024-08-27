@@ -1,11 +1,13 @@
 import { useMutation } from '@apollo/client';
 import { Select, Form, Input, Button, Row, Col } from 'antd';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import { PACKAGES } from '@/_mock/assets';
 import Card from '@/components/card';
 import { INTAKE_FORM } from '@/graphql/query';
-import { useUserInfo } from '@/store/userStore';
+import { useRouter } from '@/router/hooks';
+import { useUserActions, useUserInfo } from '@/store/userStore';
+
+import { UserInfo } from '#/entity';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -89,18 +91,16 @@ const questions = [
 ];
 
 export default function GeneralTab() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [
     intakeFormFunction,
     // { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
   ] = useMutation(INTAKE_FORM);
 
   const [form] = Form.useForm();
-  const { id } = useUserInfo();
+  const { setUserInfo } = useUserActions();
+  const user = useUserInfo();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log('Change:', e.target.value);
-  };
   const OnFinish = async (values: any) => {
     const intakeFormPayload = {
       input: {
@@ -109,41 +109,54 @@ export default function GeneralTab() {
           {
             custom_module_id: '12880693',
             label: 'Do any of the following apply to you?',
-            answer: values.q1[0], // HTML format for the intake
+            answer: values.q1.join(', '), // HTML format for the intake
           },
           {
             custom_module_id: '12880694',
             label: 'Do any of the following apply to you?',
-            answer: values.q2[0],
+            answer: values.q2.join(', '),
           },
           {
             custom_module_id: '12880695',
             label: 'Do any of the following conditions or situations apply to you?',
-            answer: values.q3[0],
+            answer: values.q3.join(', '),
           },
           {
             custom_module_id: '12880696',
             label: 'Do any of the following conditions or situations apply to you?',
-            answer: values.q4[0],
+            answer: values.q4.join(', '),
           },
           {
             custom_module_id: '12880697',
             label:
               'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
-            answer: values.q5[0],
+            answer: values.q5.join(', '),
           },
         ],
         name: 'Iconix SOAP Note',
         set_initial_answers: true,
-        user_id: id, // Patiend ID from CreatePatient mutation response
+        user_id: user.id, // Patiend ID from CreatePatient mutation response
       },
     };
+
     const res = await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    if (res) {
-      navigate('/dashboard/packages');
+
+    if (res && res.data.createFormAnswerGroup.messages === null) {
+      const newUser: UserInfo = {
+        ...user,
+        permissions: user.permissions!.map((permission: any, index: number) =>
+          index === 0
+            ? {
+                ...permission,
+                children: [...permission.children!, PACKAGES],
+              }
+            : permission,
+        ),
+      } as any;
+      setUserInfo(newUser);
+      router.replace('/dashboard/packages');
     }
   };
-
   return (
     <Card>
       <Form layout="vertical" form={form} onFinish={OnFinish}>
@@ -166,7 +179,7 @@ export default function GeneralTab() {
         <Row>
           <Col span={24} lg={24}>
             <Form.Item label="TextArea">
-              <TextArea showCount maxLength={100} onChange={onChange} placeholder="Type here" />
+              <TextArea showCount maxLength={100} placeholder="Type here" />
             </Form.Item>
           </Col>
         </Row>
