@@ -74,7 +74,6 @@ function PackagesCard() {
                 className="flex w-full flex-col px-5 text-center"
               >
                 <div className="mt-[37px] flex flex-col">
-                  {/* <span className="bold-1 text-xl"> {data.packageName}</span> */}
                   <span className="text-[#D1D6DA]">{data.originalPrice}</span>
                 </div>
               </div>
@@ -87,9 +86,6 @@ function PackagesCard() {
                   {data.description}
                   <ul className="mb-5 mt-5 text-[15px] font-semibold">
                     <span className="bold-1 text-lg"> {data.packageName}</span>
-                    {/* <li>Executive </li>
-                    <li>Manager</li>
-                    <li> Staff(Team Members )</li> */}
                   </ul>
                 </p>
               </div>
