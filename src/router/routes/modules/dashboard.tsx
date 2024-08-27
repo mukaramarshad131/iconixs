@@ -7,7 +7,7 @@ import { CircleLoading } from '@/components/loading';
 import { AppRouteObject } from '#/router';
 
 const HomePage = lazy(() => import(`@/pages/dashboard/patientDetails`));
-const Analysis = lazy(() => import('@/pages/dashboard/analysis'));
+const CheckOut = lazy(() => import('@/pages/dashboard/checkout'));
 
 const dashboard: AppRouteObject = {
   order: 1,
@@ -33,9 +33,9 @@ const dashboard: AppRouteObject = {
       meta: { label: 'sys.menu.patientDetails', key: '/dashboard/patientDetails' },
     },
     {
-      path: 'analysis',
-      element: <Analysis />,
-      meta: { label: 'sys.menu.analysis', key: '/dashboard/analysis' },
+      path: 'checkout',
+      element: <CheckOut />,
+      meta: { label: 'sys.menu.checkout', key: '/dashboard/checkout' },
     },
   ],
 };
