@@ -1,9 +1,9 @@
 import { CrownOutlined } from '@ant-design/icons';
 import { Badge, Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import Card from '@/components/card';
-import { useUserActions } from '@/store/userStore';
+import { useUserActions, useUserInfo } from '@/store/userStore';
 
 const businessPackages = [
   {
@@ -32,12 +32,18 @@ const businessPackages = [
   },
 ];
 function PackagesCard() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { setUserPlan } = useUserActions();
+  const { firstName, lastName, zip, state } = useUserInfo();
 
   const handleCart = (planId: string) => {
     setUserPlan({ planId });
-    return navigate('/dashboard/checkout');
+    window.open(
+      `https://iconix-test.chargebee.com/hosted_pages/checkout?subscription_items[item_price_id][0]=${planId}-USD-Monthly&subscription_items[quantity][0]=1&customer[first_name]=Jose&customer[last_name]=Diaz&&customer[email]=diaz@gmail.com&billing_address[first_name]=${firstName}&billing_address[last_name]=${lastName}&billing_address[line1]=AddressLine1&billing_address[line2]=AddressLine2&billing_address[city]=Maxico&billing_address[zip]=${zip}&billing_address[state_code]=${state}&billing_address[country]=US`,
+      '_blank',
+    );
+    window.close();
+    // navigate('/dashboard/checkout');
   };
   return (
     <>

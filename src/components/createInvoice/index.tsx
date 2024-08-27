@@ -32,11 +32,18 @@ function CreateInvoice() {
           if (res && res.data.createFormAnswerGroup.messages === null) {
             const newUser: UserInfo = {
               ...user,
-              permissions: user.permissions!.map((permission, index) =>
+              permissions: user.permissions!.map((permission: any, index: number) =>
                 index === 0
                   ? {
                       ...permission,
-                      children: [...permission.children!, APPOINTMENT],
+                      children: [
+                        ...permission.children!,
+                        ...(permission.children.some(
+                          (key: any) => key.label === 'sys.menu.appointment',
+                        )
+                          ? []
+                          : [APPOINTMENT]),
+                      ],
                     }
                   : permission,
               ),

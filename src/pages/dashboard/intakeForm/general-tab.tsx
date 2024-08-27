@@ -92,10 +92,7 @@ const questions = [
 
 export default function GeneralTab() {
   const router = useRouter();
-  const [
-    intakeFormFunction,
-    // { data: intakeFormtData, loading: intakeFormLoading, error: intakeFormError },
-  ] = useMutation(INTAKE_FORM);
+  const [intakeFormFunction, { loading: intakeFormLoading }] = useMutation(INTAKE_FORM);
 
   const [form] = Form.useForm();
   const { setUserInfo } = useUserActions();
@@ -148,7 +145,12 @@ export default function GeneralTab() {
           index === 0
             ? {
                 ...permission,
-                children: [...permission.children!, PACKAGES],
+                children: [
+                  ...permission.children!,
+                  ...(permission.children.some((key: any) => key.label === 'sys.menu.packages')
+                    ? []
+                    : [PACKAGES]),
+                ],
               }
             : permission,
         ),
@@ -184,7 +186,7 @@ export default function GeneralTab() {
           </Col>
         </Row>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="w-full">
+          <Button type="primary" htmlType="submit" className="w-full" loading={intakeFormLoading}>
             Submit
           </Button>
         </Form.Item>
