@@ -5,7 +5,7 @@ export interface UserToken {
   refreshToken?: string;
 }
 export interface UserPlan {
-  planId?: string;
+  planId?: string | null;
 }
 export interface UserInfo {
   id: string;

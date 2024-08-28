@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { APPOINTMENT } from '@/_mock/assets';
 import { CREATE_OPEN_LOOP_INVOICE } from '@/graphql/query';
@@ -9,10 +9,9 @@ import { useUserActions, useUserInfo, useUserPlan } from '@/store/userStore';
 import { UserInfo } from '#/entity';
 
 function CreateInvoice() {
-  const [result, setResult] = useState<any>(null);
   const [createInvoice] = useMutation(CREATE_OPEN_LOOP_INVOICE);
   const { planId } = useUserPlan();
-  const { setUserInfo } = useUserActions();
+  const { setUserInfo, setUserPlan } = useUserActions();
   const user = useUserInfo();
   const router = useRouter();
 
@@ -24,12 +23,12 @@ function CreateInvoice() {
         price: '249',
         invoice_type: 'offering',
       } as any;
-      if (!result) {
+      if (planId) {
         const res = await createInvoice({ variables: { ...input } });
         console.log(res);
         if (res) {
-          setResult(res?.data);
-          if (res && res.data.createFormAnswerGroup.messages === null) {
+          setUserPlan({});
+          if (res && res.data.createRequestedPayment.messages === null) {
             const newUser: UserInfo = {
               ...user,
               permissions: user.permissions!.map((permission: any, index: number) =>
@@ -56,7 +55,7 @@ function CreateInvoice() {
       }
     };
     genInvoice();
-  }, [result, createInvoice, planId, router, setUserInfo, user]);
+  }, [createInvoice, planId, router, setUserInfo, user, setUserPlan]);
   return (
     <div className="flex h-screen w-screen items-center justify-center text-[32px] font-bold italic">
       Please Wait....
