@@ -1,5 +1,4 @@
 import { App as AntdApp } from 'antd';
-import { Helmet } from 'react-helmet-async';
 
 import Logo from '@/assets/icons/IconixLogo.svg';
 import Router from '@/router/index';
@@ -12,10 +11,10 @@ function App() {
     <AntdConfig>
       <AntdApp>
         <MotionLazy>
-          <Helmet>
-            <title>Iconix Medical</title>
-            <link rel="icon" href={Logo} />
-          </Helmet>
+          {/* <Helmet> */}
+          <title>Iconix Medical</title>
+          <link rel="icon" href={Logo} />
+          {/* </Helmet> */}
           <Router />
         </MotionLazy>
       </AntdApp>
