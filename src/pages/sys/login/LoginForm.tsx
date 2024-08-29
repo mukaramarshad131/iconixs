@@ -7,7 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { DEFAULT_USER } from '@/_mock/assets';
 import { UserPermissions, result } from '@/_mock/utils';
 import { SignInReq } from '@/api/services/userService';
-import { LOGIN_MUTATION, USER_QUERY } from '@/graphql/query';
+import {
+  LOGIN_MUTATION,
+  USER_QUERY,
+  OPEN_LOOP_INVOICES_LIST,
+  INTAKE_FORM_QUERY,
+} from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
 
 // import { useThemeToken } from '@/theme/hooks';
@@ -36,6 +41,37 @@ function LoginForm() {
     data,
   } = useQuery(USER_QUERY, {
     variables: { id: '1412694' },
+  });
+
+  const {
+    // loading: userLoading,
+    // error,
+    data: invoicData,
+  } = useQuery(OPEN_LOOP_INVOICES_LIST, {
+    variables: { id: '1412694' },
+  });
+  // const {
+  //   // loading: userLoading,
+  //   // error,
+  //   data: intakeFormData,
+  // } = useQuery(INTAKE_FORM_QUERY, {
+  //   variables: {
+  //     user_id: '1477842',
+  //     keywords: 'Questionnaire Form',
+  //     status: 'Open',
+  //   },
+  // });
+  const {
+    // loading: userLoading,
+    // error,
+    data: intakeFormData,
+  } = useQuery(INTAKE_FORM_QUERY, {
+    variables: {
+      // date: '2024-08-29',
+      custom_module_form_id: '1499919',
+      user_id: '1531915',
+      filler_id: '1531915',
+    },
   });
 
   if (loginState !== LoginStateEnum.LOGIN) return null;
@@ -103,6 +139,8 @@ function LoginForm() {
     <>
       <div className="mb-4 text-2xl font-bold xl:text-3xl">{t('sys.login.signInFormTitle')}</div>
       {console.log('data: ', data)}
+      {console.log('invoicData: ', invoicData)}
+      {console.log('intakeFormData: ', intakeFormData)}
       <Form
         name="login"
         size="large"
