@@ -80,24 +80,6 @@ function RegisterForm() {
       provider_type: 'openloop',
       dietitian_id: '1322376',
     };
-    // const updatePayload = {
-    //   input: {
-    //     id: '1432558',
-    //     dob: '01/01/1980',
-    //     height: '5.4ft',
-    //     additional_record_identifier: '',
-    //     gender: 'Female',
-    //     location: {
-    //       state: 'IA',
-    //       city: 'Des Moines',
-    //       zip: '50309',
-    //       line1: '123 Hello',
-    //       line2: 'ria zee',
-    //     },
-    //     // 1432558
-    //   },
-    // };
-
     setLoading(true);
     try {
       const {
