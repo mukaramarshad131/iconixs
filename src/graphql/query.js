@@ -270,9 +270,37 @@ export const INTAKE_FORM = gql`
     }
   }
 `;
+export const INTAKE_FORM_QUERY2 = gql`
+  query requestedFormCompletions($userId: ID, $keywords: String, $status: String) {
+    requestedFormCompletions(user_id: $userId, keywords: $keywords, status: $status) {
+      id
+      item_type
+    }
+  }
+`;
+export const INTAKE_FORM_QUERY = gql`
+  query formAnswerGroups($custom_module_form_id: ID, $user_id: String) {
+    formAnswerGroups(custom_module_form_id: $custom_module_form_id, user_id: $user_id) {
+      id
+      name
+      created_at
+      form_answers {
+        label
+        displayed_answer
+        id
+        custom_module {
+          required
+          id
+          mod_type
+          label
+        }
+      }
+    }
+  }
+`;
 
 export const CREATE_OPEN_LOOP_INVOICE = gql`
-  mutation createRequestedPayment(
+  query createRequestedPayment(
     $recipient_id: ID # e.g "61"
     $offering_id: ID # e.g "11"
     $price: String # can be left blank since it will default to the price of the package
