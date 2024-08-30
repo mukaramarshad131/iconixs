@@ -356,3 +356,44 @@ export const OPEN_LOOP_INVOICES_LIST = gql`
     }
   }
 `;
+export const GET_INTAKE_FORM = gql`
+  query form($id: ID) {
+    customModuleForm(id: $id) {
+      id
+      has_matrix_field
+      has_non_readonly_modules
+      is_video
+      name
+      prefill
+      use_for_charting
+      use_for_program
+
+      custom_modules {
+        id
+        label
+        hipaa_name
+        mod_type
+        options
+      }
+    }
+  }
+`;
+export const CREATE_CUSTOM_FORM = gql`
+  mutation createCustomModuleForm(
+    $name: String
+    $use_for_charting: Boolean
+    $use_for_program: Boolean
+  ) {
+    createCustomModuleForm(
+      input: { name: $name, use_for_charting: $use_for_charting, use_for_program: $use_for_program }
+    ) {
+      customModuleForm {
+        id
+      }
+      messages {
+        field
+        message
+      }
+    }
+  }
+`;

@@ -104,33 +104,35 @@ export default function GeneralTab() {
         custom_module_form_id: '1524146', // Form id for staging
         form_answers: [
           {
-            custom_module_id: '12880693',
-            label: 'Do any of the following apply to you?',
-            answer: values.q1.join(', '), // HTML format for the intake
+            custom_module_id: '13579509',
+            label: 'Patient Intake',
+            answer: Object.values(values)
+              .flatMap((item: any) => item)
+              .join(', '), // HTML format for the intake
           },
-          {
-            custom_module_id: '12880694',
-            label: 'Do any of the following apply to you?',
-            answer: values.q2.join(', '),
-          },
-          {
-            custom_module_id: '12880695',
-            label: 'Do any of the following conditions or situations apply to you?',
-            answer: values.q3.join(', '),
-          },
-          {
-            custom_module_id: '12880696',
-            label: 'Do any of the following conditions or situations apply to you?',
-            answer: values.q4.join(', '),
-          },
-          {
-            custom_module_id: '12880697',
-            label:
-              'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
-            answer: values.q5.join(', '),
-          },
+          // {
+          //   custom_module_id: '12880694',
+          //   label: 'Do any of the following apply to you?',
+          //   answer: values.q2.join(', '),
+          // },
+          // {
+          //   custom_module_id: '12880695',
+          //   label: 'Do any of the following conditions or situations apply to you?',
+          //   answer: values.q3.join(', '),
+          // },
+          // {
+          //   custom_module_id: '12880696',
+          //   label: 'Do any of the following conditions or situations apply to you?',
+          //   answer: values.q4.join(', '),
+          // },
+          // {
+          //   custom_module_id: '12880697',
+          //   label:
+          //     'If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?',
+          //   answer: values.q5.join(', '),
+          // },
         ],
-        name: 'Iconix SOAP Note',
+        name: 'Hormone SOAP Intake',
         set_initial_answers: true,
         user_id: user.id, // Patiend ID from CreatePatient mutation response
       },
