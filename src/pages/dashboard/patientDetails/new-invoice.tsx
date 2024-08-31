@@ -3,7 +3,6 @@ import { Space, Typography } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 
 import Card from '@/components/card';
-import { IconButton, Iconify } from '@/components/icon';
 import Scrollbar from '@/components/scrollbar';
 import { APPOINTMENTS_QUERY } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
@@ -24,7 +23,7 @@ interface DataType {
 }
 
 export default function NewInvoice() {
-  const { id } = useUserInfo();
+  const { id, firstName, lastName } = useUserInfo();
   const { data: appointmentListing } = useQuery(APPOINTMENTS_QUERY, {
     variables: {
       user_id: id,
@@ -70,13 +69,15 @@ export default function NewInvoice() {
       key: 'action',
       render: () => (
         <Space size="middle">
-          <IconButton>
-            <Iconify icon="fontisto:more-v-a" />
-          </IconButton>
+          <a href={doxyUrl} target="blank">
+            link
+          </a>
         </Space>
       ),
     },
   ];
+
+  const doxyUrl = `https://openloophealth.doxy.me/iconix?username=${firstName}%20${lastName}%20Patient&autocheckin=false&pid=${id}`;
 
   return (
     <Card className="flex-col">
