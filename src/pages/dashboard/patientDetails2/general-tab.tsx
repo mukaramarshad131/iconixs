@@ -3,7 +3,7 @@ import { Col, Form, Input, Row, Radio, Button, DatePicker, App } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { APPOINTMENT, PACKAGES } from '@/_mock/assets';
+import { PACKAGES } from '@/_mock/assets';
 import Card from '@/components/card';
 import { USER_QUERY, UPDATE_WEIGHT, UPDATE_PATIENT, INTAKE_FORM_QUERY } from '@/graphql/query';
 import { useRouter } from '@/router/hooks';
@@ -56,22 +56,22 @@ export default function GeneralTab() {
       user.permissions[0]?.children?.some((key) => key.label !== 'sys.menu.packages')
     ) {
       // Creating the new permissions object with conditional update
-      const redirect = localStorage.getItem('redirect');
+      // const redirect = localStorage.getItem('redirect');
       const pagekes: any = user?.permissions[0]?.children!.some(
         (key) => key.label === 'sys.menu.packages',
       )
         ? []
         : [PACKAGES];
-      const appointments: any = user?.permissions[0]?.children!.some(
-        (key) => key.label === 'sys.menu.appointment' && redirect,
-      )
-        ? []
-        : [APPOINTMENT];
+      // const appointments: any = user?.permissions[0]?.children!.some(
+      //   (key) => key.label === 'sys.menu.appointment' && redirect,
+      // )
+      //   ? []
+      //   : [APPOINTMENT];
       const updatedPermissions = user.permissions.map((permission, index) =>
         index === 0
           ? {
               ...permission,
-              children: [...permission.children!, ...pagekes, ...appointments],
+              children: [...permission.children!, ...pagekes],
             }
           : permission,
       );
@@ -83,7 +83,7 @@ export default function GeneralTab() {
       if (JSON.stringify(user.permissions) !== JSON.stringify(updatedPermissions)) {
         setUserInfo(newUser);
       }
-      redirect && router.push('/dashboard/appointment');
+      // redirect && router.push('/dashboard/appointment');
       localStorage.setItem('redirect', '');
     }
   }, [intakeFormData, user, setUserInfo, router]);
