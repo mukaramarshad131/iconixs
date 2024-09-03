@@ -8,6 +8,7 @@ import { AppRouteObject } from '#/router';
 
 const HomePage = lazy(() => import(`@/pages/dashboard/patientDetails`));
 const CheckOut = lazy(() => import('@/pages/dashboard/checkout'));
+const Appointment = lazy(() => import('@/pages/dashboard/appointment'));
 
 const dashboard: AppRouteObject = {
   order: 1,
@@ -36,6 +37,11 @@ const dashboard: AppRouteObject = {
       path: 'checkout',
       element: <CheckOut />,
       meta: { label: 'sys.menu.checkout', key: '/dashboard/checkout' },
+    },
+    {
+      path: 'appointment',
+      element: <Appointment />,
+      meta: { label: 'sys.menu.appointment', key: '/dashboard/appointment' },
     },
   ],
 };

@@ -3,9 +3,10 @@ import { Col, Form, Input, Row, Radio, Button, DatePicker, App } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { PACKAGES } from '@/_mock/assets';
+import { APPOINTMENT, PACKAGES } from '@/_mock/assets';
 import Card from '@/components/card';
 import { USER_QUERY, UPDATE_WEIGHT, UPDATE_PATIENT, INTAKE_FORM_QUERY } from '@/graphql/query';
+import { useRouter } from '@/router/hooks';
 import { useUserActions, useUserInfo } from '@/store/userStore';
 
 // const onCheckBoxChange: CheckboxProps['onChange'] = (e) => {
@@ -33,6 +34,7 @@ export default function GeneralTab() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { setUserInfo } = useUserActions();
+  const router = useRouter();
   const user = useUserInfo();
   const { data: intakeFormData } = useQuery(INTAKE_FORM_QUERY, {
     variables: {
@@ -54,16 +56,22 @@ export default function GeneralTab() {
       user.permissions[0]?.children?.some((key) => key.label !== 'sys.menu.packages')
     ) {
       // Creating the new permissions object with conditional update
+      const redirect = localStorage.getItem('redirect');
+      const pagekes: any = user?.permissions[0]?.children!.some(
+        (key) => key.label === 'sys.menu.packages',
+      )
+        ? []
+        : [PACKAGES];
+      const appointments: any = user?.permissions[0]?.children!.some(
+        (key) => key.label === 'sys.menu.appointment' && redirect,
+      )
+        ? []
+        : [APPOINTMENT];
       const updatedPermissions = user.permissions.map((permission, index) =>
         index === 0
           ? {
               ...permission,
-              children: [
-                ...permission.children!,
-                ...(permission.children!.some((key) => key.label === 'sys.menu.packages')
-                  ? []
-                  : [PACKAGES]),
-              ],
+              children: [...permission.children!, ...pagekes, ...appointments],
             }
           : permission,
       );
@@ -75,8 +83,10 @@ export default function GeneralTab() {
       if (JSON.stringify(user.permissions) !== JSON.stringify(updatedPermissions)) {
         setUserInfo(newUser);
       }
+      redirect && router.push('/dashboard/appointment');
+      localStorage.setItem('redirect', '');
     }
-  }, [intakeFormData, user, setUserInfo]);
+  }, [intakeFormData, user, setUserInfo, router]);
 
   const initFormValues = {
     first_name: userData?.user.first_name,

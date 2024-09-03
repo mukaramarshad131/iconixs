@@ -13,6 +13,10 @@ const LoginRoute: AppRouteObject = {
   path: '/login',
   Component: lazy(() => import('@/pages/sys/login/Login')),
 };
+const RedirectToAppointment: AppRouteObject = {
+  path: '/createAppointment',
+  Component: lazy(() => import('@/pages/sys/rta')),
+};
 const PAGE_NOT_FOUND_ROUTE: AppRouteObject = {
   path: '*',
   element: <Navigate to="/404" replace />,
@@ -20,6 +24,8 @@ const PAGE_NOT_FOUND_ROUTE: AppRouteObject = {
 
 export default function Router() {
   const permissionRoutes = usePermissionRoutes();
+  // const { pathname } = useLocation();
+  // console.log(pathname);
   const asyncRoutes: AppRouteObject = {
     path: '/',
     element: (
@@ -30,7 +36,13 @@ export default function Router() {
     children: [{ index: true, element: <Navigate to={HOMEPAGE} replace /> }, ...permissionRoutes],
   };
 
-  const routes = [LoginRoute, asyncRoutes, ErrorRoutes, PAGE_NOT_FOUND_ROUTE];
+  const routes = [
+    LoginRoute,
+    RedirectToAppointment,
+    asyncRoutes,
+    ErrorRoutes,
+    PAGE_NOT_FOUND_ROUTE,
+  ];
 
   const router = createBrowserRouter(routes as unknown as RouteObject[]);
   return <RouterProvider router={router} />;
