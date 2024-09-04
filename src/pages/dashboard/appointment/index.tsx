@@ -30,7 +30,7 @@ function Appointment() {
     <div className="p-2">
       <iframe
         style={{ width: '100%', height: '100vh' }}
-        src={`https://express.care-staging.openloophealth.com/book-appointment?appointmentTypeId=156071&email=${email}&firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`}
+        src={` https://express.care-staging.openloophealth.com/book-appointment?appointmentTypeId=156071&providerId=1322376&email=${email}&firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`}
         title="W3Schools Free Online Web Tutorials"
       />
     </div>
