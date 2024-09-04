@@ -116,9 +116,15 @@ export default function GeneralTab() {
             custom_module_id: '13579509',
             label: 'Patient Intake',
             user_id: user.id,
-            answer: Object.values(values)
-              .flatMap((item: any) => item)
-              .join(', '), // HTML format for the intake
+            answer: `<p>${Object.values(values)
+              .map(
+                (item: any, index: number) =>
+                  `<b>Question:${questions[index].label}</b><br/>${item.map(
+                    (key: any, idx: number) => `${idx + 1}:${key}`,
+                  )}<br/>`,
+              )
+              .join('')}<b>Shipping Address</b>
+<br/>Address:${user.line1}, ${user.country}, ${user.state} ${user.zip}</p>`, // HTML format for the intake
           },
           {
             custom_module_id: '13579510',
@@ -543,7 +549,7 @@ export default function GeneralTab() {
     </Card>
   );
 }
-
+// loading={intakeFormLoading}
 // {
 //   'data': {
 //     'customModuleForm': {

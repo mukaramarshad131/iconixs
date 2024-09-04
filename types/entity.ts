@@ -21,7 +21,7 @@ export interface UserInfo {
   zip?: string;
   state?: string;
   country?: string;
-  lin1?: string;
+  line1?: string;
   line2?: string;
   permissions?: Permission[];
 }
