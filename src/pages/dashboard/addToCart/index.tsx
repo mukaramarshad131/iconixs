@@ -1,8 +1,7 @@
 import { useUserInfo } from '@/store/userStore';
 
 function AddToCart() {
-  const { firstName, lastName, zip, state, country, lin1, line2 } = useUserInfo();
-  console.log('country: ', country, 'lin1:', lin1, 'line2', line2);
+  const { firstName, lastName, zip, state } = useUserInfo();
 
   return (
     <div>
