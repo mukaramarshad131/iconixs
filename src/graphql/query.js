@@ -244,13 +244,37 @@ export const UPDATE_WEIGHT = gql`
   }
 `;
 
+export const INTAKE_FORM2 = gql`
+  mutation CreateFormAnswerGroup($input: createFormAnswerGroupInput!) {
+    createFormAnswerGroup(input: $input) {
+      form_answer_group {
+        id
+        name
+        form_answers {
+          label
+          displayed_answer
+          id
+          custom_module {
+            required
+            id
+            mod_type
+            label
+          }
+        }
+      }
+      messages {
+        field
+        message
+      }
+    }
+  }
+`;
 export const INTAKE_FORM = gql`
   mutation CreateFormAnswerGroup($input: createFormAnswerGroupInput) {
     createFormAnswerGroup(input: $input) {
       form_answer_group {
         id
         name
-
         form_answers {
           label
           displayed_answer
