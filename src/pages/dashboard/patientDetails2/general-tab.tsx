@@ -106,17 +106,17 @@ export default function GeneralTab() {
   const onFinish = async (values: any) => {
     const payload = {
       ...values,
-      dob: '2024-10-12',
       role: 'patient',
       next_appt_date: null,
       provider_type: 'openloop',
       dietitian_id: '1322376',
     };
+
     const updatePayload = {
       input: {
         id: user.id,
         dietitian_id: '1322376',
-        dob: payload.dob,
+        dob: payload.dob.toString().split(',')[1].slice(0, -12),
         first_name: payload.first_name,
         last_name: payload.last_name,
         height: `${payload.height}`,
@@ -152,7 +152,7 @@ export default function GeneralTab() {
       setLoading(false);
     }
   };
-
+  console.log(initFormValues);
   return (
     <Row gutter={[16, 16]}>
       <Col span={24} lg={24}>
@@ -215,7 +215,7 @@ export default function GeneralTab() {
                     name="dob"
                     rules={[{ required: true, message: t('sys.login.dobPlaceholder') }]}
                   >
-                    <DatePicker />
+                    <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -224,7 +224,7 @@ export default function GeneralTab() {
                     name="gender"
                     rules={[{ required: true, message: t('sys.login.genderPlaceholder') }]}
                   >
-                    <Radio.Group value={initFormValues.gender}>
+                    <Radio.Group defaultValue={initFormValues.gender}>
                       <Radio value="Female"> Female </Radio>
                       <Radio value="Male"> Male </Radio>
                     </Radio.Group>
