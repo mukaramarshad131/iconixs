@@ -28,13 +28,13 @@ export default function BannerCard() {
           <h4>Welcome back 👋 </h4>
           <h4>{username}</h4>
         </div>
-        <div
+        {/* <div
           style={{ color: themeToken.colorPrimaryTextActive }}
           className="mx-auto mb-6 mt-4 max-w-sm text-sm opacity-80 md:mx-0"
         >
           Welcome to join the Discord channel to discuss everything about Slash Admin, or you can
           visite my blog:
-        </div>
+        </div> */}
       </Col>
 
       <Col
