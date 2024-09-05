@@ -324,7 +324,7 @@ export const INTAKE_FORM_QUERY = gql`
 `;
 
 export const CREATE_OPEN_LOOP_INVOICE = gql`
-  query createRequestedPayment(
+  mutation createRequestedPayment(
     $recipient_id: ID # e.g "61"
     $offering_id: ID # e.g "11"
     $price: String # can be left blank since it will default to the price of the package

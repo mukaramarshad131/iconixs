@@ -125,12 +125,12 @@ export const UserPermissions = () => {
         {
           id: '9710971640510357',
           parentId: '9100714781927703',
-          label: 'sys.menu.createInovice',
-          name: 'createInovice',
+          label: 'sys.menu.createInvoice',
+          name: 'createInvoice',
           type: 1,
           hide:true,
-          route: 'createInovice',
-          component: '/dashboard/createInovice',
+          route: 'createInvoice',
+          component: '/dashboard/createInvoice/index.tsx',
         },
         // {
         //   id: '9710971640510357',

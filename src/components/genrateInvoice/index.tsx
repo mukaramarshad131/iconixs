@@ -5,7 +5,7 @@ import { CREATE_OPEN_LOOP_INVOICE } from '@/graphql/query';
 import { useRouter } from '@/router/hooks';
 import { useUserActions, useUserInfo, useUserPlan } from '@/store/userStore';
 
-function CreateInvoice() {
+function GenrateInvoice() {
   const [createInvoice] = useMutation(CREATE_OPEN_LOOP_INVOICE);
   const { planId } = useUserPlan();
   const { setUserPlan } = useUserActions();
@@ -39,4 +39,4 @@ function CreateInvoice() {
   );
 }
 
-export default CreateInvoice;
+export default GenrateInvoice;

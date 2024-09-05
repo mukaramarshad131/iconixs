@@ -1,9 +1,9 @@
-import CreateInvoice from '@/components/createInvoice';
+import GenrateInvoice from '@/components/genrateInvoice';
 
 function CreateInovice() {
   return (
     <div>
-      <CreateInvoice />
+      <GenrateInvoice />
     </div>
   );
 }
