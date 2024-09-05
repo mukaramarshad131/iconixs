@@ -213,7 +213,7 @@ export default function GeneralTab() {
                   <Form.Item
                     label="Date of Birth:"
                     name="dob"
-                    rules={[{ message: t('sys.login.dobPlaceholder') }]}
+                    rules={[{ required: true, message: t('sys.login.dobPlaceholder') }]}
                   >
                     <DatePicker />
                   </Form.Item>
