@@ -129,7 +129,7 @@ export default function GeneralTab() {
           {
             custom_module_id: '13579510',
             label: 'Photo Upload',
-            answer: '',
+            answer: 'photo',
             user_id: user.id, // HTML format for the intake
           },
           {
@@ -148,61 +148,61 @@ export default function GeneralTab() {
           {
             custom_module_id: '13579512',
             label: 'Charting',
-            answer: '',
+            answer: 'Charting',
             user_id: user.id,
           },
           {
             custom_module_id: '13085531',
             label: 'Note Type',
-            answer: '',
+            answer: 'Test Note Type',
             user_id: user.id,
           },
           {
             custom_module_id: '13085532',
             label: 'Visit Type',
-            answer: '',
+            answer: 'Initial Visit ( visit_type_1 )',
             user_id: user.id,
           },
           {
             custom_module_id: '13085561',
             label: 'Patient Consent (Sync)',
-            answer: '',
+            answer: 'Patient Consent (Sync)',
             user_id: user.id,
           },
           {
             custom_module_id: '13085559',
             label: 'Patient Consent (Async)',
-            answer: '',
+            answer: 'Patient Consent (Async)',
             user_id: user.id,
           },
           {
             custom_module_id: '13085543',
             label: 'Visit Modality',
-            answer: '',
+            answer: 'Test Visit Modality',
             user_id: user.id,
           },
           {
             custom_module_id: '13085567',
             label: 'What state is the patient located in at time of visit?',
-            answer: '',
+            answer: 'Test',
             user_id: user.id,
           },
           {
             custom_module_id: '13085566',
             label: null,
-            answer: '',
+            answer: 'Test',
             user_id: user.id,
           },
           {
             custom_module_id: '13085569',
             label: null,
-            answer: '',
+            answer: 'Test',
             user_id: user.id,
           },
           {
             custom_module_id: '13085535',
             label: 'Name of Patient',
-            answer: '',
+            answer: 'Test ABC',
             user_id: user.id,
           },
           {
@@ -214,7 +214,7 @@ export default function GeneralTab() {
           {
             custom_module_id: '13085538',
             label: 'Gender',
-            answer: '',
+            answer: 'Gender',
             user_id: user.id,
           },
           {
