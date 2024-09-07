@@ -6,12 +6,12 @@ import {
   useUserInfo,
   useUserPermissions,
 } from "@/store/userStore";
-// import { useMutation } from '@apollo/client';
-import { Select, Form, Input, Button, Row, Col } from "antd";
+
+import { Select, Form, Input, Button} from "antd";
 import { useRouter } from "next/navigation";
 
 export default function ItakeForm() {
-  // const [intakeFormFunction, { loading}] = useMutation(INTAKE_FORM);
+
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm } = useUserActions();
   const user = useUserInfo();
@@ -39,14 +39,14 @@ export default function ItakeForm() {
             answer: `<p>${Object.values(values)
               .map(
                 (item: any, index: number) =>
-                  `<b>Question:${questions[index].label}</b><br/>${item.map(
+                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)?item?.map(
                     (key: any, idx: number) => `${idx + 1}:${key}`
-                  )}<br/>`
+                  ):item}<br/>`
               )
               .join("")}<b>Shipping Address</b>
-<br/>Address:${user.location.line1}, ${user.location.country}, ${
-              user.location.state
-            } ${user.location.zip}</p>`, // HTML format for the intake
+<br/>Address:${user.location?.line1}, ${user.location?.country}, ${
+              user.location?.state
+            } ${user.location?.zip}</p>`, // HTML format for the intake
           },
           {
             custom_module_id: "13579510",
@@ -436,48 +436,25 @@ export default function ItakeForm() {
             label={field.label}
             rules={[{ required: true, message: `${field.label} is required` }]}
           >
-            <Select
+            {index>4?
+            <Input.TextArea
+                showCount
+                maxLength={100}
+                placeholder="Type here"
+              />
+            :<Select
               mode="multiple"
               placeholder={`Select ${field.label}`}
               allowClear
             >
-              {field.options.map((option, idx) => (
+              {field?.options!.map((option, idx) => (
                 <Select.Option key={idx} value={option}>
                   {option}
                 </Select.Option>
               ))}
-            </Select>
+            </Select>}
           </Form.Item>
         ))}
-        <Row>
-          <Col span={24} lg={24}>
-            <Form.Item label="Please list the name, strength, and date of the last dose of testosterone (or related) replacement therapy. If you have never been on any of the above, please list ‘N/A’. ">
-              <Input.TextArea
-                showCount
-                maxLength={100}
-                placeholder="Type here"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={24} lg={24}>
-            <Form.Item label="Please list your current prescription and over-the-counter medications. ">
-              <Input.TextArea
-                showCount
-                maxLength={100}
-                placeholder="Type here"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={24} lg={24}>
-            <Form.Item label="Please list your allergies to medications, dyes, foods, and any other substances. ">
-              <Input.TextArea
-                showCount
-                maxLength={100}
-                placeholder="Type here"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
         <Form.Item>
           <Button
             type="primary"

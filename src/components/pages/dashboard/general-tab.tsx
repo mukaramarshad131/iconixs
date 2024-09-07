@@ -8,8 +8,8 @@ import {
   Radio,
   Button,
   DatePicker,
-  App,
   Card,
+  notification
 } from "antd";
 import { useEffect, useState } from "react";
 import {
@@ -29,9 +29,8 @@ import { FieldType } from "@/types/types";
 import dayjs from "dayjs";
 
 export default function GeneralTab() {
-  const { notification } = App.useApp();
   const [loading, setLoading] = useState(false);
-  const { setUserPermissions } = useUserActions();
+  const { setUserPermissions ,setUserInfo} = useUserActions();
   const intakeForm = useIntakeForm();
   // const router = useRouter();
   const user = useUserInfo();
@@ -58,11 +57,13 @@ export default function GeneralTab() {
     }
   }, [intakeFormData, user, permissions, setUserPermissions, intakeForm]);
 
+    console.log(user, !permissions.includes("/dashboard/packages"))
   const initFormValues = {
     first_name: userData?.user.first_name,
     last_name: userData?.user.last_name,
     email: userData?.user.email,
     phone_number: userData?.user.phone_number,
+    dob: dayjs(userData?.user.dob),
     gender: userData?.user.gender,
     height: userData?.user.height,
     city: userData?.user?.location?.city,
@@ -112,7 +113,8 @@ export default function GeneralTab() {
         created_at: dayjs().format("DD/MM/YYYY"),
       };
       await updateWeightFunction({ variables: { ...updateWeightPayload } });
-      await updateFunction({ variables: { ...updatePayload } });
+      const res=await updateFunction({ variables: { ...updatePayload } });
+      setUserInfo(res?.data?.updateClient?.user);
       notification.success({
         message: "Update success!",
         duration: 3,
@@ -144,7 +146,6 @@ export default function GeneralTab() {
                     ]}
                   >
                     <Input
-                      value={initFormValues.first_name}
                       placeholder="Enter First Name"
                     />
                   </Form.Item>
@@ -159,7 +160,6 @@ export default function GeneralTab() {
                     ]}
                   >
                     <Input
-                      value={initFormValues.last_name}
                       placeholder="Enter Last Name"
                     />
                   </Form.Item>
@@ -180,27 +180,16 @@ export default function GeneralTab() {
                   >
                     <Input
                       type="email"
-                      value={initFormValues.email}
                       placeholder="Email"
                     />
                   </Form.Item>
                 </Col>
                 <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
+                  <Form.Item
                     label="Phone"
                     name="phone_number"
-                    rules={[
-                      {
-                        required: true,
-                        type: "email",
-                        message: "Please input email",
-                      },
-                    ]}
-                  >
-                    <Input
-                      value={initFormValues.phone_number}
-                      placeholder="Email"
-                    />
+                    rules={[ { required: true,  message: "Please input Phone Number" }]}>
+                    <Input  placeholder="Phone Number"/>
                   </Form.Item>
                 </Col>
               </Row>
@@ -210,10 +199,7 @@ export default function GeneralTab() {
                     label="Date of Birth:"
                     name="dob"
                     className="!w-full"
-                    rules={[
-                      { required: true, message: "Please input date of birth" },
-                    ]}
-                  >
+                    rules={[{ required: true, message: "Please input date of birth" }]}>
                     <DatePicker
                       placeholder="Date of Birth"
                       format="DD/MM/YYYY"
@@ -244,7 +230,6 @@ export default function GeneralTab() {
                     <Input
                       type="number"
                       placeholder="Height"
-                      value={initFormValues.height}
                     />
                   </Form.Item>
                 </Col>
@@ -255,7 +240,7 @@ export default function GeneralTab() {
                     name="metric_stat"
                     rules={[{ required: true, message: "Please input Weight" }]}
                   >
-                    <Input value={initFormValues.weight} placeholder="Weight" />
+                    <Input placeholder="Weight" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -268,7 +253,7 @@ export default function GeneralTab() {
                       { required: true, message: "Please input Address" },
                     ]}
                   >
-                    <Input value={initFormValues.line1} placeholder="Street" />
+                    <Input  placeholder="Street" />
                   </Form.Item>
                 </Col>
 
@@ -278,7 +263,7 @@ export default function GeneralTab() {
                     name="city"
                     rules={[{ required: true, message: "Please input city" }]}
                   >
-                    <Input value={initFormValues.city} placeholder="City" />
+                    <Input  placeholder="City" />
                   </Form.Item>
                 </Col>
                 <Col md={12} sm={24}>
@@ -287,7 +272,7 @@ export default function GeneralTab() {
                     name="state"
                     rules={[{ required: true, message: "Please input state" }]}
                   >
-                    <Input value={initFormValues.state} placeholder="State" />
+                    <Input  placeholder="State" />
                   </Form.Item>
                 </Col>
                 <Col md={12} sm={24}>
@@ -300,7 +285,6 @@ export default function GeneralTab() {
                   >
                     <Input
                       placeholder="Postal/Zip code"
-                      value={initFormValues.zip}
                     />
                   </Form.Item>
                 </Col>
@@ -312,10 +296,7 @@ export default function GeneralTab() {
                       { required: true, message: "Please input country" },
                     ]}
                   >
-                    <Input
-                      value={initFormValues.country}
-                      placeholder="Country"
-                    />
+                    <Input placeholder="Country" />
                   </Form.Item>
                 </Col>
               </Row>

@@ -101,4 +101,13 @@ export const questions = [
       "None of the above ",
     ],
   },
+  {
+    name: "q6",
+    label:"Please list the name, strength, and date of the last dose of testosterone (or related) replacement therapy. If you have never been on any of the above, please list ‘N/A’."},
+  {
+    name: "q7",
+    label:"Please list your current prescription and over-the-counter medications. "},
+  {
+    name: "q8",
+    label:"Please list your allergies to medications, dyes, foods, and any other substances." },
 ];
