@@ -12,7 +12,7 @@ export default function BannerCard() {
   const bg = `linear-gradient(135deg, ${Color(themeToken.colorPrimaryHover).alpha(0.2)}, ${Color(
     themeToken.colorPrimary,
   ).alpha(0.2)}) rgb(255, 255, 255)`;
-
+  console.log(bg, 'bg');
   return (
     <Row
       className="!mx-0 rounded-2xl p-7"
@@ -51,6 +51,7 @@ export default function BannerCard() {
 
 function BannerSvg() {
   const { colorPrimary, colorPrimaryActive, colorPrimaryHover } = useThemeToken();
+
   return (
     <svg viewBox="0 0 480 360" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
       <defs>

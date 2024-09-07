@@ -7,6 +7,7 @@ import { useUserActions, useUserInfo, useUserPlan } from '@/store/userStore';
 
 function GenrateInvoice() {
   const [createInvoice] = useMutation(CREATE_OPEN_LOOP_INVOICE);
+  // const [intakeFormFunction, { loading: intakeFormLoading }] = useMutation(INTAKE_FORM);
   const { planId } = useUserPlan();
   const { setUserPlan } = useUserActions();
   const user = useUserInfo();
