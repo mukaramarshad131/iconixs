@@ -1,50 +1,74 @@
-import { useMutation } from '@tanstack/react-query';
-import { App } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { StorageEnum } from '@/types/enums';
+import { UserInfo} from '@/types/types';
 import { create } from 'zustand';
-
-import userService, { SignInReq } from '@/api/services/userService';
-import { getItem, removeItem, setItem } from '@/utils/storage';
-
-import { UserInfo, UserPlan, UserToken } from '#/entity';
-import { StorageEnum } from '#/enum';
-
-const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 
 type UserStore = {
   userInfo: Partial<UserInfo>;
-  userToken: UserToken;
-  userPlan: UserPlan;
-  // 使用 actions 命名空间来存放所有的 action
+  userToken: string | null;
+  userPlan: string | null;
+  userPermissions: string[] ;
+  intakeForm:any;
   actions: {
     setUserInfo: (userInfo: UserInfo) => void;
-    setUserToken: (token: UserToken) => void;
-    setUserPlan: (planId: UserPlan) => void;
+    setUserToken: (token: string | null) => void;
+    setUserPlan: (planId: string) => void;
+    setUserPermissions: (userPermissions: string[]) => void;
+    setUserIntakeForm:(intakeForm:any)=>void;
     clearUserInfoAndToken: () => void;
   };
 };
-
+export const getItem = <T>(key: StorageEnum, isString?:boolean): T | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  let value = null;
+  try {
+    const result =  window.localStorage.getItem(key);
+    if (result) {
+      value =isString?result:JSON.parse(result);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return value;
+};
 const useUserStore = create<UserStore>((set) => ({
-  userInfo: getItem<UserInfo>(StorageEnum.User) || {},
-  userToken: getItem<UserToken>(StorageEnum.Token) || {},
-  userPlan: getItem<UserPlan>(StorageEnum.Plan) || {},
+  userInfo: getItem(StorageEnum.User) || {},
+  userToken: getItem(StorageEnum.Token) || null,
+  userPlan: getItem(StorageEnum.Plan,true) || null,
+  userPermissions: getItem(StorageEnum.PERMISSIONS) || [],
+  intakeForm: getItem(StorageEnum.INTAKEFORM) || [],
   actions: {
     setUserInfo: (userInfo) => {
       set({ userInfo });
-      setItem(StorageEnum.User, userInfo);
+      localStorage.setItem('user', JSON.stringify(userInfo));
     },
     setUserToken: (userToken) => {
       set({ userToken });
-      setItem(StorageEnum.Token, userToken);
+      localStorage.setItem('token', JSON.stringify(userToken));
+      document.cookie = `token=${userToken}; path=/; Secure; SameSite=Strict;`;
     },
     setUserPlan: (userPlan) => {
       set({ userPlan });
-      setItem(StorageEnum.Plan, userPlan);
+      localStorage.setItem('planId', userPlan);
+    },
+    setUserPermissions: (userPermissions) => {
+      set({ userPermissions });
+      localStorage.setItem('permissions', JSON.stringify(userPermissions));
+      document.cookie = `permissions=${JSON.stringify(userPermissions)}; path=/; Secure; SameSite=Strict;`;
+    },
+    setUserIntakeForm: (intakeForm) => {
+      set({ intakeForm });
+      localStorage.setItem('intakeForm', JSON.stringify(intakeForm));
     },
     clearUserInfoAndToken() {
-      set({ userInfo: {}, userToken: {} });
-      removeItem(StorageEnum.User);
-      removeItem(StorageEnum.Token);
+      set({ userInfo: {}, userToken: null });
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      localStorage.removeItem('permissions');
+      localStorage.removeItem('intakeForm');
+      document.cookie = `token=; Max-Age=0; path=/; Secure; SameSite=Strict;`;
+      document.cookie = `permissions=; Max-Age=0; path=/; Secure; SameSite=Strict;`;
     },
   },
 }));
@@ -52,34 +76,8 @@ const useUserStore = create<UserStore>((set) => ({
 export const useUserInfo = () => useUserStore((state) => state.userInfo);
 export const useUserToken = () => useUserStore((state) => state.userToken);
 export const useUserPlan = () => useUserStore((state) => state.userPlan);
-export const useUserPermission = () => useUserStore((state) => state.userInfo.permissions);
+export const useUserPermissions = () => useUserStore((state) => state.userPermissions);
+export const useIntakeForm = () => useUserStore((state) => state.intakeForm);
 export const useUserActions = () => useUserStore((state) => state.actions);
-
-export const useSignIn = () => {
-  const navigatge = useNavigate();
-  const { message } = App.useApp();
-  const { setUserToken, setUserInfo } = useUserActions();
-
-  const signInMutation = useMutation({
-    mutationFn: userService.signin,
-  });
-
-  const signIn = async (data: SignInReq) => {
-    try {
-      const res = await signInMutation.mutateAsync(data);
-      const { user, accessToken, refreshToken } = res;
-      setUserToken({ accessToken, refreshToken });
-      setUserInfo(user);
-      navigatge(HOMEPAGE, { replace: true });
-    } catch (err) {
-      message.warning({
-        content: err.message,
-        duration: 3,
-      });
-    }
-  };
-
-  return signIn;
-};
 
 export default useUserStore;
