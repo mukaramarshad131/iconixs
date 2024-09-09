@@ -47,7 +47,7 @@ export default function GeneralTab() {
   });
   const [updateFunction, {loading}] = useMutation(UPDATE_PATIENT);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
-  console.log(intakeFormData?.formAnswerGroups?.length > 0, intakeForm.length > 0)
+
   useEffect(() => {
     if (
       (intakeFormData?.formAnswerGroups?.length > 0 || intakeForm.length > 0) &&
