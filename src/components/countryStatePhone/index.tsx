@@ -142,7 +142,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
           />
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      {/* <Col md={12} sm={24}>
       <Form.Item
         label={noLabel?undefined:"Time Zone"}
         name="timezone"
@@ -164,7 +164,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
           ))}
         </Select>
       </Form.Item>
-      </Col>
+      </Col> */}
     </Row>
   );
 };
