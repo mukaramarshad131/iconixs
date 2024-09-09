@@ -3,7 +3,7 @@ import { Country, State, ICountry, IState } from "country-state-city";
 import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 import { Form, Select, Input, Col, Row } from "antd";
 import { FieldType } from "@/types/types";
-import moment from "moment-timezone";
+// import moment from "moment-timezone";
 
 const { Option } = Select;
 
@@ -17,7 +17,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedState, setSelectedState] = useState<string>("");
   const [phoneCode, setPhoneCode] = useState<string>("");
-  const [timezones, setTimezones] = useState<string[]>([]);
+  // const [timezones, setTimezones] = useState<string[]>([]);
 
   // Handler for country change
   const handleCountryChange = (value: string) => {
@@ -30,8 +30,8 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
     // Fetch and set the country calling code
     const countryCallingCode = getCountryCallingCode(value as CountryCode);
     setPhoneCode(`+${countryCallingCode}`);
-    const countryTimeZones = moment.tz.zonesForCountry(value);
-    setTimezones(countryTimeZones || []);
+    // const countryTimeZones = moment.tz.zonesForCountry(value);
+    // setTimezones(countryTimeZones || []);
   };
 
   // Handler for state change
