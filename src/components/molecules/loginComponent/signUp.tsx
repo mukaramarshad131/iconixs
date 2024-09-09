@@ -133,6 +133,47 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
             <Input type='number' placeholder="Weight" />
           </Form.Item>
         </Col>
+        <Col span={12}>
+          <Form.Item
+            name="password"
+            rules={[
+              { required: true },
+
+              {
+                validator: (rule, value) => {
+                  const hasUppercase = /[A-Z]/.test(value);
+                  const hasLowercase = /[a-z]/.test(value);
+                  const hasNumber = /[0-9]/.test(value);
+                  const hasSpecialChar = /[^a-zA-Z0-9 ]/.test(value);
+                  if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecialChar) {
+                    return Promise.reject('Password must be 8 characters long contains 1 upercase, 1 special character, 1 number');
+                  }
+                  return Promise.resolve();
+                },
+              },
+            ]}
+          >
+            <Input.Password type="password" placeholder={'Password'} />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            name="confirmPassword"
+            rules={[
+              { required: true, message: 'Please input confirm password' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('The two passwords are inconsistent.'));
+                },
+              }),
+            ]}
+          >
+            <Input.Password type="password" placeholder='Confirm password' />
+          </Form.Item>
+        </Col>
       </Row>
       <CountryStateForm noLabel/>
       <Form.Item>
