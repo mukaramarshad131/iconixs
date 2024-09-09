@@ -10,18 +10,18 @@ export const dynamic = 'force-dynamic';
 
 const PatientDetails = () => {
   return (
-    <div className="p-2">
-    <Row gutter={[16, 16]} justify="center">
+    <div className="p-2 w-full flex flex-col justify-center items-center">
+    <Row gutter={[16, 16]} justify="center" className='!w-full'>
       <Col span={24} lg={24}>
         <BannerCard />
       </Col>
     </Row>
-    <Row gutter={[16, 16]} className="mt-4" justify="center">
+    <Row gutter={[16, 16]} className="mt-4 container" justify="center">
       <Col span={24} md={24} lg={24}>
         <NewInvoice />
       </Col>
     </Row>
-    <GeneralTab />
+    <div className='container'><GeneralTab /></div>
   </div>
   )
 }

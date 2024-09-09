@@ -1,6 +1,6 @@
 'use client'
 import { useQuery } from '@apollo/client';
-import { Card, Space, Typography } from 'antd';
+import { Card, Space} from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 import { APPOINTMENTS_QUERY } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
@@ -67,8 +67,10 @@ export default function NewInvoice() {
 
   return (
     <Card className="flex-col">
-      <header className="self-start">
-        <Typography.Title level={5}>New Appointments</Typography.Title>
+      <header className="text-center mb-5">
+      <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+      New Appointments
+      </h1>
       </header>
       <main className="">
           <Table columns={columns} dataSource={appointmentListing?.appointments.map((item:any, idx:number)=>({key:idx, ...item})) ?? []} scroll={{x: "700px"}} loading={loading}/>

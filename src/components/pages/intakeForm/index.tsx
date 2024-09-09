@@ -11,7 +11,6 @@ import { Select, Form, Input, Button} from "antd";
 import { useRouter } from "next/navigation";
 
 export default function ItakeForm() {
-
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm } = useUserActions();
   const user = useUserInfo();
@@ -39,9 +38,13 @@ export default function ItakeForm() {
             answer: `<p>${Object.values(values)
               .map(
                 (item: any, index: number) =>
-                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)?item?.map(
-                    (key: any, idx: number) => `${idx + 1}:${key}`
-                  ):item}<br/>`
+                  `<b>Question:${questions[index].label}</b><br/>${
+                    Array.isArray(item)
+                      ? item?.map(
+                          (key: any, idx: number) => `${idx + 1}:${key}`
+                        )
+                      : item
+                  }<br/>`
               )
               .join("")}<b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${
@@ -422,7 +425,10 @@ export default function ItakeForm() {
     router.replace("/dashboard/packages");
   };
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex flex-col justify-center items-center mt-10">
+       <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+       Patient Intake Form
+      </h1>
       <Form
         layout="vertical"
         form={form}
@@ -436,23 +442,25 @@ export default function ItakeForm() {
             label={field.label}
             rules={[{ required: true, message: `${field.label} is required` }]}
           >
-            {index>4?
-            <Input.TextArea
+            {index > 4 ? (
+              <Input.TextArea
                 showCount
                 maxLength={100}
                 placeholder="Type here"
               />
-            :<Select
-              mode="multiple"
-              placeholder={`Select ${field.label}`}
-              allowClear
-            >
-              {field?.options!.map((option, idx) => (
-                <Select.Option key={idx} value={option}>
-                  {option}
-                </Select.Option>
-              ))}
-            </Select>}
+            ) : (
+              <Select
+                mode="multiple"
+                placeholder={`Select ${field.label}`}
+                allowClear
+              >
+                {field?.options!.map((option, idx) => (
+                  <Select.Option key={idx} value={option}>
+                    {option}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
           </Form.Item>
         ))}
         <Form.Item>

@@ -9,7 +9,7 @@ import {
   Button,
   DatePicker,
   Card,
-  notification
+  notification,
 } from "antd";
 import { useEffect, useState } from "react";
 import {
@@ -27,10 +27,11 @@ import {
 // import { useRouter } from 'next/navigation';
 import { FieldType } from "@/types/types";
 import dayjs from "dayjs";
+import CountryStateForm from "@/components/countryStatePhone";
 
 export default function GeneralTab() {
   const [loading, setLoading] = useState(false);
-  const { setUserPermissions ,setUserInfo} = useUserActions();
+  const { setUserPermissions, setUserInfo } = useUserActions();
   const intakeForm = useIntakeForm();
   // const router = useRouter();
   const user = useUserInfo();
@@ -57,7 +58,7 @@ export default function GeneralTab() {
     }
   }, [intakeFormData, user, permissions, setUserPermissions, intakeForm]);
 
-    console.log(user, !permissions.includes("/dashboard/packages"))
+  console.log(user, !permissions.includes("/dashboard/packages"));
   const initFormValues = {
     first_name: userData?.user.first_name,
     last_name: userData?.user.last_name,
@@ -113,7 +114,7 @@ export default function GeneralTab() {
         created_at: dayjs().format("DD/MM/YYYY"),
       };
       await updateWeightFunction({ variables: { ...updateWeightPayload } });
-      const res=await updateFunction({ variables: { ...updatePayload } });
+      const res = await updateFunction({ variables: { ...updatePayload } });
       setUserInfo(res?.data?.updateClient?.user);
       notification.success({
         message: "Update success!",
@@ -125,195 +126,131 @@ export default function GeneralTab() {
   };
 
   return (
-    <div className="w-full flex justify-center mt-2">
-      <Row gutter={[16, 16]}>
-        {!userLoading && (
-          <Card>
-            <Form
-              layout="vertical"
-              initialValues={{ ...initFormValues }}
-              labelCol={{ span: 8 }}
-              className="w-full"
-              onFinish={onFinish}
-            >
-              <Row gutter={16}>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="First Name"
-                    name="first_name"
-                    rules={[
-                      { required: true, message: "Please input First Name" },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter First Name"
-                    />
-                  </Form.Item>
-                </Col>
-
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Last Name"
-                    name="last_name"
-                    rules={[
-                      { required: true, message: "Please input Last Name" },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter Last Name"
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Email:"
-                    name="email"
-                    rules={[
-                      {
-                        required: true,
-                        type: "email",
-                        message: "Please input email",
-                      },
-                    ]}
-                  >
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col md={12} sm={24}>
-                  <Form.Item
-                    label="Phone"
-                    name="phone_number"
-                    rules={[ { required: true,  message: "Please input Phone Number" }]}>
-                    <Input  placeholder="Phone Number"/>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col md={12} sm={24}>
-                  <Form.Item
-                    label="Date of Birth:"
-                    name="dob"
-                    className="!w-full"
-                    rules={[{ required: true, message: "Please input date of birth" }]}>
-                    <DatePicker
-                      placeholder="Date of Birth"
-                      format="DD/MM/YYYY"
-                      className={"w-full"}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col md={12} sm={24}>
-                  <Form.Item
-                    label="Gender"
-                    name="gender"
-                    rules={[
-                      { required: true, message: "Please select gender" },
-                    ]}
-                  >
-                    <Radio.Group >
-                      <Radio value="Female"> Female </Radio>
-                      <Radio value="Male"> Male </Radio>
-                    </Radio.Group>
-                  </Form.Item>
-                </Col>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Height"
-                    name="height"
-                    rules={[{ required: true, message: "Please input Height" }]}
-                  >
-                    <Input
-                      type="number"
-                      placeholder="Height"
-                    />
-                  </Form.Item>
-                </Col>
-
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Weight"
-                    name="metric_stat"
-                    rules={[{ required: true, message: "Please input Weight" }]}
-                  >
-                    <Input placeholder="Weight" />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Street:"
-                    name="line1"
-                    rules={[
-                      { required: true, message: "Please input Address" },
-                    ]}
-                  >
-                    <Input  placeholder="Street" />
-                  </Form.Item>
-                </Col>
-
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="City:"
-                    name="city"
-                    rules={[{ required: true, message: "Please input city" }]}
-                  >
-                    <Input  placeholder="City" />
-                  </Form.Item>
-                </Col>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="State:"
-                    name="state"
-                    rules={[{ required: true, message: "Please input state" }]}
-                  >
-                    <Input  placeholder="State" />
-                  </Form.Item>
-                </Col>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Zip Code:"
-                    name="zip"
-                    rules={[
-                      { required: true, message: "Please input postal code" },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Postal/Zip code"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col md={12} sm={24}>
-                  <Form.Item<FieldType>
-                    label="Country:"
-                    name="country"
-                    rules={[
-                      { required: true, message: "Please input country" },
-                    ]}
-                  >
-                    <Input placeholder="Country" />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="w-full !bg-[#0c2345]"
-                  loading={loading}
+    <div className="w-full mt-2">
+      {!userLoading && (
+        <Card>
+          <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+            Patient Detail
+          </h1>
+          <Form
+            layout="vertical"
+            initialValues={{ ...initFormValues }}
+            labelCol={{ span: 8 }}
+            className="!w-full ml-0"
+            onFinish={onFinish}
+          >
+            <Row gutter={16}>
+              <Col md={12} sm={24}>
+                <Form.Item<FieldType>
+                  label="First Name"
+                  name="first_name"
+                  rules={[
+                    { required: true, message: "Please input First Name" },
+                  ]}
                 >
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
-        )}
-      </Row>
+                  <Input placeholder="Enter First Name" />
+                </Form.Item>
+              </Col>
+
+              <Col md={12} sm={24}>
+                <Form.Item<FieldType>
+                  label="Last Name"
+                  name="last_name"
+                  rules={[
+                    { required: true, message: "Please input Last Name" },
+                  ]}
+                >
+                  <Input placeholder="Enter Last Name" />
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item<FieldType>
+                  label="Email:"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      type: "email",
+                      message: "Please input email",
+                    },
+                  ]}
+                >
+                  <Input type="email" placeholder="Email" />
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="Phone"
+                  name="phone_number"
+                  rules={[
+                    { required: true, message: "Please input Phone Number" },
+                  ]}
+                >
+                  <Input placeholder="Phone Number" />
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="Date of Birth:"
+                  name="dob"
+                  className="!w-full"
+                  rules={[
+                    { required: true, message: "Please input date of birth" },
+                  ]}
+                >
+                  <DatePicker
+                    placeholder="Date of Birth"
+                    format="DD/MM/YYYY"
+                    className={"w-full"}
+                  />
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item
+                  label="Gender"
+                  name="gender"
+                  rules={[{ required: true, message: "Please select gender" }]}
+                >
+                  <Radio.Group>
+                    <Radio value="Female"> Female </Radio>
+                    <Radio value="Male"> Male </Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </Col>
+              <Col md={12} sm={24}>
+                <Form.Item<FieldType>
+                  label="Height"
+                  name="height"
+                  rules={[{ required: true, message: "Please input Height" }]}
+                >
+                  <Input type="number" placeholder="Height" />
+                </Form.Item>
+              </Col>
+
+              <Col md={12} sm={24}>
+                <Form.Item<FieldType>
+                  label="Weight"
+                  name="metric_stat"
+                  rules={[{ required: true, message: "Please input Weight" }]}
+                >
+                  <Input placeholder="Weight" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <CountryStateForm />
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="w-full !bg-[#0c2345]"
+                loading={loading}
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      )}
     </div>
   );
 }

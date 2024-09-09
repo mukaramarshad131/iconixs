@@ -7,7 +7,7 @@ function Packages() {
 
   return (
     <>
-      <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3]">
+      <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
         Packages Plan
       </h1>
       <div className="mb-5 flex flex-wrap items-center justify-center gap-5">

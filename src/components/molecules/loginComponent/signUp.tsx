@@ -1,4 +1,5 @@
 'use client'
+import CountryStateForm from '@/components/countryStatePhone';
 import { SIGNUP_MUTATION, UPDATE_PATIENT, UPDATE_WEIGHT } from '@/graphql/query';
 import { useMutation } from '@apollo/client';
 import { Button, Col, DatePicker, Form, Input, notification, Radio, Row } from 'antd';
@@ -133,97 +134,7 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
           </Form.Item>
         </Col>
       </Row>
-      <Row gutter={16}>
-        <Col span={12}>
-          <Form.Item
-            name="line1"
-            rules={[{ required: true, message: 'Please input Address' }]}
-          >
-            <Input placeholder="Address" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="city"
-            rules={[{ required: true, message: 'Please input city' }]}
-          >
-            <Input placeholder="City" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="state"
-            rules={[{ required: true, message: 'Please input state' }]}
-          >
-            <Input placeholder="State" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="country"
-            rules={[{ required: true, message: 'Please input country' }]}
-          >
-            <Input placeholder="Country" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="zip"
-            rules={[{ required: true, message: 'Please input postal code' }]}
-          >
-            <Input placeholder="Postal/Zip code" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="phone"
-            rules={[{ required: true, message:'Please input mobile number'}]}
-          >
-            <Input placeholder="Phone Number" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="password"
-            rules={[
-              { required: true },
-
-              {
-                validator: (rule, value) => {
-                  const hasUppercase = /[A-Z]/.test(value);
-                  const hasLowercase = /[a-z]/.test(value);
-                  const hasNumber = /[0-9]/.test(value);
-                  const hasSpecialChar = /[^a-zA-Z0-9 ]/.test(value);
-                  if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecialChar) {
-                    return Promise.reject('Password must be 8 characters long contains 1 upercase, 1 special character, 1 number');
-                  }
-                  return Promise.resolve();
-                },
-              },
-            ]}
-          >
-            <Input.Password type="password" placeholder={'Password'} />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="confirmPassword"
-            rules={[
-              { required: true, message: 'Please input confirm password' },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error('The two passwords are inconsistent.'));
-                },
-              }),
-            ]}
-          >
-            <Input.Password type="password" placeholder='Confirm password' />
-          </Form.Item>
-        </Col>
-      </Row>
+      <CountryStateForm noLabel/>
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full !bg-[#0c2345]" loading={loading}>
           Sign UP

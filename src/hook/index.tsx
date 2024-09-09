@@ -31,26 +31,4 @@ export const useSidebarItmes = () => {
       </Link>
     ),
   }});
-  //      [
-  //     {
-  //       key: "1",
-  //       icon: <UserOutlined />,
-  //       label: <Link href="/appointments">Appointments</Link>,
-  //     },
-  //     {
-  //       key: "2",
-  //       icon: <VideoCameraOutlined />,
-  //       label: <Link href="/inTakeForm">Intake Form</Link>,
-  //     },
-  //     {
-  //       key: "3",
-  //       icon: <UploadOutlined />,
-  //       label: <Link href="/packages">Packages</Link>,
-  //     },
-  //     {
-  //       key: "4",
-  //       icon: <UserOutlined />,
-  //       label: <Link href="/checkout">Checkout</Link>,
-  //     },
-  //   ]
 };
