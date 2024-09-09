@@ -53,7 +53,7 @@ export default function GeneralTab() {
       (intakeFormData?.formAnswerGroups?.length > 0 || intakeForm) &&
       !permissions.includes("/dashboard/packages")
     ) {
-      setUserPermissions([...permissions, "/dashboard/packages"]);
+      setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
     }
   }, [intakeFormData, user, permissions, setUserPermissions, intakeForm]);
 

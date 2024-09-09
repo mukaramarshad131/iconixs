@@ -421,3 +421,39 @@ export const CREATE_CUSTOM_FORM = gql`
     }
   }
 `;
+export const GET_CARE_PLAN = gql`
+  query carePlan(
+  $id: ID
+) {
+  carePlan(
+    id: $id
+  ) {
+    id
+    name
+    patient {
+      id
+    }
+  }
+}
+`;
+
+export const GET_MEDICATION_LIST = gql`
+  query medications(
+  $active: Boolean,
+  $patient_id: ID
+) {
+  medications(
+    active: $active,
+    patient_id: $patient_id
+  ) {
+    id
+    name
+    active
+    directions
+    dosage
+    code
+    start_date
+    end_date
+  }
+}
+`;

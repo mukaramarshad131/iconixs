@@ -416,8 +416,8 @@ export default function ItakeForm() {
     };
     // const res = await intakeFormFunction({ variables: { ...intakeFormPayload } });
     setUserIntakeForm(intakeFormPayload);
-    if (!permissions.includes("/dashbaord/packages")) {
-      setUserPermissions([...permissions, "/dashbaord/packages"]);
+    if (!permissions.includes("/dashboard/packages")) {
+      setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
     }
     router.replace("/dashboard/packages");
   };
