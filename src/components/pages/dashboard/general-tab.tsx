@@ -6,7 +6,7 @@ import {
   Input,
   Row,
   Radio,
-  Button,
+  // Button,
   DatePicker,
   Card,
   notification,
@@ -45,7 +45,7 @@ export default function GeneralTab() {
   const { loading: userLoading, data: userData } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
-  const [updateFunction, {loading}] = useMutation(UPDATE_PATIENT);
+  const [updateFunction, ] = useMutation(UPDATE_PATIENT);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
 
   useEffect(() => {
@@ -226,7 +226,7 @@ export default function GeneralTab() {
               </Col>
             </Row>
             <CountryStateForm />
-            <Form.Item>
+            {/* <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
@@ -235,7 +235,7 @@ export default function GeneralTab() {
               >
                 Submit
               </Button>
-            </Form.Item>
+            </Form.Item> */}
           </Form>
         </Card>
       )}
