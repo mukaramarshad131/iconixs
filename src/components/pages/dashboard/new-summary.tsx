@@ -25,13 +25,13 @@ console.log("appointmentListing", appointmentListing?.carePlans);
       dataIndex: 'id',
       key: 'id',
       width:150,
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.id}</span>,
     },
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.name}</span>,
     },
     {
       title: 'description',
@@ -42,12 +42,12 @@ console.log("appointmentListing", appointmentListing?.carePlans);
       title: 'Date',
       dataIndex: 'created_at',
       key: 'created_at',
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.created_at}</span>,
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
+      render: () => (
         <Space size="middle">
           <Link href="/appointments">Link</Link>
         </Space>
@@ -57,7 +57,7 @@ console.log("appointmentListing", appointmentListing?.carePlans);
     //   title: 'Provider',
     //   dataIndex: 'provider',
     //   key: 'provider',
-    //   render: (text) => <span>{text.full_name}</span>,
+    //   render: (text:any) => <span>{text.full_name}</span>,
     // },
     // {
     //   title: 'Action',

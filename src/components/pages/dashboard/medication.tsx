@@ -26,13 +26,13 @@ console.log("medicationListing", medicationListing);
       dataIndex: 'id',
       key: 'id',
       width:150,
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.id}</span>,
     },
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.name}</span>,
     },
     {
       title: 'Directions',
@@ -43,18 +43,18 @@ console.log("medicationListing", medicationListing);
       title: 'Dosage',
       dataIndex: 'dosage',
       key: 'dosage',
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.dosage}</span>,
     },
     {
       title: 'Start Date',
       dataIndex: 'start_date',
       key: 'start_date',
-      render: (text) => <span>{text}</span>,
+      render: (text:any) => <span>{text.start_date}</span>,
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
+      render: () => (
         <Space size="middle">
           <Link href="/appointments">Link</Link>
         </Space>
