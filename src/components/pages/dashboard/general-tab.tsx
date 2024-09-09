@@ -180,17 +180,6 @@ export default function GeneralTab() {
               </Col>
               <Col md={12} sm={24}>
                 <Form.Item
-                  label="Phone"
-                  name="phone_number"
-                  rules={[
-                    { required: true, message: "Please input Phone Number" },
-                  ]}
-                >
-                  <Input placeholder="Phone Number" />
-                </Form.Item>
-              </Col>
-              <Col md={12} sm={24}>
-                <Form.Item
                   label="Date of Birth:"
                   name="dob"
                   className="!w-full"
@@ -205,7 +194,7 @@ export default function GeneralTab() {
                   />
                 </Form.Item>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={8} sm={12}>
                 <Form.Item
                   label="Gender"
                   name="gender"
@@ -217,7 +206,7 @@ export default function GeneralTab() {
                   </Radio.Group>
                 </Form.Item>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={8} sm={12}>
                 <Form.Item<FieldType>
                   label="Height"
                   name="height"
@@ -227,7 +216,7 @@ export default function GeneralTab() {
                 </Form.Item>
               </Col>
 
-              <Col md={12} sm={24}>
+              <Col md={8} sm={12}>
                 <Form.Item<FieldType>
                   label="Weight"
                   name="metric_stat"

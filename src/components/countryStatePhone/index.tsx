@@ -121,10 +121,15 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
         <Form.Item
         label={!noLabel ? "Phone Number" : undefined}
           name="phone_number"
-          rules={[{ required: true, message: "Please input Phone Number" }]}
+          rules={[{ required: true, message: "Please input Phone Number" },
+            {
+              pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/, // Generic pattern allowing +, spaces, and dashes
+              message: 'Invalid phone number format',
+            },
+          ]}
         >
           <Input
-            type="tel"
+            type="number"
             placeholder={
               phoneCode ? `e.g., ${phoneCode} 123456789` : "Enter phone number"
             }
