@@ -39,16 +39,16 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
               input: {
                 id: user.id,
                 dietitian_id: '1322376',
-                dob: payload.dob,
+                dob: dayjs(values.dob).format("DD/MM/YYYY"),
                 height: payload.height,
                 phone_number: payload.phone,
                 additional_record_identifier: '',
                 gender: payload.gender,
                 location: {
-                  state: '',
-                  city: '',
-                  zip: '',
-                  line1: payload.address,
+                  state: payload.this.state.first,
+                  city: payload.city,
+                  zip: payload.zip,
+                  line1: payload.line1,
                 },
               },
             };

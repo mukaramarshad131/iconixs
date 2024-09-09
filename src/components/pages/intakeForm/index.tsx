@@ -1,11 +1,14 @@
 "use client";
+import { extractQuestionsAndAnswers } from "@/components/funcitons";
 // import { INTAKE_FORM } from '@/graphql/query';
 import { questions } from "@/data/projectData";
+import { INTAKE_FORM_QUERY } from "@/graphql/query";
 import {
   useUserActions,
   useUserInfo,
   useUserPermissions,
 } from "@/store/userStore";
+import { useQuery } from "@apollo/client";
 
 import { Select, Form, Input, Button} from "antd";
 import { useRouter } from "next/navigation";
@@ -17,6 +20,14 @@ export default function ItakeForm() {
   const router = useRouter();
   const [form] = Form.useForm();
 
+  const { data: intakeFormData } = useQuery(INTAKE_FORM_QUERY, {
+    variables: {
+      custom_module_form_id: "1524146",
+      user_id: user.id,
+      filler_id: user.id,
+    },
+  });
+const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer)
   const OnFinish = async (values: any) => {
     const intakeFormPayload = {
       input: {
@@ -424,6 +435,8 @@ export default function ItakeForm() {
     }
     router.replace("/dashboard/packages");
   };
+
+  console.log(result)
   return (
     <div className="w-full flex flex-col justify-center items-center mt-10">
        <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
@@ -432,6 +445,7 @@ export default function ItakeForm() {
       <Form
         layout="vertical"
         form={form}
+        initialValues={result}
         onFinish={OnFinish}
         className="container"
       >

@@ -11,7 +11,7 @@ import {
   Card,
   notification,
 } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   USER_QUERY,
   UPDATE_WEIGHT,
@@ -30,7 +30,6 @@ import dayjs from "dayjs";
 import CountryStateForm from "@/components/countryStatePhone";
 
 export default function GeneralTab() {
-  const [loading, setLoading] = useState(false);
   const { setUserPermissions, setUserInfo } = useUserActions();
   const intakeForm = useIntakeForm();
   // const router = useRouter();
@@ -46,7 +45,7 @@ export default function GeneralTab() {
   const { loading: userLoading, data: userData } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
-  const [updateFunction] = useMutation(UPDATE_PATIENT);
+  const [updateFunction, {loading}] = useMutation(UPDATE_PATIENT);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
 
   useEffect(() => {
@@ -58,7 +57,6 @@ export default function GeneralTab() {
     }
   }, [intakeFormData, user, permissions, setUserPermissions, intakeForm]);
 
-  console.log(user, !permissions.includes("/dashboard/packages"));
   const initFormValues = {
     first_name: userData?.user.first_name,
     last_name: userData?.user.last_name,
@@ -83,7 +81,6 @@ export default function GeneralTab() {
       provider_type: "openloop",
       dietitian_id: "1322376",
     };
-
     const updatePayload = {
       input: {
         id: user.id,
@@ -104,7 +101,9 @@ export default function GeneralTab() {
         },
       },
     };
-    setLoading(true);
+    
+    console.log(updatePayload, 'values')
+
     try {
       const updateWeightPayload = {
         category: "Weight",
@@ -120,8 +119,8 @@ export default function GeneralTab() {
         message: "Update success!",
         duration: 3,
       });
-    } finally {
-      setLoading(false);
+    }catch(err:any){
+        throw new Error(err)
     }
   };
 

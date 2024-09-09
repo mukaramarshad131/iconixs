@@ -3,6 +3,7 @@ import { Country, State, ICountry, IState } from "country-state-city";
 import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 import { Form, Select, Input, Col, Row } from "antd";
 import { FieldType } from "@/types/types";
+import moment from "moment-timezone";
 
 const { Option } = Select;
 
@@ -16,6 +17,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedState, setSelectedState] = useState<string>("");
   const [phoneCode, setPhoneCode] = useState<string>("");
+  const [timezones, setTimezones] = useState<string[]>([]);
 
   // Handler for country change
   const handleCountryChange = (value: string) => {
@@ -28,6 +30,8 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
     // Fetch and set the country calling code
     const countryCallingCode = getCountryCallingCode(value as CountryCode);
     setPhoneCode(`+${countryCallingCode}`);
+    const countryTimeZones = moment.tz.zonesForCountry(value);
+    setTimezones(countryTimeZones || []);
   };
 
   // Handler for state change
@@ -136,6 +140,29 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
             prefix={phoneCode}
           />
         </Form.Item>
+      </Col>
+      <Col md={12} sm={24}>
+      <Form.Item
+        label={noLabel?undefined:"Time Zone"}
+        name="timezone"
+        rules={[{ required: true, message: 'Please select a time zone' }]}
+      >
+        <Select
+          showSearch
+          placeholder="Select Time Zone"
+          disabled={!timezones.length}
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+          }
+        >
+          {timezones.map((timezone) => (
+            <Option key={timezone} value={timezone}>
+              {timezone}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
       </Col>
     </Row>
   );
