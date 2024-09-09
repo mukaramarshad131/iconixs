@@ -68,7 +68,7 @@ export default function GeneralTab() {
     gender: userData?.user.gender,
     height: userData?.user.height,
     city: userData?.user?.location?.city,
-    weight: userData?.user?.weight,
+    metric_stat: userData?.user?.weight,
     zip: userData?.user?.location?.zip,
     state: userData?.user?.location?.state,
     country: userData?.user?.location?.country,
@@ -129,7 +129,7 @@ export default function GeneralTab() {
     <div className="w-full mt-2">
       {!userLoading && (
         <Card>
-          <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+          <h1 className="text-left text-3xl font-semibold text-[#0092B3] mb-5">
             Patient Detail
           </h1>
           <Form
@@ -222,7 +222,7 @@ export default function GeneralTab() {
                   name="metric_stat"
                   rules={[{ required: true, message: "Please input Weight" }]}
                 >
-                  <Input placeholder="Weight" />
+                  <Input placeholder="Weight (lbs)" />
                 </Form.Item>
               </Col>
             </Row>

@@ -67,8 +67,8 @@ export default function NewInvoice() {
 
   return (
     <Card className="flex-col">
-      <header className="text-center mb-5">
-      <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+      <header className=" mb-5">
+      <h1 className=" text-3xl font-semibold text-[#0092B3] mb-5">
       New Appointments
       </h1>
       </header>
