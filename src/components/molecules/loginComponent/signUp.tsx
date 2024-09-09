@@ -45,7 +45,8 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
                 additional_record_identifier: '',
                 gender: payload.gender,
                 location: {
-                  state: payload.this.state.first,
+                  country:payload.country,
+                  state: payload.state,
                   city: payload.city,
                   zip: payload.zip,
                   line1: payload.line1,
