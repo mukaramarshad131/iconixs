@@ -30,7 +30,7 @@ const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
             return 0;
           }
           const accessToken = '387f3e57-9c4b-46a3-bd66-cbac6a60aad2';
-          const permissions=["/dashboard", "/dashboard/intake-form"]
+          const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/summary"]
 
           setUserToken(accessToken);
           setUserInfo(signUser.user);

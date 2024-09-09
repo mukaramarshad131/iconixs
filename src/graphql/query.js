@@ -457,3 +457,29 @@ export const GET_MEDICATION_LIST = gql`
   }
 }
 `;
+export const GET_CAREPLAN_LIST = gql`
+ query carePlans(
+  $patient_id: ID,
+  $offset: Int,
+  $sort_by: String,
+  $templates_only: Boolean,
+  $template_search_keywords: String
+) {
+  carePlans(
+    patient_id: $patient_id,
+    offset: $offset,
+    sort_by: $sort_by,
+    templates_only: $templates_only,
+    template_search_keywords: $template_search_keywords
+  ) {
+    id
+    name
+    description
+    created_at
+    patient {
+      id
+ 
+    }
+  }
+}
+`;

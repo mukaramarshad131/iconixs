@@ -35,6 +35,20 @@ export interface UserInfo {
     price?: string;
     status?: string;
   }
+  export interface SummaryDataType {
+    key?: string;
+    id?: string;
+    name?: string;
+    // date?: string;
+    // location?: string;
+    // attendees?: any[];
+    // provider?: {
+    //   full_name: string;
+    // };
+    // category?: string;
+    // price?: string;
+    // status?: string;
+  }
 
   export type FieldType = {
     first_name?: string;
