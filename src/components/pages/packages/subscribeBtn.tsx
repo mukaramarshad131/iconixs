@@ -16,7 +16,7 @@ const SubscribeBtn = ({data}: {data:any}) => {
   const handleCart = (planId: string) => {
     setUserPlan(planId);
     if (!permissions.includes("/dashboard/create-invoice")) {
-      setUserPermissions([...permissions, "/dashboard/create-invoice"]);
+      setUserPermissions([...new Set([...permissions, "/dashboard/create-invoice"])]);
     }
     router.replace(
       process.env.CHARGEBEE_URL +
