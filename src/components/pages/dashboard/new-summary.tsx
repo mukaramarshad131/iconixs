@@ -4,10 +4,20 @@ import { Card, Typography, Space } from 'antd';
 import Table from 'antd/es/table';
 import {  GET_CAREPLAN_LIST } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
-import Link from "next/link";
+import React, { useState } from 'react';
+import dayjs from "dayjs";
+import CarePlanModal from '@/components/atom/carePlanModal';
 
 
 export default function NewSummary() {
+  const [isViewModal, setIsViewModal] = useState(false)
+  const [cardPlanId, setCardPlanId] = useState('')
+
+  const showModal = (payload:any) => {
+    setIsViewModal(true);
+    setCardPlanId(payload.id);
+  };
+
   const { id } = useUserInfo();
   const { data: appointmentListing,loading } = useQuery(GET_CAREPLAN_LIST, {
     variables: {
@@ -16,22 +26,19 @@ export default function NewSummary() {
     },
   });
 
-console.log("appointmentListing", appointmentListing?.carePlans);
-
-
   const columns = [
     {
       title: 'Appointment Id',
       dataIndex: 'id',
       key: 'id',
       width:150,
-      render: (text:any) => <span>{text.id}</span>,
+      render: (text:any) => <span>{text}</span>,
     },
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text:any) => <span>{text.name}</span>,
+      render: (text:any) => <span>{text}</span>,
     },
     {
       title: 'description',
@@ -42,34 +49,19 @@ console.log("appointmentListing", appointmentListing?.carePlans);
       title: 'Date',
       dataIndex: 'created_at',
       key: 'created_at',
-      render: (text:any) => <span>{text.created_at}</span>,
+      render: (text:any) => <span>{dayjs(text).format("DD/MM/YYYY")}</span>,
     },
     {
       title: 'Action',
       key: 'action',
-      render: () => (
+      render: (_:any,record:any) => (
         <Space size="middle">
-          <Link href="/appointments">Link</Link>
+          <a target="blank"  onClick={() => {showModal(record)}}>
+            View Detail
+          </a>
         </Space>
       ),
     },
-    // {
-    //   title: 'Provider',
-    //   dataIndex: 'provider',
-    //   key: 'provider',
-    //   render: (text:any) => <span>{text.full_name}</span>,
-    // },
-    // {
-    //   title: 'Action',
-    //   key: 'action',
-    //   render: () => (
-    //     <Space size="middle">
-    //       <a href={doxyUrl} target="blank">
-    //         link
-    //       </a>
-    //     </Space>
-    //   ),
-    // },
   ];
 
   return (
@@ -80,6 +72,7 @@ console.log("appointmentListing", appointmentListing?.carePlans);
       <main className="">
           <Table columns={columns} dataSource={appointmentListing?.carePlans?.map((item:any, idx:number)=>({key:idx, ...item})) ?? []} scroll={{x: "700px"}} loading={loading}/>
       </main>
+      {isViewModal && <CarePlanModal isViewModal={isViewModal} setIsViewModal={setIsViewModal} cardPlanId={cardPlanId} /> }
     </Card>
   );
 }

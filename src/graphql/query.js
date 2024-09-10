@@ -447,6 +447,7 @@ export const GET_CARE_PLAN = gql`
   ) {
     id
     name
+    description
     patient {
       id
     }
