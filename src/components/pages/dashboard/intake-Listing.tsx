@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 export default function IntakeListing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentRow, setCurrentRow] = useState({
+  const [currentRow, setCurrentRow] = useState<any>({
     name: '',
     created_at: '',
     form_answers: []
