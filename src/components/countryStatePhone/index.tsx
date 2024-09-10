@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Country, State, ICountry, IState } from "country-state-city";
 import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 import { Form, Select, Input, Col, Row } from "antd";
@@ -38,7 +38,9 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
   const handleStateChange = (value: string) => {
     setSelectedState(value);
   };
-
+  useEffect(() => {
+    handleCountryChange('US');
+  }, []);
   return (
     <Row gutter={16}>
       <Col md={12} sm={24}>
