@@ -56,7 +56,7 @@ export default function IntakeListing() {
     {
       title: 'Action',
       key: 'action',
-      render: (_, record:any) => (
+      render: (_:any, record:any) => (
         <Space size="middle">
           <a target="blank" onClick={() => showModal(record)} >
             View Detail
