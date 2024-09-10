@@ -18,6 +18,7 @@ import {
   UPDATE_PATIENT,
   INTAKE_FORM_QUERY,
   UPDATE_LOCATION,
+  OPEN_LOOP_INVOICES_LIST,
 } from "@/graphql/query";
 import {
   useIntakeForm,
@@ -46,18 +47,18 @@ export default function GeneralTab() {
   const { loading: userLoading, data: userData, refetch } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
+  const { data: invoicData} = useQuery(OPEN_LOOP_INVOICES_LIST, { variables: { sender_id: user.id }});
   const [updateFunction, {loading:fetching}] = useMutation(UPDATE_PATIENT);
   const [updateLocation, ] = useMutation(UPDATE_LOCATION);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
-
   useEffect(() => {
     if (
-      (intakeFormData?.formAnswerGroups?.length > 0 || intakeForm.length > 0) &&
+      (invoicData?.requestedPayments?.length > 0 || intakeFormData?.formAnswerGroups?.length > 0 || intakeForm.length > 0) &&
       !permissions.includes("/dashboard/packages")
     ) {
       setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
     }
-  }, [intakeFormData, user, permissions, setUserPermissions, intakeForm]);
+  }, [intakeFormData, user, permissions, setUserPermissions, intakeForm, invoicData]);
 
   const initFormValues = {
     first_name: userData?.user.first_name,

@@ -1,18 +1,14 @@
 'use client'
-import { LOGIN_MUTATION, OPEN_LOOP_INVOICES_LIST, USER_QUERY } from '@/graphql/query';
+import { LOGIN_MUTATION } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from 'antd'
 import { useRouter } from 'next/navigation';
 
 const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
       const [ mutateFunction, { loading } ] = useMutation(LOGIN_MUTATION);
-      const { data} = useQuery(USER_QUERY, { variables: { id: '1412694' } });
-      const { data: invoicData} = useQuery(OPEN_LOOP_INVOICES_LIST, { variables: { id: '1412694' }});
       const { setUserToken, setUserInfo, setUserPermissions} = useUserActions();
       const router = useRouter();
-
-        console.log(invoicData, data)
       const handleFinish = async (values:any) => {
           const login = {
             email: values.username,
