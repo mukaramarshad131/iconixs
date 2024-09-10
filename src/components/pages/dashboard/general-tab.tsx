@@ -6,7 +6,7 @@ import {
   Input,
   Row,
   Radio,
-  // Button,
+  Button,
   DatePicker,
   Card,
   notification,
@@ -17,6 +17,7 @@ import {
   UPDATE_WEIGHT,
   UPDATE_PATIENT,
   INTAKE_FORM_QUERY,
+  UPDATE_LOCATION,
 } from "@/graphql/query";
 import {
   useIntakeForm,
@@ -45,7 +46,8 @@ export default function GeneralTab() {
   const { loading: userLoading, data: userData } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
-  const [updateFunction, ] = useMutation(UPDATE_PATIENT);
+  const [updateFunction, {loading:fetching}] = useMutation(UPDATE_PATIENT);
+  const [updateLocation, ] = useMutation(UPDATE_LOCATION);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
 
   useEffect(() => {
@@ -92,16 +94,16 @@ export default function GeneralTab() {
         phone_number: payload.phone,
         additional_record_identifier: "",
         gender: payload.gender,
-        location: {
-          state: payload.state,
-          city: payload.city,
-          zip: payload.zip,
-          line1: payload.line1,
-          country: payload?.country,
-        },
       },
     };
-    
+    const updatedLocation = {
+      id: userData?.user?.location?.id,
+      state: payload.state,
+      city: payload.city,
+      zip: payload.zip,
+      line1: payload.line1,
+      country: payload?.country,
+    };
     console.log(updatePayload, 'values')
 
     try {
@@ -113,6 +115,7 @@ export default function GeneralTab() {
         created_at: dayjs().format("DD/MM/YYYY"),
       };
       await updateWeightFunction({ variables: { ...updateWeightPayload } });
+      await updateLocation({ variables: { ...updatedLocation } });
       const res = await updateFunction({ variables: { ...updatePayload } });
       setUserInfo(res?.data?.updateClient?.user);
       notification.success({
@@ -226,16 +229,16 @@ export default function GeneralTab() {
               </Col>
             </Row>
             <CountryStateForm />
-            {/* <Form.Item>
+            <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 className="w-full !bg-[#0c2345]"
-                loading={loading}
+                loading={fetching}
               >
                 Submit
               </Button>
-            </Form.Item> */}
+            </Form.Item>
           </Form>
         </Card>
       )}

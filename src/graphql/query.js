@@ -13,6 +13,7 @@ export const USER_QUERY = gql`
       height
       weight
       location {
+        id
         city
         line1
         line2
@@ -420,6 +421,21 @@ export const CREATE_CUSTOM_FORM = gql`
       }
     }
   }
+`;
+export const UPDATE_LOCATION = gql`
+  mutation updateLocation($id: String, $line1: String, $zip: String, $city: String, $state: String, $country: String) {
+  updateLocation(input: {id: $id, line1: $line1, zip: $zip, city: $city, state: $state, country: $country }) {
+    location {
+      id
+      line1
+      zip
+    }
+    messages {
+      field
+      message
+    }
+  }
+}
 `;
 export const GET_CARE_PLAN = gql`
   query carePlan(
