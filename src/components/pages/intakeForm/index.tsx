@@ -12,6 +12,7 @@ import { useQuery } from "@apollo/client";
 
 import { Select, Form, Input, Button} from "antd";
 import { useRouter } from "next/navigation";
+import IntakeListing from "../dashboard/intake-Listing";
 
 export default function ItakeForm() {
   const permissions = useUserPermissions();
@@ -438,6 +439,8 @@ const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.fo
 
   console.log(result)
   return (
+    <div>
+      <IntakeListing />
     <div className="w-full flex flex-col justify-center items-center mt-10">
        <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
        Patient Intake Form
@@ -487,6 +490,7 @@ const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.fo
           </Button>
         </Form.Item>
       </Form>
+    </div>
     </div>
   );
 }

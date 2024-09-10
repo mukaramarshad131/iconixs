@@ -30,3 +30,13 @@ body {
     opacity: .5;
   }
 }
+.rowHTML {
+ margin: 20px 0; 
+}
+.rowHTML b {
+  display: block;
+  margin: 15px 0 0;
+}
+.rowHTML br {
+  display: none;
+}
