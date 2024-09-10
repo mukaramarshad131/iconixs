@@ -43,7 +43,7 @@ export default function AccountDropdown() {
   return (
     <Dropdown menu={{ items }} trigger={['click']} dropdownRender={dropdownRender}>
       <IconButton className="h-10 transform-none text-sm">
-        <div className='mr-1'>{first_name} {last_name}</div>
+        <div className='mr-1'>Current Patient</div>
         <DownOutlined className="text-sm" />
       </IconButton>
     </Dropdown>

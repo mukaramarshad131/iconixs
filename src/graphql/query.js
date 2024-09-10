@@ -8,6 +8,7 @@ export const USER_QUERY = gql`
       first_name
       last_name
       phone_number
+      timezone
       dob
       gender
       height
