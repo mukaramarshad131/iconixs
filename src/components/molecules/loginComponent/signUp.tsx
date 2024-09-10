@@ -46,7 +46,7 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
                 gender: payload.gender,
                 location: {
                   country:payload.country,
-                  state: payload.state,
+                  state: payload.state ?? 'NA',
                   city: payload.city,
                   zip: payload.zip,
                   line1: payload.line1,

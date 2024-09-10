@@ -138,7 +138,7 @@ const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.fo
           {
             custom_module_id: "13085535",
             label: "Name of Patient",
-            answer: "Test ABC",
+            answer: "",
             user_id: user.id,
           },
           {
