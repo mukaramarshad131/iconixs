@@ -23,11 +23,8 @@ export default function Medication() {
     },
   });
 
-console.log("medicationListing", medicationListing);
-
 
 const showModal = (payload:any) => {
-  console.log('showModal: ', payload);
   setMedicationId(payload.id);
   setIsViewModal(true);
 };
@@ -80,9 +77,9 @@ const showModal = (payload:any) => {
 
   return (
     <Card className="flex-col">
-      <header className="self-start">
+      <div className="self-start">
         <Typography.Title level={5}>Medication</Typography.Title>
-      </header>
+      </div>
       <main className="">
           <Table columns={columns} dataSource={medicationListing?.medications?.map((item:any, idx:number)=>({key:idx, ...item})) ?? []} scroll={{x: "700px"}} loading={loading}/>
       </main>
