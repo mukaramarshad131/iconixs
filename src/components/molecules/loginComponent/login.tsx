@@ -1,14 +1,53 @@
 'use client'
-import { LOGIN_MUTATION } from '@/graphql/query';
+import React, { useState } from 'react';
+import { LOGIN_MUTATION, UPDATE_PATIENT, SEARCH_USERS } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from 'antd'
 import { useRouter } from 'next/navigation';
+import {  Modal } from 'antd';
 
 const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
       const [ mutateFunction, { loading } ] = useMutation(LOGIN_MUTATION);
+      const [ inviteEmail, { loading:inviteLoding } ] = useMutation(UPDATE_PATIENT);
+      const [runQuery, {loading: fetching}] = useLazyQuery(SEARCH_USERS);
       const { setUserToken, setUserInfo, setUserPermissions} = useUserActions();
+      const [isModalOpen, setIsModalOpen] = useState(false);
       const router = useRouter();
+      const showModal = () => {
+        setIsModalOpen(true);
+        
+      };
+    
+      const handleOk = () => {
+        setIsModalOpen(false);
+      };
+    
+      const handleCancel = () => {
+        setIsModalOpen(false);
+      };
+      const handleForgetPassword = async (values:any) => {
+        const response = await runQuery({ variables: { keywords: values.email } });
+        if(response?.data?.users?.length > 0) {
+          const payload = {
+            input: {
+              id: response?.data?.users[0].id,
+              resend_welcome: true
+            },
+          };
+          await inviteEmail({ variables: { ...payload } });
+          notification.success({
+            message: 'Invite sent to an Email',
+            duration: 3,
+          });
+          handleCancel();
+        } else {
+          notification.error({
+            message: 'Invalid Email',
+            duration: 3,
+          });
+        }
+      }
       const handleFinish = async (values:any) => {
           const login = {
             email: values.username,
@@ -43,9 +82,9 @@ const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
       >
         <Form.Item
           name="username"
-          rules={[{ required: true, message: 'Username is required.' }]}
+          rules={[{ type: 'email', required: true, message: 'Email is required.' }]}
         >
-          <Input type="text" placeholder='Please enter Username' />
+          <Input placeholder='Please enter Email' />
         </Form.Item>
         <Form.Item
           name="password"
@@ -60,14 +99,14 @@ const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
             </Col>
-            {/* <Col span={12} className="text-right">
+            <Col span={12} className="text-right">
               <button
                 className="!underline"
-                onClick={() => setLoginState(LoginStateEnum.RESET_PASSWORD)}
+                onClick={showModal}
               >
-                {t('sys.login.forgetPassword')}
+                Forget Password
               </button>
-            </Col> */}
+            </Col>
           </Row>
         </Form.Item>
         <Form.Item>
@@ -81,6 +120,27 @@ const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
           </div>
         </Divider>
       </Form>
+      <Modal title="Reset Password" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Form
+        name="forgetPassword"
+        size="large"
+        onFinish={handleForgetPassword}
+        style={{ maxWidth: 600 }}
+    
+  >
+    <Form.Item
+          name="email"
+          rules={[{ required: true, message: 'Email is required.', type: 'email' }]}
+        >
+          <Input type="text" placeholder='Please enter Email' />
+        </Form.Item>
+    <Form.Item style={{textAlign: 'center'}}>
+          <Button type="primary" htmlType="submit" className="!bg-[#0c2345]" loading={fetching || inviteLoding}>
+            Submit
+          </Button>
+        </Form.Item>
+  </Form>
+      </Modal>
     </section>
   )
 }

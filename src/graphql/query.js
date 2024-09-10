@@ -501,3 +501,12 @@ export const GET_CAREPLAN_LIST = gql`
   }
 }
 `;
+export const SEARCH_USERS = gql`
+query users($keywords: String) {
+	users(keywords: $keywords) {
+		id
+		email
+		name
+	}
+}
+`;
