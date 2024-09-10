@@ -2,16 +2,15 @@
 import IconButton from '@/components/atom/IconButton';
 import { Divider, MenuProps } from 'antd';
 import Dropdown, { DropdownProps } from 'antd/es/dropdown/dropdown';
-import avatar from '@/assets/images/avatar.png'
 import React from 'react';
-import Image from 'next/image';
 import { useUserActions, useUserInfo } from '@/store/userStore';
 import Link from 'next/link';
+import { DownOutlined } from '@ant-design/icons';
 
 
 export default function AccountDropdown() {
   const { clearUserInfoAndToken} = useUserActions();
-  const {first_name, email} = useUserInfo();
+  const {first_name, last_name ,email} = useUserInfo();
   const menuStyle: React.CSSProperties = {
     boxShadow: 'none',
   };
@@ -23,7 +22,7 @@ export default function AccountDropdown() {
   const dropdownRender: DropdownProps['dropdownRender'] = (menu) => (
     <div style={contentStyle}>
       <div className="flex flex-col items-start p-4">
-        <div>{first_name||''}</div>
+        <div>{first_name||''} {last_name || ''}</div>
         <div className="text-gray">{email||''}</div>
       </div>
       <Divider style={{ margin: 0 }} />
@@ -43,8 +42,9 @@ export default function AccountDropdown() {
 
   return (
     <Dropdown menu={{ items }} trigger={['click']} dropdownRender={dropdownRender}>
-      <IconButton className="h-10 w-12 transform-none px-0 hover:scale-105">
-        <Image className="h-8 w-10 rounded-full" src={avatar} alt="" />
+      <IconButton className="h-10 transform-none text-sm">
+        <div className='mr-1'>{first_name} {last_name}</div>
+        <DownOutlined className="text-sm" />
       </IconButton>
     </Dropdown>
   );
