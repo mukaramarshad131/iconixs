@@ -43,7 +43,7 @@ export default function GeneralTab() {
       filler_id: user.id,
     },
   });
-  const { loading: userLoading, data: userData } = useQuery(USER_QUERY, {
+  const { loading: userLoading, data: userData, refetch } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
   const [updateFunction, {loading:fetching}] = useMutation(UPDATE_PATIENT);
@@ -116,8 +116,14 @@ export default function GeneralTab() {
       };
       await updateWeightFunction({ variables: { ...updateWeightPayload } });
       await updateLocation({ variables: { ...updatedLocation } });
-      const res = await updateFunction({ variables: { ...updatePayload } });
-      setUserInfo(res?.data?.updateClient?.user);
+      await updateFunction({ variables: { ...updatePayload }, onCompleted: () => {
+        //call refetch here. 
+        setTimeout(() => {
+          refetch().then((response)=>{
+            setUserInfo(response?.data?.user);
+          });
+        }, 2000);
+        } });
       notification.success({
         message: "Update success!",
         duration: 3,
