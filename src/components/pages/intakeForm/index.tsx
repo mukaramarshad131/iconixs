@@ -10,7 +10,7 @@ import {
 } from "@/store/userStore";
 import { useQuery } from "@apollo/client";
 
-import { Select, Form, Input, Button} from "antd";
+import { Select, Form, Input, Button } from "antd";
 import { useRouter } from "next/navigation";
 import IntakeListing from "../dashboard/intake-Listing";
 
@@ -28,7 +28,7 @@ export default function ItakeForm() {
       filler_id: user.id,
     },
   });
-const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer)
+  const result = extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer)
   const OnFinish = async (values: any) => {
     const intakeFormPayload = {
       input: {
@@ -50,18 +50,16 @@ const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.fo
             answer: `<p>${Object.values(values)
               .map(
                 (item: any, index: number) =>
-                  `<b>Question:${questions[index].label}</b><br/>${
-                    Array.isArray(item)
-                      ? item?.map(
-                          (key: any, idx: number) => `${idx + 1}:${key}`
-                        )
-                      : item
+                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)
+                    ? item?.map(
+                      (key: any, idx: number) => `${idx + 1}:${key}`
+                    )
+                    : item
                   }<br/>`
               )
               .join("")}<b>Shipping Address</b>
-<br/>Address:${user.location?.line1}, ${user.location?.country}, ${
-              user.location?.state
-            } ${user.location?.zip}</p>`, // HTML format for the intake
+<br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
+              } ${user.location?.zip}</p>`, // HTML format for the intake
           },
           {
             custom_module_id: "13579510",
@@ -436,61 +434,62 @@ const result =extractQuestionsAndAnswers(intakeFormData?.formAnswerGroups[0]?.fo
     }
     router.replace("/dashboard/packages");
   };
-
-  console.log(result)
   return (
     <div>
-      <IntakeListing />
-    <div className="w-full flex flex-col justify-center items-center mt-10">
-       <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
-       Patient Intake Form
-      </h1>
-      <Form
-        layout="vertical"
-        form={form}
-        initialValues={result}
-        onFinish={OnFinish}
-        className="container"
-      >
-        {questions.map((field, index) => (
-          <Form.Item
-            key={index}
-            name={field.name}
-            label={field.label}
-            rules={[{ required: true, message: `${field.label} is required` }]}
-          >
-            {index > 4 ? (
-              <Input.TextArea
-                showCount
-                maxLength={100}
-                placeholder="Type here"
-              />
-            ) : (
-              <Select
-                mode="multiple"
-                placeholder={`Select ${field.label}`}
-                allowClear
-              >
-                {field?.options!.map((option, idx) => (
-                  <Select.Option key={idx} value={option}>
-                    {option}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+      {
+        intakeFormData?.formAnswerGroups?.length > 0 ? 
+        <IntakeListing /> :
+        <div className="w-full flex flex-col justify-center items-center mt-10">
+        <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+          Patient Intake Form
+        </h1>
+        <Form
+          layout="vertical"
+          form={form}
+          initialValues={result}
+          onFinish={OnFinish}
+          className="container"
+        >
+          {questions.map((field, index) => (
+            <Form.Item
+              key={index}
+              name={field.name}
+              label={field.label}
+              rules={[{ required: true, message: `${field.label} is required` }]}
+            >
+              {index > 4 ? (
+                <Input.TextArea
+                  showCount
+                  maxLength={100}
+                  placeholder="Type here"
+                />
+              ) : (
+                <Select
+                  mode="multiple"
+                  placeholder={`Select ${field.label}`}
+                  allowClear
+                >
+                  {field?.options!.map((option, idx) => (
+                    <Select.Option key={idx} value={option}>
+                      {option}
+                    </Select.Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
+          ))}
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full !bg-[#0c2345]"
+            >
+              Submit
+            </Button>
           </Form.Item>
-        ))}
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="w-full !bg-[#0c2345]"
-          >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+        </Form>
+      </div>
+      }
     </div>
   );
 }

@@ -186,7 +186,7 @@ export default function GeneralTab() {
                     },
                   ]}
                 >
-                  <Input type="email" placeholder="Email" />
+                  <Input type="email" placeholder="Email"  disabled={true} />
                 </Form.Item>
               </Col>
               <Col md={12} sm={24}>
