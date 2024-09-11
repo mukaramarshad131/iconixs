@@ -18,9 +18,10 @@ const SubscribeBtn = ({data}: {data:any}) => {
     if (!permissions.includes("/dashboard/create-invoice")) {
       setUserPermissions([...new Set([...permissions, "/dashboard/create-invoice"])]);
     }
+    // https://iconix-test.chargebee.com/hosted_pages/checkout?subscription_items[item_price_id][0]=ico-trt-kyzatrex-oral-28-USD-Every-28-days&utm_source=cb-app-copy
     router.replace(
       process.env.CHARGEBEE_URL +
-        `?subscription_items[item_price_id][0]=${planId}-USD-Monthly&subscription_items[quantity][0]=1&customer[first_name]=${first_name}&customer[last_name]=${last_name}&&customer[email]=${email}&billing_address[first_name]=${first_name}&billing_address[last_name]=${last_name}&billing_address[line1]=AddressLine1&billing_address[line2]=AddressLine2&billing_address[city]=Maxico&billing_address[zip]=${location.zip}&billing_address[state_code]=${location.state}&billing_address[country]=US`
+        `?subscription_items[item_price_id][0]=${planId}-USD-Every-28-days&subscription_items[quantity][0]=1&customer[first_name]=${first_name}&customer[last_name]=${last_name}&&customer[email]=${email}&billing_address[first_name]=${first_name}&billing_address[last_name]=${last_name}&billing_address[line1]=AddressLine1&billing_address[line2]=AddressLine2&billing_address[city]=Maxico&billing_address[zip]=${location.zip}&billing_address[state_code]=${location.state}&billing_address[country]=US`
     );
   };
 

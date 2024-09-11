@@ -9,7 +9,7 @@ import { Modal } from 'antd';
 function GenrateInvoice() {
   const [createInvoice] = useMutation(CREATE_OPEN_LOOP_INVOICE);
   const [intakeFormFunction] = useMutation(INTAKE_FORM);
-  const  planId  = useUserPlan();
+  const planId = useUserPlan();
   const { setUserPlan } = useUserActions();
   const user = useUserInfo();
   const intakeForm = useIntakeForm();
@@ -25,12 +25,12 @@ function GenrateInvoice() {
       } as any;
       if (planId) {
         const res = await createInvoice({ variables: { ...input } });
-        intakeForm&& await intakeFormFunction({ variables: { ...intakeForm } });
+        intakeForm && await intakeFormFunction({ variables: { ...intakeForm } });
         if (res) {
           console.log(res)
           setUserPlan('');
           if (res && res.data.createRequestedPayment.messages === null) {
-            Modal.success({content:"Your request is submitted successfully."})
+            Modal.success({ content: "Your request is submitted successfully." })
             router.replace('/dashboard');
           }
         }
@@ -40,8 +40,10 @@ function GenrateInvoice() {
     //eslint-disable-next-line
   }, []);
   return (
-    <div className="flex h-screen w-screen items-center justify-center text-[32px] font-bold italic">
-      Please Wait....
+    <div className="flex h-screen w-screen items-center justify-center text-[18px] font-bold italic">
+      Thank you for trusting us with your care. We are pleased to inform you that we will be processing your at-home lab order shortly.
+
+      You will receive an email soon with detailed instructions on the next steps, including how to complete the process and any additional information you may need.
     </div>
   );
 }
