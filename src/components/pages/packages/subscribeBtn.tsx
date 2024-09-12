@@ -12,6 +12,7 @@ const SubscribeBtn = ({data}: {data:any}) => {
   const { setUserPlan, setUserPermissions } = useUserActions();
   const permissions = useUserPermissions();
   const { email, first_name, last_name, location } = useUserInfo();
+  console.log('location:', location);
   const router = useRouter();
   const handleCart = (planId: string) => {
     setUserPlan(planId);

@@ -1,29 +1,5 @@
 export const businessPackages = [
   {
-    id: "ico-mwl-sema-inj-28",
-    discount: 24,
-    backgroundColor: "#1B3352",
-    packageName: "Semaglutide Weekly Injection Subscription - 28 days",
-    originalPrice: "$299.00 USD",
-    description: "Description",
-  },
-  {
-    id: "ico-mwl-sema-oral-28",
-    discount: 24,
-    backgroundColor: "#1B3352",
-    packageName: "Semaglutide Weekly Oral Subscription - 28 days",
-    originalPrice: "$297.00 USD",
-    description: "Description",
-  },
-  {
-    id: "ico-mwl-tirz-inj-28",
-    discount: 24,
-    backgroundColor: "#1B3352",
-    packageName: "Tirzepatide Weekly Injection Subscription - 28 days",
-    originalPrice: "$448.00 USD",
-    description: "Description",
-  },
-  {
     id: "ico-trt-cypionate-inj-28",
     discount: 24,
     backgroundColor: "#1B3352",
@@ -48,7 +24,7 @@ export const businessPackages = [
     description: "Description",
   },
 ];
-export const questions = [
+export const questions:any = [
   {
     name: "q1",
     label: "Do any of the following apply to you?",
@@ -105,7 +81,7 @@ export const questions = [
       "Gynecomastia (breast enlargement in men due to benign or non-cancerous breast tissue growth)",
       "Shrinking testicles or small testes",
       "Signs and symptoms of an enlarged prostate (increased urination at night, trouble starting urinary stream, urinating many times daily, urinary urgency, inability to pass urine, or weak urine flow)",
-      "None of the above ",
+      "None of the above",
     ],
   },
   {
@@ -132,7 +108,7 @@ export const questions = [
       "hCG (human chorionic gonadotropin) ",
       "Clomiphene/enclomiphene",
       "Over the counter testosterone booster/supplement",
-      "None of the above ",
+      "None of the above",
     ],
   },
   {

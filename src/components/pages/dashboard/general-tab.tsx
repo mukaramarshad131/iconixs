@@ -16,9 +16,7 @@ import {
   USER_QUERY,
   UPDATE_WEIGHT,
   UPDATE_PATIENT,
-  INTAKE_FORM_QUERY,
   UPDATE_LOCATION,
-  OPEN_LOOP_INVOICES_LIST,
 } from "@/graphql/query";
 import {
   useIntakeForm,
@@ -37,28 +35,20 @@ export default function GeneralTab() {
   // const router = useRouter();
   const user = useUserInfo();
   const permissions = useUserPermissions();
-  const { data: intakeFormData } = useQuery(INTAKE_FORM_QUERY, {
-    variables: {
-      custom_module_form_id: "1524146",
-      user_id: user.id,
-      filler_id: user.id,
-    },
-  });
   const { loading: userLoading, data: userData, refetch } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
-  const { data: invoicData} = useQuery(OPEN_LOOP_INVOICES_LIST, { variables: { sender_id: user.id }});
   const [updateFunction, {loading:fetching}] = useMutation(UPDATE_PATIENT);
   const [updateLocation, ] = useMutation(UPDATE_LOCATION);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
   useEffect(() => {
     if (
-      (invoicData?.requestedPayments?.length > 0 || intakeFormData?.formAnswerGroups?.length > 0 || intakeForm.length > 0) &&
+      (intakeForm.length > 0) &&
       !permissions.includes("/dashboard/packages")
     ) {
       setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
     }
-  }, [intakeFormData, user, permissions, setUserPermissions, intakeForm, invoicData]);
+  }, [user, permissions, setUserPermissions, intakeForm]);
 
   const initFormValues = {
     first_name: userData?.user.first_name,

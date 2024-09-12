@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from 'react';
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
 // import { INTAKE_FORM } from '@/graphql/query';
 import { questions } from "@/data/projectData";
@@ -20,6 +21,29 @@ export default function ItakeForm() {
   const user = useUserInfo();
   const router = useRouter();
   const [form] = Form.useForm();
+  const [formData, setFormData] = useState<any>(
+    questions.reduce((acc:any, q:any) => {
+      acc[q.name] = {
+        options: q.options,
+        selectedValues: [],
+      };
+      return acc;
+    }, {})
+  );
+
+  const handleSelectChange = (questionName:any, values:any) => {
+    const isNoneSelected = values.includes("None of the above");
+    if (isNoneSelected) {
+      form.setFieldsValue({ [questionName]: ["None of the above"] });
+    }
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
+      [questionName]: {
+        options: isNoneSelected ? ["None of the above"] : questions?.find((q:any) => q.name === questionName).options,
+        selectedValues: isNoneSelected ? ["None of the above"] : values,
+      },
+    }));
+  };
 
   const { data: intakeFormData } = useQuery(INTAKE_FORM_QUERY, {
     variables: {
@@ -437,58 +461,63 @@ export default function ItakeForm() {
   return (
     <div>
       {
-        intakeFormData?.formAnswerGroups?.length > 0 ? 
-        <IntakeListing /> :
-        <div className="w-full flex flex-col justify-center items-center mt-10">
-        <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
-          Patient Intake Form
-        </h1>
-        <Form
-          layout="vertical"
-          form={form}
-          initialValues={result}
-          onFinish={OnFinish}
-          className="container"
-        >
-          {questions.map((field, index) => (
-            <Form.Item
-              key={index}
-              name={field.name}
-              label={field.label}
-              rules={[{ required: true, message: `${field.label} is required` }]}
+        intakeFormData?.formAnswerGroups?.length > 0 ?
+          <IntakeListing /> :
+          <div className="w-full flex flex-col justify-center items-center mt-10">
+            <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
+              Patient Intake Form
+            </h1>
+            <Form
+              layout="vertical"
+              form={form}
+              initialValues={result}
+              onFinish={OnFinish}
+              className="container"
             >
-              {index > 4 ? (
-                <Input.TextArea
-                  showCount
-                  maxLength={100}
-                  placeholder="Type here"
-                />
-              ) : (
-                <Select
-                  mode="multiple"
-                  placeholder={`Select ${field.label}`}
-                  allowClear
+              {questions.map((question:any, index:any) => (
+                <Form.Item
+                  key={index}
+                  name={question.name}
+                  label={question.label}
                 >
-                  {field?.options!.map((option, idx) => (
-                    <Select.Option key={idx} value={option}>
-                      {option}
-                    </Select.Option>
-                  ))}
-                </Select>
-              )}
-            </Form.Item>
-          ))}
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="w-full !bg-[#0c2345]"
-            >
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+                  {question.options && question.options.length > 0 ? (
+
+                    <Select
+                      mode="multiple"
+                      placeholder="Select options"
+                      value={formData[question.name].selectedValues}
+                      onChange={values => handleSelectChange(question.name, values)}
+                    >
+                      {question.options.map((option:any, i:any) => (
+                        <Select.Option
+                          key={i}
+                          value={option}
+                          disabled={option !== "None of the above" && formData[question.name].selectedValues.includes("None of the above")}
+                        >
+                          {option}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  ) : (
+                    <Input.TextArea
+                      showCount
+                      maxLength={100}
+                      placeholder="Type here"
+                    />
+                  )}
+                </Form.Item>
+              ))}
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="w-full !bg-[#0c2345]"
+                >
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
       }
     </div>
   );
