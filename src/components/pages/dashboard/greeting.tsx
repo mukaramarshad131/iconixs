@@ -9,7 +9,7 @@ const Greeting = () => {
     user && user.first_name && setName(user.first_name);
   }, [user]);
   return (
-    <div className="mt-4 text-lg font-semibold md:text-xl">
+    <div className="my-4 text-lg font-semibold md:text-xl">
       Welcome back 👋 <br />
       <span>{name}</span>
     </div>

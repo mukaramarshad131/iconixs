@@ -1,9 +1,8 @@
-import { Col, Row } from 'antd';
+"use client";
+import { Col, Row, Steps } from 'antd';
 import Character3 from '@/assets/images/characters/character_4.png';
 import Greeting from './greeting';
-
 export default function BannerCard() {
-
   return (
     <Row
       className="!mx-0 rounded-2xl p-7"
@@ -12,7 +11,27 @@ export default function BannerCard() {
       style={{ background: 'linear-gradient(135deg, rgba(27, 51, 82, 0.2), rgba(12, 35, 69, 0.2)) rgb(255, 255, 255)' }}
     >
       <Col span={24} md={12} xl={16} className="flex-1 text-center md:text-left">
-        <Greeting/>
+        <Greeting />
+        <Steps
+    direction="vertical"
+    size="small"
+    current={0}
+    items={[
+      { title: 'Complete Intake Form', description: 'Please fill out the intake form to begin' },
+      {
+        title: 'Select Package',
+        description: 'Choose a package that suits your needs',
+      },
+      {
+        title: 'Payment',
+        description: 'Securely pay for your selected package',
+      },
+      {
+        title: 'Setup Appointments',
+        description: 'Schedule your appointments',
+      },
+    ]}
+  />
       </Col>
 
       <Col
