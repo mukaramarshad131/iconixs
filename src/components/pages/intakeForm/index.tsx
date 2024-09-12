@@ -480,6 +480,7 @@ export default function ItakeForm() {
                   name={question.name}
                   label={question.label}
                 >
+
                   {question.options && question.options.length > 0 ? (
                     <Select
                       mode="multiple"
@@ -503,6 +504,7 @@ export default function ItakeForm() {
                       maxLength={100}
                       placeholder="Type here"
                     />
+                  
                   )}
                 </Form.Item>
               ))}
