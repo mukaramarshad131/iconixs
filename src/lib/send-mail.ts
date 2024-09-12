@@ -4,9 +4,9 @@ const SMTP_SERVER_HOST = 'mail.myeq360.com';
 const SMTP_SERVER_USERNAME = 'notification@myeq360.com';
 const SMTP_SERVER_PASSWORD = 'MNBmnb@589';
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
   host: SMTP_SERVER_HOST,
   port: 465,
+  secure: false,
   auth: {
     user: SMTP_SERVER_USERNAME,
     pass: SMTP_SERVER_PASSWORD,
