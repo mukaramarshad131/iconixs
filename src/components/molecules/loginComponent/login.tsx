@@ -1,15 +1,16 @@
 'use client'
 import React, { useState } from 'react';
-import { LOGIN_MUTATION, UPDATE_PATIENT, SEARCH_USERS } from '@/graphql/query';
+import { LOGIN_MUTATION, SEARCH_USERS } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from 'antd'
 import { useRouter } from 'next/navigation';
 import {  Modal } from 'antd';
+import { sendMail } from '@/lib/send-mail';
 
 const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
       const [ mutateFunction, { loading } ] = useMutation(LOGIN_MUTATION);
-      const [ inviteEmail, { loading:inviteLoding } ] = useMutation(UPDATE_PATIENT);
+      // const [ inviteEmail, { loading:inviteLoding } ] = useMutation(UPDATE_PATIENT);
       const [runQuery, {loading: fetching}] = useLazyQuery(SEARCH_USERS);
       const { setUserToken, setUserInfo, setUserPermissions} = useUserActions();
       const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,21 +27,49 @@ const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
       const handleCancel = () => {
         setIsModalOpen(false);
       };
+      function genPassword() {
+        const chars = '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const passwordLength = 12;
+        let password = "";
+     for (let i = 0; i <= passwordLength; i++) {
+       const randomNumber = Math.floor(Math.random() * chars.length);
+       password += chars.substring(randomNumber, randomNumber +1);
+      }
+      return password;
+     }
       const handleForgetPassword = async (values:any) => {
         const response = await runQuery({ variables: { keywords: values.email } });
         if(response?.data?.users?.length > 0) {
-          const payload = {
-            input: {
-              id: response?.data?.users[0].id,
-              resend_welcome: true
-            },
-          };
-          await inviteEmail({ variables: { ...payload } });
-          notification.success({
-            message: 'Invite sent to an Email',
-            duration: 3,
+          // const payload = {
+          //   input: {
+          //     id: response?.data?.users[0].id,
+          //     resend_welcome: true
+          //   },
+          // };
+          const message = `${genPassword()}`
+          const mailText = `\n  Email: ${values.email}\nMessage: ${message}`;
+          const response4 = await sendMail({
+            sendTo: values.email,
+            subject: 'New Contact Us Form',
+            text: mailText,
           });
-          handleCancel();
+          if (response4?.messageId) {
+            notification.success({
+              message: 'Application Submitted Successfully. Invite sent to an Email',
+              duration: 3,
+            });
+          } else {
+            notification.error({
+              message: 'Failed To send application.',
+              duration: 3,
+            });
+          }
+          // await inviteEmail({ variables: { ...payload } });
+          // notification.success({
+          //   message: 'Invite sent to an Email',
+          //   duration: 3,
+          // });
+          // handleCancel();
         } else {
           notification.error({
             message: 'Invalid Email',
@@ -135,7 +164,7 @@ const Login = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
           <Input type="text" placeholder='Please enter Email' />
         </Form.Item>
     <Form.Item style={{textAlign: 'center'}}>
-          <Button type="primary" htmlType="submit" className="!bg-[#0c2345]" loading={fetching || inviteLoding}>
+          <Button type="primary" htmlType="submit" className="!bg-[#0c2345]" loading={fetching}>
             Submit
           </Button>
         </Form.Item>
