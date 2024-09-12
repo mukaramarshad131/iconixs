@@ -465,7 +465,7 @@ export default function ItakeForm() {
           <IntakeListing /> :
           <div className="w-full flex flex-col justify-center items-center mt-10">
             <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
-              Patient Intake Form
+              Patient Intake Form 
             </h1>
             <Form
               layout="vertical"
@@ -481,7 +481,6 @@ export default function ItakeForm() {
                   label={question.label}
                 >
                   {question.options && question.options.length > 0 ? (
-
                     <Select
                       mode="multiple"
                       placeholder="Select options"
