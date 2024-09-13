@@ -5,6 +5,8 @@ import { useMutation, useLazyQuery } from '@apollo/client';
 import { Button, Divider, Form, Input, notification } from 'antd'
 import { sendMail } from '@/lib/send-mail';
 
+
+
 const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
     const [loading, setLoading] = useState(false);
       const [ mutateFunction ] = useMutation(UPDATE_PATIENT);
@@ -32,14 +34,18 @@ const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
                   password
                 },
               };
-          const message = `${password}`
-          const mailText = `\n  Email: ${values.email}\nMessage: ${message}`;
+          const mailText = `<h2>Hi ${user.first_name}</h2>
+            <p>Your password has been reset. You can now use the following password to log in to your account:</p>
+            <h4>New Password: ${password}</h4>
+            <p>For security reasons, we recommend logging in and changing your password immediately to something more personal and secure. You can do this by visiting your account settings.</p>
+            <p>If you didn’t request this password reset, please contact us immediately.</p>
+            <h5>Thank you,</h5>
+            <h5>Iconix Support Team</h5>`;
           const response4 = await sendMail({
             sendTo: values.email,
-            subject: 'New Contact Us Form',
+            subject: ' Your New Password for Iconix',
             text: mailText,
           });
-          console.log('response4: ', response4);
           if (response4?.messageId) {
             const {
                 data: {
@@ -48,7 +54,7 @@ const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
               } = await mutateFunction({ variables: { ...updatePayload } });
               console.log('signUp: ', signUp);
             notification.success({
-              message: 'Application Submitted Successfully. Invite sent to an Email',
+              message: 'Please Check your email for your new password. If not found, check your spam folder.',
               duration: 3,
             });
             setLoading(false);
@@ -57,7 +63,7 @@ const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
             setLoading(false);
             setIsForget(false);
             notification.error({
-              message: 'Failed To send application.',
+              message: "We couldn't process your request. Please try again later or contact support if the issue persists.",
               duration: 3,
             });
           }

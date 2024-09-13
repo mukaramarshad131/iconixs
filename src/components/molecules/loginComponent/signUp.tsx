@@ -182,6 +182,16 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
           Sign UP
         </Button>
       </Form.Item>
+      <div className="mb-2 text-xs text-gray">
+        <span>By signing up, I agree to </span>
+        <a href="./" className="text-sm !underline text-blue-600">
+        Terms of service 
+        </a>
+        {' & '}
+        <a href="./" className="text-sm !underline text-blue-600">
+        Privacy policy
+        </a>
+      </div>
       <Button block type="link" onClick={()=>setIsLogin(true)}>
       <div className="flex items-center justify-center hover:underline">
         {/* <MdArrowBackIosNew /> */}
