@@ -1,11 +1,11 @@
 'use server';
 import nodemailer from 'nodemailer';
-const SMTP_SERVER_HOST = 'mail.myeq360.com';
-const SMTP_SERVER_USERNAME = 'notification@myeq360.com';
-const SMTP_SERVER_PASSWORD = 'MNBmnb@589';
+const SMTP_SERVER_HOST = 'mail.patient.iconixmedical.com';
+const SMTP_SERVER_USERNAME = 'contact@patient.iconixmedical.com';
+const SMTP_SERVER_PASSWORD = 'Patient@9825';
 const transporter = nodemailer.createTransport({
   host: SMTP_SERVER_HOST,
-  port: 465,
+  port: 587,
   secure: true,
   auth: {
     user: SMTP_SERVER_USERNAME,
