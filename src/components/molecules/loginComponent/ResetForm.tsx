@@ -34,17 +34,17 @@ const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
                   password
                 },
               };
-          const mailText = `<h2>Hi ${user[0].first_name}</h2>
+          const mailText = `<p>Hi <strong>${user[0].first_name}</strong></p>
             <p>Your password has been reset. You can now use the following password to log in to your account:</p>
-            <h4>New Password: <b>${password}<b></h4>
+            <p>New Password: <b>${password}<b></p>
             <p>For security reasons, we recommend logging in and changing your password immediately to something more personal and secure. You can do this by visiting your account settings.</p>
             <p>If you didn’t request this password reset, please contact us immediately.</p>
-            <h5>Thank you,</h5>
-            <h5>Iconix Support Team</h5>`;
+            <p><strong>Thank you,</strong></p>
+            <p><strong>Iconix Support Team</strong></p>`;
           const response4 = await sendMail({
             sendTo: values.email,
             subject: ' Your New Password for Iconix',
-            text: `Hi ${user[0].first_name}`,
+            text: ``,
             html: mailText
           });
           if (response4?.messageId) {
