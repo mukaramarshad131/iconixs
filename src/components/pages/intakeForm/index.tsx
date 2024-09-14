@@ -11,7 +11,7 @@ import {
 } from "@/store/userStore";
 import { useQuery } from "@apollo/client";
 
-import { Select, Form, Input, Button } from "antd";
+import { Select, Form, Input, Button, Card } from "antd";
 import { useRouter } from "next/navigation";
 import IntakeListing from "../dashboard/intake-Listing";
 
@@ -464,9 +464,10 @@ export default function ItakeForm() {
         intakeFormData?.formAnswerGroups?.length > 0 ?
           <IntakeListing /> :
           <div className="w-full flex flex-col justify-center items-center mt-10">
-            <h1 className="p-5 text-center text-3xl font-semibold text-[#0092B3] mb-5">
-              Patient Intake Form 
-            </h1>
+            <Card bodyStyle={{padding: '15px 24px' }}>
+          <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
+          Patient Intake Form 
+          </h1>
             <Form
               layout="vertical"
               form={form}
@@ -518,6 +519,7 @@ export default function ItakeForm() {
                 </Button>
               </Form.Item>
             </Form>
+            </Card>
           </div>
       }
     </div>

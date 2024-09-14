@@ -1,6 +1,6 @@
 'use client'
 import { useQuery } from '@apollo/client';
-import { Card, Typography, Space } from 'antd';
+import { Card, Space } from 'antd';
 import Table from 'antd/es/table';
 import {  GET_CAREPLAN_LIST } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
@@ -65,9 +65,11 @@ export default function NewSummary() {
   ];
 
   return (
-    <Card className="flex-col">
+    <Card className="flex-col" bodyStyle={{padding: '15px 24px' }}>
       <header className="self-start">
-        <Typography.Title level={5}>Care Plan</Typography.Title>
+      <h1 className=" text-lg font-semibold text-[#0092B3] mb-5">
+      Care Plan
+      </h1>
       </header>
       <main className="">
           <Table columns={columns} dataSource={appointmentListing?.carePlans?.map((item:any, idx:number)=>({key:idx, ...item})) ?? []} scroll={{x: "700px"}} loading={loading}/>

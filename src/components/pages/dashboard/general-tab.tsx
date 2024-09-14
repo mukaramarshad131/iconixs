@@ -129,8 +129,8 @@ export default function GeneralTab() {
   return (
     <div className="w-full mt-2">
       {!userLoading && (
-        <Card>
-          <h1 className="text-left text-3xl font-semibold text-[#0092B3] mb-5">
+        <Card bodyStyle={{padding: '15px 24px' }}>
+          <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
             Patient Detail
           </h1>
           <Form

@@ -1,7 +1,7 @@
 'use client'
 // import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { Card, Typography, Space } from 'antd';
+import { Card, Space } from 'antd';
 import Table from 'antd/es/table';
 import {  GET_MEDICATION_LIST } from '@/graphql/query';
 import { useUserInfo } from '@/store/userStore';
@@ -76,9 +76,11 @@ const showModal = (payload:any) => {
   ];
 
   return (
-    <Card className="flex-col">
+    <Card className="flex-col" bodyStyle={{padding: '15px 24px' }}>
       <div className="self-start">
-        <Typography.Title level={5}>Medication</Typography.Title>
+        <h1 className=" text-lg font-semibold text-[#0092B3] mb-5">
+        Medication
+      </h1>
       </div>
       <main className="">
           <Table columns={columns} dataSource={medicationListing?.medications?.map((item:any, idx:number)=>({key:idx, ...item})) ?? []} scroll={{x: "700px"}} loading={loading}/>
