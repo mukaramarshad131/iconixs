@@ -34,7 +34,7 @@ const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
                   password
                 },
               };
-          const mailText = `<p>Hi <strong>${user[0].first_name}</strong></p>
+          const mailText = `<p>Hi <strong>${user[0].name}</strong></p>
             <p>Your password has been reset. You can now use the following password to log in to your account:</p>
             <p>New Password: <b>${password}<b></p>
             <p>For security reasons, we recommend logging in and changing your password immediately to something more personal and secure. You can do this by visiting your account settings.</p>
