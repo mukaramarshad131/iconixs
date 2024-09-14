@@ -27,7 +27,7 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
             return 0;
           }
           const accessToken = '387f3e57-9c4b-46a3-bd66-cbac6a60aad2';
-          const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/summary"]
+          const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/summary", "/dashboard/update-password"]
 
           setUserToken(accessToken);
           setUserInfo(signUser.user);

@@ -9,7 +9,7 @@ const SidebarMenu = () => {
     <Menu
         mode="inline"
         className="!border-e-0"
-        defaultSelectedKeys={["4"]}
+        defaultSelectedKeys={["0"]}
         items={items}
         suppressHydrationWarning
       />
