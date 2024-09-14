@@ -201,6 +201,7 @@ export const UPDATE_PATIENT = gql`
     updateClient(input: $input) {
       user {
         id
+        first_name
         dob
         gender
         height
