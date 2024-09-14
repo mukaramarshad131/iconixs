@@ -19,6 +19,12 @@ export const siderStyle: React.CSSProperties = {
   position: "fixed",
   top: 0,
   bottom: 0,
-  background: "#fff",
+  // background: "#001529",
   boxShadow: "3px 3px 5px #f0f0f0",
+};
+
+export const logoStyle: React.CSSProperties = {
+  margin: '10px 0 0',
+  padding: '0 10px',
+  objectFit: 'scale-down',
 };

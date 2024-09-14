@@ -10,6 +10,7 @@ const SidebarMenu = () => {
         mode="inline"
         className="!border-e-0"
         defaultSelectedKeys={["0"]}
+        theme="dark"
         items={items}
         suppressHydrationWarning
       />
