@@ -2,7 +2,7 @@
 import { UPDATE_PATIENT } from '@/graphql/query';
 import { useMutation } from '@apollo/client';
 import { useUserInfo } from '@/store/userStore';
-import { Button, Col, Form, Input, notification, Row } from 'antd';
+import { Button, Col, Form, Input, notification, Row, Card } from 'antd';
 
 
 const UpdatePassword = () => {
@@ -30,7 +30,11 @@ const UpdatePassword = () => {
 
   return (
     <section className="overflow-y-auto overflow-x-hidden w-full px-[16px] lg:px-[64px]">
-      <div className="mb-4 text-2xl font-bold xl:text-3xl">Update Password</div>
+      {/* <div className="mb-4 text-2xl font-bold xl:text-3xl">Update Password</div> */}
+      <Card bodyStyle={{padding: '15px 24px' }}>
+      <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
+        Update Password
+      </h1>
       <Form name="normal_login" size="large" initialValues={{ remember: true }} onFinish={onFinish}>
         <Row gutter={10}>
           <Col span={24}>
@@ -79,8 +83,9 @@ const UpdatePassword = () => {
           <Button type="primary" htmlType="submit" className="w-full !bg-[#0c2345]" loading={loading}>
             Update Password
           </Button>
-        </Form.Item>
+        </Form.Item>                                                                                                                          
       </Form>
+      </Card>
     </section>
   )
 }
