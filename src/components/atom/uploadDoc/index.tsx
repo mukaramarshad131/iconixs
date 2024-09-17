@@ -1,4 +1,4 @@
-import { Input } from "antd"; // Assuming you're using Ant Design for Input
+// import { Input } from "antd"; // Assuming you're using Ant Design for Input
 
 
 const UploadDocs = ({ setValue, title }: { setValue: any, title: string }) => {
@@ -21,15 +21,12 @@ const UploadDocs = ({ setValue, title }: { setValue: any, title: string }) => {
       };
 
   return (
-    <>
-    <label>{title}</label>
-    <Input
+    <input
       type="file"
       accept="image/png, image/jpeg, .pdf"
       onChange={handleChange}
       placeholder={title}
     />
-    </>
   );
 };
 

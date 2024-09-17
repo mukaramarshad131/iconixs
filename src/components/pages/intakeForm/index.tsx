@@ -23,7 +23,7 @@ export default function ItakeForm() {
   const router = useRouter();
   const [form] = Form.useForm();
   const [isDriving, setIsDriving] = useState();
-  const [isSocial, setIsSocial] = useState();
+  const [isSocial, setIsSocial] = useState<string>();
   const [formData, setFormData] = useState<any>(
     questions.reduce((acc: any, q: any) => {
       acc[q.name] = {
@@ -481,6 +481,7 @@ export default function ItakeForm() {
     }
     router.replace("/dashboard/packages");
   };
+
   return (
     <div>
       {intakeFormData?.formAnswerGroups?.length > 0 ? (
@@ -539,7 +540,7 @@ export default function ItakeForm() {
               ))}
               <Row gutter={[20, 20]}>
                 <Col md={12} sm={24}>
-                <UploadDocs setValue={setIsSocial} title="Upload Social Security Number"/>
+                <Input placeholder="Social Security Number" onChange={(e)=>setIsSocial(e.target.value)}/>
                 </Col>
                 <Col md={12} sm={24}>
                 <UploadDocs setValue={setIsDriving} title="Upload Social Driving Liscense"/>
