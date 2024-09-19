@@ -504,6 +504,7 @@ export default function ItakeForm() {
                   key={index}
                   name={question.name}
                   label={question.label}
+                  rules={[{ required: true, message: `${question.label} is required` }]}
                 >
                   {question.options && question.options.length > 0 ? (
                     <Select
