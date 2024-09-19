@@ -511,3 +511,21 @@ query users($keywords: String) {
 	}
 }
 `;
+
+export const UPLOAD_DOCS=gql`
+mutation CreateDocument($input: createDocumentInput!) {
+	createDocument(input: $input) {
+		document {
+			id
+			file_content_type
+			include_in_charting
+			}
+			currentUser {
+				id
+			}
+		messages {
+			field
+			message
+		}
+}
+}`;
