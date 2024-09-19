@@ -59,6 +59,7 @@ export default function ItakeForm() {
   );
   const OnFinish = async (values: any) => {
     const {security_number,driving_liscense, ...questionValues} = values;
+    console.log('driving_liscense: ', driving_liscense);
     const intakeFormPayload = {
       input: {
         custom_module_form_id: "1524146", // Form id for staging
@@ -70,7 +71,7 @@ export default function ItakeForm() {
           {
             id: "14669226",
             label: "Driver License (DL)",
-            answer: driving_liscense,
+            answer: '',
           },
           {
             id: "14669227",
