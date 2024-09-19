@@ -184,11 +184,11 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
       </Form.Item>
       <div className="mb-2 text-xs text-gray">
         <span>By signing up, I agree to </span>
-        <a href="./" className="text-sm !underline text-blue-600">
+        <a href="https://openloophealth.com/terms-of-use" target='_blank' className="text-sm !underline text-blue-600">
         Terms of service 
         </a>
         {' & '}
-        <a href="./" className="text-sm !underline text-blue-600">
+        <a href="https://openloophealth.com/notice-of-privacy-practices" target='_blank' className="text-sm !underline text-blue-600">
         Privacy policy
         </a>
       </div>
