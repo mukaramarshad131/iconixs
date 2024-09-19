@@ -70,6 +70,16 @@ export default function ItakeForm() {
             label: "Patient Info"
           },
           {
+            id: "14669226",
+            label: "Driver License (DL)",
+            answer: security_number,
+          },
+          {
+            id: "14669227",
+            label: "Social Security Number (SSN)",
+            answer: security_number,
+          },
+          {
             custom_module_id: "13579507",
             label: "Intake",
           },
