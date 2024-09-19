@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
-// import { INTAKE_FORM } from '@/graphql/query';
 import { questions } from "@/data/projectData";
 import { INTAKE_FORM_QUERY } from "@/graphql/query";
 import {
@@ -11,7 +10,7 @@ import {
 } from "@/store/userStore";
 import { useQuery } from "@apollo/client";
 
-import { Select, Form, Input, Button, Card, Row, Col } from "antd";
+import { Select, Form, Input, Button, Card } from "antd";
 import { useRouter } from "next/navigation";
 import IntakeListing from "../dashboard/intake-Listing";
 import UploadDocs from "@/components/atom/uploadDoc";
@@ -22,8 +21,6 @@ export default function ItakeForm() {
   const user = useUserInfo();
   const router = useRouter();
   const [form] = Form.useForm();
-  const [isDriving, setIsDriving] = useState();
-  const [isSocial, setIsSocial] = useState<string>();
   const [formData, setFormData] = useState<any>(
     questions.reduce((acc: any, q: any) => {
       acc[q.name] = {
@@ -61,6 +58,7 @@ export default function ItakeForm() {
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
+    const {security_number,driving_liscense, ...questionValues} = values;
     const intakeFormPayload = {
       input: {
         custom_module_form_id: "1524146", // Form id for staging
@@ -72,12 +70,12 @@ export default function ItakeForm() {
           {
             id: "14669226",
             label: "Driver License (DL)",
-            answer: isDriving,
+            answer: driving_liscense,
           },
           {
             id: "14669227",
             label: "Social Security Number (SSN)",
-            answer:isSocial,
+            answer: security_number,
           },
           {
             custom_module_id: "13579507",
@@ -92,21 +90,19 @@ export default function ItakeForm() {
             custom_module_id: "13579509",
             label: "Patient Intake",
             user_id: user.id,
-            answer: `<p>${Object.values(values)
+            answer: `<p>${Object.values(questionValues)
               .map(
                 (item: any, index: number) =>
-                  `<b>Question:${questions[index].label}</b><br/>${
-                    Array.isArray(item)
-                      ? item?.map(
-                          (key: any, idx: number) => `${idx + 1}:${key}`
-                        )
-                      : item
+                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)
+                    ? item?.map(
+                      (key: any, idx: number) => `${idx + 1}:${key}`
+                    )
+                    : item
                   }<br/>`
               )
               .join("")}<b>Shipping Address</b>
-<br/>Address:${user.location?.line1}, ${user.location?.country}, ${
-              user.location?.state
-            } ${user.location?.zip}</p>`, // HTML format for the intake
+<br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
+              } ${user.location?.zip}</p>`, // HTML format for the intake
           },
           {
             custom_module_id: "13579510",
@@ -481,7 +477,11 @@ export default function ItakeForm() {
     }
     router.replace("/dashboard/packages");
   };
-
+  const onFileChange = (value: string) => {
+    form?.setFieldsValue({
+      'driving_liscense': value,
+    });
+  };
   return (
     <div>
       {intakeFormData?.formAnswerGroups?.length > 0 ? (
@@ -539,14 +539,22 @@ export default function ItakeForm() {
                   )}
                 </Form.Item>
               ))}
-              <Row gutter={[20, 20]}>
-                <Col md={12} sm={24}>
-                <Input placeholder="Social Security Number" onChange={(e)=>setIsSocial(e.target.value)}/>
-                </Col>
-                <Col md={12} sm={24}>
-                <UploadDocs setValue={setIsDriving} title="Upload Social Driving Liscense"/>
-                </Col>
-              </Row>
+              <Form.Item
+                key={12}
+                name="security_number"
+                label="Social Security Number"
+                rules={[{ required: true, message: `Social Security Number is required` }]}
+              >
+                <Input placeholder="Social Security Number" />
+              </Form.Item>
+              <Form.Item
+                key={13}
+                name="driving_liscense"
+                label="Upload Social Driving Liscense"
+                rules={[{ required: true, message: `Driving Liscense is required` }]}
+              >
+                <UploadDocs onHandleChange={(value: string)=> onFileChange(value)}  title="Upload Social Driving Liscense" />
+              </Form.Item>
               <Form.Item>
                 <Button
                   type="primary"
