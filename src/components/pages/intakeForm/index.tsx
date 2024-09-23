@@ -64,8 +64,6 @@ export default function ItakeForm() {
   const OnFinish = async (values: any) => {
     const {security_number,upload_driving_liscense, license_number, upload_social_security, ...questionValues} = values;
     console.log('upload_driving_liscense: ', upload_driving_liscense);
-    console.log('license_number: ', license_number);
-    console.log('security_number: ', security_number);
     console.log('upload_social_security: ', upload_social_security);
     const intakeFormPayload = {
       input: {
