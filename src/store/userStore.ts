@@ -86,7 +86,7 @@ export const useUserToken = () => useUserStore((state) => state.userToken);
 export const useUserPlan = () => useUserStore((state) => state.userPlan);
 export const useUserPermissions = () => useUserStore((state) => state.userPermissions);
 export const useIntakeForm = () => useUserStore((state) => state.intakeForm);
-export const useIntakeDoc = () => useUserStore((state) => state.intakeForm);
+export const useIntakeDoc = () => useUserStore((state) => state.intakeDoc);
 export const useUserActions = () => useUserStore((state) => state.actions);
 
 export default useUserStore;
