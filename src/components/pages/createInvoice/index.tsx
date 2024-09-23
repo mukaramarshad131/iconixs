@@ -1,8 +1,8 @@
 'use client'
 import { useMutation } from '@apollo/client';
 import { useEffect } from 'react';
-import { CREATE_OPEN_LOOP_INVOICE, INTAKE_FORM } from '@/graphql/query';
-import { useIntakeForm, useUserActions, useUserInfo, useUserPlan, useUserPermissions } from '@/store/userStore';
+import { CREATE_OPEN_LOOP_INVOICE, INTAKE_FORM, UPLOAD_DOCS } from '@/graphql/query';
+import { useIntakeForm, useIntakeDoc, useUserActions, useUserInfo, useUserPlan, useUserPermissions } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'antd';
 
@@ -15,7 +15,22 @@ function GenrateInvoice() {
   const { setUserPlan, setUserPermissions } = useUserActions();
   const user = useUserInfo();
   const intakeForm = useIntakeForm();
+  const intakeDoc = useIntakeDoc();
   const router = useRouter();
+
+  const [mutateFunction] = useMutation(UPLOAD_DOCS);
+
+  const onFileChange = async (value: string, fieldType: boolean) => {
+    const updatePayload = {
+      input: {
+        "file_string": value,
+        "display_name": fieldType ? "File Driving Liscense" : "File Social Security Number",
+        "rel_user_id": user.id,
+        "include_in_charting": true
+      },
+    };
+    await mutateFunction({ variables: { ...updatePayload } });
+  };
 
   useEffect(() => {
     const genInvoice = async () => {
@@ -27,10 +42,11 @@ function GenrateInvoice() {
       } as any;
       if (planId) {
         const res = await createInvoice({ variables: { ...input } });
-
+        intakeDoc && onFileChange(intakeDoc.upload_driving_liscense, true);
+        intakeDoc && onFileChange(intakeDoc.upload_social_security, false);
         intakeForm && await intakeFormFunction({ variables: { ...intakeForm } });
+        
         if (res) {
-          console.log(res)
           setUserPlan('');
           if (res && res.data.createRequestedPayment.messages === null) {
             setUserPermissions([...permissions.filter(x => x !== '/dashboard/packages')]);
@@ -48,7 +64,7 @@ function GenrateInvoice() {
       <div className="max-w-2xl text-center">
         <h1 className="text-2xl font-extrabold text-slate-900 sm:text-3xl"> Thank you for trusting us</h1>
         <div className="mt-6 text-base leading-7 text-slate-600"> We are pleased to inform you that we will be processing your <strong className="font-semibold text-slate-900">at-home lab order shortly. </strong> You will receive an email soon with detailed instructions on the next steps, including how to complete the process and any additional information you may need.</div>
-        </div>   
+      </div>
     </div>
   );
 }

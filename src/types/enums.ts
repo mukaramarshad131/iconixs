@@ -4,4 +4,5 @@ export enum StorageEnum {
     Plan = 'planId',
     PERMISSIONS = 'permissions',
     INTAKEFORM='intakeForm',
+    INTAKEDOC='intakeDoc',
   }

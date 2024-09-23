@@ -1,8 +1,10 @@
 "use client";
+// import { useMutation } from '@apollo/client';
 import React, { useState } from "react";
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
 import { questions } from "@/data/projectData";
 import { INTAKE_FORM_QUERY } from "@/graphql/query";
+
 import {
   useUserActions,
   useUserInfo,
@@ -17,7 +19,7 @@ import UploadDocs from "@/components/atom/uploadDoc";
 
 export default function ItakeForm() {
   const permissions = useUserPermissions();
-  const { setUserPermissions, setUserIntakeForm } = useUserActions();
+  const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
   const user = useUserInfo();
   const router = useRouter();
   const [form] = Form.useForm();
@@ -30,6 +32,8 @@ export default function ItakeForm() {
       return acc;
     }, {})
   );
+
+  // const [ mutateFunction, { loading } ] = useMutation(UPLOAD_DOCS);
 
   const handleSelectChange = (questionName: any, values: any) => {
     const isNoneSelected = values.includes("None of the above");
@@ -58,9 +62,11 @@ export default function ItakeForm() {
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
-    const {security_number,driving_liscense, ...questionValues} = values;
-    console.log('driving_liscense: ', driving_liscense);
+    const {security_number,upload_driving_liscense, license_number, upload_social_security, ...questionValues} = values;
+    console.log('upload_driving_liscense: ', upload_driving_liscense);
+    console.log('license_number: ', license_number);
     console.log('security_number: ', security_number);
+    console.log('upload_social_security: ', upload_social_security);
     const intakeFormPayload = {
       input: {
         custom_module_form_id: "1524146", // Form id for staging
@@ -71,13 +77,23 @@ export default function ItakeForm() {
           },
           {
             id: "14669226",
-            label: "Driver License (DL)",
-            answer: security_number,
+            label: "Driver License Number (DL)",
+            answer: license_number,
           },
           {
             id: "14669227",
             label: "Social Security Number (SSN)",
             answer: security_number,
+          },
+          {
+            id: "14669228",
+            label: "Upload Social Driving Liscense",
+            answer: upload_driving_liscense,
+          },
+          {
+            id: "14669229",
+            label: "Upload Social Security Number",
+            answer: upload_social_security,
           },
           {
             custom_module_id: "13579507",
@@ -472,17 +488,34 @@ export default function ItakeForm() {
         user_id: user.id, // Patiend ID from CreatePatient mutation response
       },
     };
+
     // const res = await intakeFormFunction({ variables: { ...intakeFormPayload } });
+    setUserIntakeDoc({ upload_driving_liscense, upload_social_security });
     setUserIntakeForm(intakeFormPayload);
     if (!permissions.includes("/dashboard/packages")) {
       setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
     }
     router.replace("/dashboard/packages");
   };
-  const onFileChange = (value: string) => {
-    form?.setFieldsValue({
-      'driving_liscense': value,
-    });
+  const onFileChange = async (value: string, fieldType: boolean) => {
+    // const updatePayload = {
+    //   input: {
+    //     "file_string": value,
+    //     "display_name": fieldType ? "File Driving Liscense" : "File Social Security Number",
+    //     "rel_user_id": user.id,
+    //     "include_in_charting": true
+    //   },
+    // };
+    if(fieldType) {
+      form?.setFieldsValue({
+        'upload_driving_liscense': value,
+      });      
+    } else {
+      form?.setFieldsValue({
+        'upload_social_security': value,
+      });
+    }
+    // await mutateFunction({ variables: { ...updatePayload } });
   };
   return (
     <div>
@@ -551,11 +584,27 @@ export default function ItakeForm() {
               </Form.Item>
               <Form.Item
                 key={13}
-                name="driving_liscense"
+                name="license_number"
+                label="Driving License Number"
+                rules={[{ required: true, message: `Driving License Number is required` }]}
+              >
+                <Input placeholder="Driving License Number" />
+              </Form.Item>
+              <Form.Item
+                key={14}
+                name="upload_social_security"
+                label="Upload Social Security Number"
+                rules={[{ required: true, message: `Social Security Number is required` }]}
+              >
+                <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
+              </Form.Item>
+              <Form.Item
+                key={15}
+                name="upload_driving_liscense"
                 label="Upload Social Driving Liscense"
                 rules={[{ required: true, message: `Driving Liscense is required` }]}
               >
-                <UploadDocs onHandleChange={(value: string)=> onFileChange(value)}  title="Upload Social Driving Liscense" />
+                <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Social Driving Liscense" />
               </Form.Item>
               <Form.Item>
                 <Button

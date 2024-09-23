@@ -511,7 +511,7 @@ query users($keywords: String) {
 	}
 }
 `;
-
+ 
 export const UPLOAD_DOCS=gql`
 mutation CreateDocument($input: createDocumentInput!) {
 	createDocument(input: $input) {
@@ -529,3 +529,25 @@ mutation CreateDocument($input: createDocumentInput!) {
 		}
 }
 }`;
+
+// export const CREATE_DOCS=gql`
+// mutation CreateDocument($input: createDocumentInput!) {
+// 	mutation createDocument(
+//   $file: Upload,
+//   $display_name: String,
+//   $folder_id: String
+// ) {
+//   createDocument(input: {
+//     file: $file,
+//     display_name: $display_name,
+//     folder_id: $folder_id
+//   }) {
+//     document {
+//       id
+//     }
+//     messages {
+//       field
+//       message
+//     }
+//   }
+// }`;

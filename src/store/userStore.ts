@@ -8,12 +8,14 @@ type UserStore = {
   userPlan: string | null;
   userPermissions: string[] ;
   intakeForm:any;
+  intakeDoc:any;
   actions: {
     setUserInfo: (userInfo: UserInfo) => void;
     setUserToken: (token: string | null) => void;
     setUserPlan: (planId: string) => void;
     setUserPermissions: (userPermissions: string[]) => void;
     setUserIntakeForm:(intakeForm:any)=>void;
+    setUserIntakeDoc:(intakeDoc:any)=>void;
     clearUserInfoAndToken: () => void;
   };
 };
@@ -38,6 +40,7 @@ const useUserStore = create<UserStore>((set) => ({
   userPlan: getItem(StorageEnum.Plan,true) || null,
   userPermissions: getItem(StorageEnum.PERMISSIONS) || [],
   intakeForm: getItem(StorageEnum.INTAKEFORM) || [],
+  intakeDoc: getItem(StorageEnum.INTAKEDOC) || [],
   actions: {
     setUserInfo: (userInfo) => {
       set({ userInfo });
@@ -61,12 +64,17 @@ const useUserStore = create<UserStore>((set) => ({
       set({ intakeForm });
       localStorage.setItem('intakeForm', JSON.stringify(intakeForm));
     },
+    setUserIntakeDoc: (intakeDoc) => {
+      set({ intakeDoc });
+      localStorage.setItem('intakeDoc', JSON.stringify(intakeDoc));
+    },
     clearUserInfoAndToken() {
       set({ userInfo: {}, userToken: null });
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       localStorage.removeItem('permissions');
       localStorage.removeItem('intakeForm');
+      localStorage.removeItem('intakeDoc');
       document.cookie = `token=; Max-Age=0; path=/; Secure; SameSite=Strict;`;
       document.cookie = `permissions=; Max-Age=0; path=/; Secure; SameSite=Strict;`;
     },
@@ -78,6 +86,7 @@ export const useUserToken = () => useUserStore((state) => state.userToken);
 export const useUserPlan = () => useUserStore((state) => state.userPlan);
 export const useUserPermissions = () => useUserStore((state) => state.userPermissions);
 export const useIntakeForm = () => useUserStore((state) => state.intakeForm);
+export const useIntakeDoc = () => useUserStore((state) => state.intakeForm);
 export const useUserActions = () => useUserStore((state) => state.actions);
 
 export default useUserStore;
