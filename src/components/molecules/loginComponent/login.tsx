@@ -1,13 +1,19 @@
 'use client'
 import React from 'react';
-import { LOGIN_MUTATION } from '@/graphql/query';
+import { LOGIN_MUTATION, GET_INTAKE_FORM } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from 'antd'
 import { useRouter } from 'next/navigation';
 
 const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setIsForget:(value:boolean)=>void}) => {
       const [ mutateFunction, { loading } ] = useMutation(LOGIN_MUTATION);
+      const medicationListing = useQuery(GET_INTAKE_FORM, {
+        variables: {
+          id: '2174074',
+        },
+      });
+      console.log('medicationListing: ', medicationListing);
       const { setUserToken, setUserInfo, setUserPermissions} = useUserActions();
       const router = useRouter();
       const handleFinish = async (values:any) => {
