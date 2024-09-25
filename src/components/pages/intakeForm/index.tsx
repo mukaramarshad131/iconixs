@@ -13,16 +13,17 @@ import {
 import { useQuery } from "@apollo/client";
 
 import { Select, Form, Input, Button, Card } from "antd";
-import { useRouter } from "next/navigation";
 import IntakeListing from "../dashboard/intake-Listing";
 import UploadDocs from "@/components/atom/uploadDoc";
+import { useRouter } from "next/navigation";
+
 
 export default function ItakeForm() {
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
   const user = useUserInfo();
-  const router = useRouter();
   const [form] = Form.useForm();
+  const router = useRouter()
   const [formData, setFormData] = useState<any>(
     questions.reduce((acc: any, q: any) => {
       acc[q.name] = {
@@ -34,7 +35,7 @@ export default function ItakeForm() {
   );
 
   // const [ mutateFunction, { loading } ] = useMutation(UPLOAD_DOCS);
-
+  // const [intakeFormFunction] = useMutation(INTAKE_FORM);
   const handleSelectChange = (questionName: any, values: any) => {
     const isNoneSelected = values.includes("None of the above");
     if (isNoneSelected) {
@@ -70,27 +71,30 @@ export default function ItakeForm() {
         custom_module_form_id: "1524146", // Form id for staging
         form_answers: [
           {
-            id: "14669225",
-            label: "Patient Info"
+            custom_module_id: "14669225",
+            label: "Patient Info",
           },
           {
-            id: "14669226",
+            custom_module_id: "14669226",
             label: "Driver License Number (DL)",
+            user_id: user.id,
             answer: license_number,
           },
           {
-            id: "14669227",
+            custom_module_id: "14669227",
             label: "Social Security Number (SSN)",
             answer: security_number,
           },
           {
-            id: "14669228",
+            custom_module_id: "14669228",
             label: "Upload Social Driving Liscense",
+            mod_type: "textarea",
             answer: upload_driving_liscense,
           },
           {
-            id: "14669229",
+            custom_module_id: "14669229",
             label: "Upload Social Security Number",
+            mod_type: "textarea",
             answer: upload_social_security,
           },
           {
@@ -487,7 +491,7 @@ export default function ItakeForm() {
       },
     };
 
-    // const res = await intakeFormFunction({ variables: { ...intakeFormPayload } });
+    // await intakeFormFunction({ variables: { ...intakeFormPayload } });
     setUserIntakeDoc({ upload_driving_liscense, upload_social_security });
     setUserIntakeForm(intakeFormPayload);
     if (!permissions.includes("/dashboard/packages")) {
@@ -616,7 +620,7 @@ export default function ItakeForm() {
             </Form>
           </Card>
         </div>
-      )}
+       )} 
     </div>
   );
 }

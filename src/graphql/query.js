@@ -551,3 +551,23 @@ mutation CreateDocument($input: createDocumentInput!) {
 //     }
 //   }
 // }`;
+export const UPLOAD_DOCS2=gql`
+mutation createDocument(
+  $file: Upload,
+  $display_name: String,
+  $folder_id: String
+) {
+  createDocument(input: {
+    file: $file,
+    display_name: $display_name,
+    folder_id: $folder_id
+  }) {
+    document {
+      id
+    }
+    messages {
+      field
+      message
+    }
+  }
+}`;
