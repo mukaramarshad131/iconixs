@@ -10,11 +10,10 @@ import { ReactNode } from "react";
 
 const ApolloClientProvider = ({children}:{children:ReactNode}) => {
     const client = new ApolloClient({
-        uri: process.env.OPEN_LOOP_URL,
+        uri: '/api/graphql-proxy',
         headers: {
-          authorization:
-            "Basic "+process.env.OPEN_LOOP_TOKEN,
-          authorizationsource: "API",
+          Authorization: `Bearer ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
+          authorizationsource: "API", 
         },
         cache: new InMemoryCache(),
       });

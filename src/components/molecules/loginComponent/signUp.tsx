@@ -17,7 +17,7 @@ const SignUp = ({setIsLogin}:{setIsLogin:(value:boolean)=>void}) => {
           dob: dayjs(values.dob).format('DD/MM/YYYY'),
           role: 'patient',
           next_appt_date: null,
-          provider_type: 'openloop',
+          provider_type: 'OpenLoop Network',
           dietitian_id: '1322376',
         };
 
