@@ -1,38 +1,43 @@
 'use client'
-import React from 'react';
-import { LOGIN_MUTATION } from '@/graphql/query';
+import React, { useState } from 'react';
+import { LOGIN_MUTATION, SEARCH_PATIENT } from '@/graphql/query';
 import { useUserActions } from '@/store/userStore';
 import { useMutation } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from 'antd'
 import { useRouter } from 'next/navigation';
 
 const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setIsForget:(value:boolean)=>void}) => {
-      const [ mutateFunction, { loading } ] = useMutation(LOGIN_MUTATION);
-      const { setUserToken, setUserInfo, setUserPermissions} = useUserActions();
+      const { setUserInfo, setUserPermissions} = useUserActions();
+      const [isLoading, setIsLoading] = useState(false)
       const router = useRouter();
       const handleFinish = async (values:any) => {
-          const login = {
-            email: values.username,
-            password:values.password,
-            tokenAPI: true,
-            multipleAPI: true,
-            dietitian_id: '1322376',
-          };
-          const {data: { signIn: signUser }} = await mutateFunction({ variables: { ...login } });
-          if (signUser?.messages?.length > 0) {
-            notification.error({
-              message: signUser.messages[0].message,
-              duration: 3,
+        setIsLoading(true)
+          try {
+            const logIn = {email:values.email, password:values.password}
+            const logInRes = await fetch("api/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(logIn),
             });
-            return 0;
+            const response = await logInRes.json();
+            console.log(response,logInRes.status)
+            if(!logInRes.ok){
+              notification.error({message:response.message,duration:3})
+              setIsLoading(false)
+              return;
+            }
+            const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/summary", "/dashboard/update-password"]
+            setUserInfo(response.user);
+            setUserPermissions(permissions);
+            router.push('/dashboard')
+            setIsLoading(false)
+          } catch (error:any) {
+            console.log(error.message)
+            setIsLoading(false)
+            throw error;
           }
-          const accessToken = '387f3e57-9c4b-46a3-bd66-cbac6a60aad2';
-          const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/summary", "/dashboard/update-password"]
-
-          setUserToken(accessToken);
-          setUserInfo(signUser.user);
-          setUserPermissions(permissions);
-          router.push('/dashboard')
           }
   return (
     <section className='px-[16px] lg:px-[64px]'>
@@ -43,7 +48,7 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
         onFinish={handleFinish}
       >
         <Form.Item
-          name="username"
+          name="email"
           rules={[{ type: 'email', required: true, message: 'Email is required.' }]}
         >
           <Input placeholder='Please enter Email' />
@@ -72,13 +77,13 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
           </Row>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="w-full !bg-[#0c2345]" loading={loading}>
+          <Button type="primary" htmlType="submit" className="w-full !bg-[#0c2345]" loading={isLoading}>
             Log In
           </Button>
         </Form.Item>
         <Divider className="!text-xs">
           <div onClick={() => setIsLogin(false)}>
-            <Button className="w-full !text-sm">Sign Up</Button>
+            <Button className="w-full !text-sm" >Sign Up</Button>
           </div>
         </Divider>
       </Form>

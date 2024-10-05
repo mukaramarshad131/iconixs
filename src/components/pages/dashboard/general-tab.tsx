@@ -73,12 +73,12 @@ export default function GeneralTab() {
       role: "patient",
       next_appt_date: null,
       provider_type: "openloop",
-      dietitian_id: "1322376",
+      dietitian_id: "5171717",
     };
     const updatePayload = {
       input: {
         id: user.id,
-        dietitian_id: "1322376",
+        dietitian_id: "5171717",
         dob: dayjs(values.dob).format("DD/MM/YYYY"),
         first_name: payload.first_name,
         timezone: payload.timezone,
@@ -129,7 +129,7 @@ export default function GeneralTab() {
   return (
     <div className="w-full mt-2">
       {!userLoading && (
-        <Card bodyStyle={{padding: '15px 24px' }}>
+        <Card style={{padding: '15px 24px' }}>
           <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
             Patient Detail
           </h1>

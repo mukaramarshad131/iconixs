@@ -1,7 +1,7 @@
 import {NextResponse, NextRequest} from "next/server";
 
 export  async function middleware(request: NextRequest) {
-    const token = request.cookies.get('token')?.value;
+    const token = request.cookies.get('jwt')?.value;
     let permissions = request.cookies.get('permissions')?.value;
   
     if (permissions) {

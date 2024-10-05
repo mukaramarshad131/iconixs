@@ -195,7 +195,42 @@ export const SIGNUP_MUTATION = gql`
     }
   }
 `;
-
+export const CREATE_PATIENT = gql`
+mutation CreateClient($input: createClientInput!) {
+	createClient(input: $input) {
+		user {
+			id
+			first_name
+			last_name
+			email
+			skipped_email
+			phone_number
+			dietitian_id
+			user_group_id
+			additional_record_identifier
+		}
+		messages {
+			field
+			message
+		}
+}
+}
+`;
+export const SEARCH_PATIENT = gql`
+  query users($keywords: String) {
+    users(keywords: $keywords) {
+      id
+      email
+      name
+      first_name
+      last_name
+      dob
+      phone_number
+      weight
+      height
+    }
+  }
+`;
 export const UPDATE_PATIENT = gql`
   mutation UpdateClient($input: updateClientInput!) {
     updateClient(input: $input) {

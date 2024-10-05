@@ -4,14 +4,12 @@ import { create } from 'zustand';
 
 type UserStore = {
   userInfo: Partial<UserInfo>;
-  userToken: string | null;
   userPlan: string | null;
   userPermissions: string[] ;
   intakeForm:any;
   intakeDoc:any;
   actions: {
     setUserInfo: (userInfo: UserInfo) => void;
-    setUserToken: (token: string | null) => void;
     setUserPlan: (planId: string) => void;
     setUserPermissions: (userPermissions: string[]) => void;
     setUserIntakeForm:(intakeForm:any)=>void;
@@ -36,7 +34,6 @@ export const getItem = <T>(key: StorageEnum, isString?:boolean): T | null => {
 };
 const useUserStore = create<UserStore>((set) => ({
   userInfo: getItem(StorageEnum.User) || {},
-  userToken: getItem(StorageEnum.Token) || null,
   userPlan: getItem(StorageEnum.Plan,true) || null,
   userPermissions: getItem(StorageEnum.PERMISSIONS) || [],
   intakeForm: getItem(StorageEnum.INTAKEFORM) || [],
@@ -45,11 +42,6 @@ const useUserStore = create<UserStore>((set) => ({
     setUserInfo: (userInfo) => {
       set({ userInfo });
       localStorage.setItem('user', JSON.stringify(userInfo));
-    },
-    setUserToken: (userToken) => {
-      set({ userToken });
-      localStorage.setItem('token', JSON.stringify(userToken));
-      document.cookie = `token=${userToken}; path=/; Secure; SameSite=Strict;`;
     },
     setUserPlan: (userPlan) => {
       set({ userPlan });
@@ -69,9 +61,8 @@ const useUserStore = create<UserStore>((set) => ({
       localStorage.setItem('intakeDoc', JSON.stringify(intakeDoc));
     },
     clearUserInfoAndToken() {
-      set({ userInfo: {}, userToken: null });
+      set({ userInfo: {}});
       localStorage.removeItem('user');
-      localStorage.removeItem('token');
       localStorage.removeItem('permissions');
       localStorage.removeItem('intakeForm');
       localStorage.removeItem('intakeDoc');
@@ -82,7 +73,6 @@ const useUserStore = create<UserStore>((set) => ({
 }));
 
 export const useUserInfo = () => useUserStore((state) => state.userInfo);
-export const useUserToken = () => useUserStore((state) => state.userToken);
 export const useUserPlan = () => useUserStore((state) => state.userPlan);
 export const useUserPermissions = () => useUserStore((state) => state.userPermissions);
 export const useIntakeForm = () => useUserStore((state) => state.intakeForm);
