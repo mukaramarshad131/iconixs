@@ -66,7 +66,7 @@ export default function IntakeListing() {
     },
   ];
   return (
-    <Card className="flex-col" bodyStyle={{padding: '15px 24px' }}>
+    <Card className="flex-col" style={{padding: '15px 24px' }}>
       <header className=" mb-5">
       <h1 className=" text-lg font-semibold text-[#0092B3] mb-5">
       Intake Listing

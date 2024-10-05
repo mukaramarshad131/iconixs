@@ -19,6 +19,8 @@ export default function NewInvoice() {
       with_all_statuses: true,
     },
   });
+
+  console.log(appointmentListing, 'appointment')
   const columns: ColumnsType<DataType> = [
     {
       title: 'Appointment Id',

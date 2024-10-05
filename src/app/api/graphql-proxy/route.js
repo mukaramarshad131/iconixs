@@ -21,10 +21,11 @@ export async function POST(req) {
     // Handle the response
 
     const { data, errors } = await response.json();
+
     if (errors) {
       return NextResponse.json({ error: errors }, { status: 400 });
     }
-    return NextResponse.json(data);
+    return NextResponse.json({data});
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

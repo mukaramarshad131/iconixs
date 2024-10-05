@@ -35,7 +35,7 @@ export default function GeneralTab() {
   // const router = useRouter();
   const user = useUserInfo();
   const permissions = useUserPermissions();
-  const { loading: userLoading, data: userData, refetch } = useQuery(USER_QUERY, {
+  const { data: userData, loading: userLoading,  refetch } = useQuery(USER_QUERY, {
     variables: { id: user.id },
   });
   const [updateFunction, {loading:fetching}] = useMutation(UPDATE_PATIENT);
@@ -66,7 +66,8 @@ export default function GeneralTab() {
     country: userData?.user?.location?.country,
     line1: userData?.user?.location?.line1,
   };
-
+  
+console.log(userData?.user, initFormValues)
   const onFinish = async (values: any) => {
     const payload = {
       ...values,

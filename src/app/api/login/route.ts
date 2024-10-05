@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
      variables: { id: userExist.openLoopId }, // Pass the email as a variable
    });
   
-    const response = NextResponse.json({ message: 'Login successful', user});
+    const response = NextResponse.json({ message: 'Login successful', user:user.user});
 
     // Set the token as an HTTP-only cookie
     response.cookies.set('jwt', token, {
