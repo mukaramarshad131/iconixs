@@ -11,7 +11,7 @@ const userSchema = z.object({
   password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
 });
 
-export const client = new ApolloClient({
+  const client = new ApolloClient({
      uri: process.env.OPEN_LOOP_URL_PRODUCTION,
      cache: new InMemoryCache(),
      headers: {

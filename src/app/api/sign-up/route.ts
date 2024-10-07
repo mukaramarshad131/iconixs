@@ -2,15 +2,23 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import * as bcrypt from 'bcrypt'
-import { client } from "../login/route";
+// import { client } from "../login/route";
 import { CREATE_PATIENT, UPDATE_PATIENT, UPDATE_WEIGHT } from "@/graphql/query";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import dayjs from "dayjs";
 
 const userSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
     password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
   });
-
+  const client = new ApolloClient({
+    uri: process.env.OPEN_LOOP_URL_PRODUCTION,
+    cache: new InMemoryCache(),
+    headers: {
+      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
+      authorizationsource: "API",
+    },
+  });
 export async function POST(req:NextRequest){
   const json = await req.json(); // This is important to parse the request body
   const { email, password } = json;
