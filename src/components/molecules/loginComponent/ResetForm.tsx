@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { SEARCH_USERS, UPDATE_PATIENT } from '@/graphql/query';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { Button, Divider, Form, Input, notification } from 'antd'
-import { sendMail } from '@/lib/send-mail';
+import axios from "axios";
 
 
 
@@ -23,57 +23,36 @@ const ResetForm = ({setIsForget}:{setIsForget:(value:boolean)=>void}) => {
       return password;
      }
       const handleForgetPassword = async (values:any) => {
-        setLoading(true);
-        const response = await runQuery({ variables: { keywords: values.email } });
-        if(response?.data?.users?.length > 0) {
-            const user = response?.data?.users;
-            const password = genPassword();
-            const updatePayload = {
-                input: {
-                  id: user[0].id,
-                  password
-                },
-              };
-          const mailText = `<p>Hi <strong>${user[0].name}</strong></p>
-            <p>Your password has been reset. You can now use the following password to log in to your account:</p>
-            <p>New Password: <b>${password}<b></p>
-            <p>For security reasons, we recommend logging in and changing your password immediately to something more personal and secure. You can do this by visiting your account settings.</p>
-            <p>If you didn’t request this password reset, please contact us immediately.</p>
-            <p><strong>Thank you,</strong></p>
-            <p><strong>Iconix Support Team</strong></p>`;
-          const response4 = await sendMail({
-            sendTo: values.email,
-            subject: ' Your New Password for Iconix',
-            text: ``,
-            html: mailText
+        const password = genPassword();
+        const payload = {
+          ...values,
+          password
+        }
+        console.log('MAK', payload);
+        try {      
+          setLoading(true)
+         const response:any = await axios.post("api/reset-password", payload, {
+            headers: {
+              "Content-Type": "application/json",
+            },
           });
-          if (response4?.messageId) {
-            const {
-                data: {
-                  signUp
-                },
-              } = await mutateFunction({ variables: { ...updatePayload } });
-              console.log('signUp: ', signUp);
+          console.log(response)
+          if(response.status===200){
             notification.success({
-              message: 'Please Check your email for your new password. If not found, check your spam folder.',
-              duration: 3,
-            });
-            setLoading(false);
-            setIsForget(false);
-          } else {
-            setLoading(false);
-            setIsForget(false);
-            notification.error({
-              message: "We couldn't process your request. Please try again later or contact support if the issue persists.",
+              message: response.data.message,
               duration: 3,
             });
           }
-        } else {
-          setLoading(false);
+          setLoading(false)
+          setIsForget(false);
+        } catch (error:any) {
+          console.log(error)
           notification.error({
-            message: 'Invalid Email',
+            message: error.response.data.message,
             duration: 3,
           });
+          setLoading(false);
+          setIsForget(false);
         }
       }
   return (

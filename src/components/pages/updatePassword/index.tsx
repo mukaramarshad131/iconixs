@@ -1,33 +1,39 @@
 'use client'
-import { UPDATE_PATIENT } from '@/graphql/query';
-import { useMutation } from '@apollo/client';
+import React, { useState } from 'react';
 import { useUserInfo } from '@/store/userStore';
 import { Button, Col, Form, Input, notification, Row, Card } from 'antd';
+import { sendPassword } from '@/lib/update-password';
 
 
 const UpdatePassword = () => {
-  const { id } = useUserInfo();
-  const [updateFunction, {loading}] = useMutation(UPDATE_PATIENT);
+  const [loading, setLoading] = useState(false);
+  const { email } = useUserInfo();
 
-  const onFinish = async (values: any) => {
+  const handleForgetPassword = async (values:any) => {
     const payload = {
-      input: {
-        id,
-        password: values.password
-      },
+      password: values.password,
+      email: email as string
     };
-
-    try {
-      await updateFunction({ variables: { ...payload } });
-      notification.success({
-        message: 'Password Updated success!',
+    try {      
+      setLoading(true)
+      const response = await sendPassword(payload);
+      console.log('MAK', response);
+      if(response){
+        notification.success({
+          message: "Password updated Successfully",
+          duration: 3,
+        });
+      }
+      setLoading(false)
+    } catch (error:any) {
+      console.log(error)
+      notification.error({
+        message: "Something went wrong",
         duration: 3,
       });
-    } catch (error) {
-      throw error;
+      setLoading(false);
     }
-  };
-
+  }
   return (
     <section className="overflow-y-auto overflow-x-hidden w-full px-[16px] lg:px-[64px]">
       {/* <div className="mb-4 text-2xl font-bold xl:text-3xl">Update Password</div> */}
@@ -35,7 +41,7 @@ const UpdatePassword = () => {
       <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
         Update Password
       </h1>
-      <Form name="normal_login" size="large" initialValues={{ remember: true }} onFinish={onFinish}>
+      <Form name="normal_login" size="large" onFinish={handleForgetPassword}>
         <Row gutter={10}>
           <Col span={24}>
             <Form.Item
