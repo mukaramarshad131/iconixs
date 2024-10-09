@@ -12,10 +12,10 @@ const userSchema = z.object({
     password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
   });
   const client = new ApolloClient({
-    uri: process.env.OPEN_LOOP_URL_PRODUCTION,
+    uri: process.env.OPEN_LOOP_URL,
     cache: new InMemoryCache(),
     headers: {
-      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
+      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN}`,
       authorizationsource: "API",
     },
   });
