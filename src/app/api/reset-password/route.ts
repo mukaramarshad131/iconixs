@@ -48,7 +48,7 @@ export async function POST(req:NextRequest){
           password: hash
         },
       })
-      return NextResponse.json({user: updateUser, message:`${password} Please Check your email for your new password. If not found, check your spam folder.`},{status:200}) 
+      return NextResponse.json({user: updateUser, message:`Please Check your email for your new password. If not found, check your spam folder.`},{status:200}) 
     }
       return NextResponse.json({user: alreadyExistEmail, message:`Email exist.`},{status:200})
     }
