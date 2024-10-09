@@ -9,10 +9,10 @@ const userSchema = z.object({
     email: z.string().email({ message: "Invalid email address" })
   });
   const client = new ApolloClient({
-    uri: process.env.OPEN_LOOP_URL,
+    uri: process.env.OPEN_LOOP_URL_PRODUCTION,
     cache: new InMemoryCache(),
     headers: {
-      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN}`,
+      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
       authorizationsource: "API",
     },
   });
