@@ -34,7 +34,7 @@ export async function POST(req:NextRequest){
       <p><strong>Thank you,</strong></p>
       <p><strong>Iconix Support Team</strong></p>`;
     const response4 = await sendMail({
-      sendTo: 'graphiccrexed@gmail.com',
+      sendTo: email,
       subject: 'Your New Password for Iconix',
       text: ``,
       html: mailText
