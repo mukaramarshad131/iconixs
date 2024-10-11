@@ -74,12 +74,12 @@ console.log(userData?.user, initFormValues)
       role: "patient",
       next_appt_date: null,
       provider_type: "openloop",
-      dietitian_id: "5171717",
+      dietitian_id: process.env.DIETITIAN_ID,
     };
     const updatePayload = {
       input: {
         id: user.id,
-        dietitian_id: "5171717",
+        dietitian_id: process.env.DIETITIAN_ID,
         dob: dayjs(values.dob).format("DD/MM/YYYY"),
         first_name: payload.first_name,
         timezone: payload.timezone,

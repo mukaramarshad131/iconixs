@@ -23,11 +23,12 @@ export default function ItakeForm() {
   const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
   const user = useUserInfo();
   const [form] = Form.useForm();
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState<any>(
     questions.reduce((acc: any, q: any) => {
       acc[q.name] = {
         options: q.options,
+        isDisable: false,
         selectedValues: [],
       };
       return acc;
@@ -37,6 +38,34 @@ export default function ItakeForm() {
   // const [ mutateFunction, { loading } ] = useMutation(UPLOAD_DOCS);
   // const [intakeFormFunction] = useMutation(INTAKE_FORM);
   const handleSelectChange = (questionName: any, values: any) => {
+    if( questionName === "q1" && !values.includes("None of the above")) {
+      formData['q2'].isDisable = true;
+      formData['q3'].isDisable = true;
+      formData['q4'].isDisable = true;
+      formData['q5'].isDisable = true;
+      formData['q6'].isDisable = true;
+      formData['q7'].isDisable = true;
+      formData['q8'].isDisable = true;
+      formData['q9'].isDisable = true;
+    } else if(questionName === "q2" && values.includes("None of the above")) {
+      formData['q1'].isDisable = true;
+      formData['q3'].isDisable = true;
+      formData['q4'].isDisable = true;
+      formData['q5'].isDisable = true;
+      formData['q6'].isDisable = true;
+      formData['q7'].isDisable = true;
+      formData['q8'].isDisable = true;
+      formData['q9'].isDisable = true;
+    } else {
+      formData['q2'].isDisable = false;
+      formData['q3'].isDisable = false;
+      formData['q4'].isDisable = false;
+      formData['q5'].isDisable = false;
+      formData['q6'].isDisable = false;
+      formData['q7'].isDisable = false;
+      formData['q8'].isDisable = false;
+      formData['q9'].isDisable = false;
+    }
     const isNoneSelected = values.includes("None of the above");
     if (isNoneSelected) {
       form.setFieldsValue({ [questionName]: ["None of the above"] });
@@ -54,7 +83,7 @@ export default function ItakeForm() {
 
   const { data: intakeFormData } = useQuery(INTAKE_FORM_QUERY, {
     variables: {
-      custom_module_form_id: "2174074",
+      custom_module_form_id: process.env.FORM_ID,
       user_id: user.id,
       filler_id: user.id,
     },
@@ -67,7 +96,7 @@ export default function ItakeForm() {
     const {security_number,upload_driving_liscense, license_number, upload_social_security, ...questionValues} = values;
     console.log('upload_driving_liscense: ', upload_driving_liscense);
     console.log('upload_social_security: ', upload_social_security);
-    const intakeFormPayload = {
+    const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
         form_answers: [
@@ -302,6 +331,429 @@ export default function ItakeForm() {
         finished: true,
         user_id: user.id, // Patiend ID from CreatePatient mutation response
       },
+    } : {
+      input: {
+        custom_module_form_id: "1524146", // Form id for staging
+        form_answers: [
+          {
+            custom_module_id: "14669225",
+            label: "Patient Info",
+          },
+          {
+            custom_module_id: "14669226",
+            label: "Driver License Number (DL)",
+            user_id: user.id,
+            answer: license_number,
+          },
+          {
+            custom_module_id: "14669227",
+            label: "Social Security Number (SSN)",
+            answer: security_number,
+          },
+          {
+            custom_module_id: "14669228",
+            label: "Upload Social Driving Liscense",
+            mod_type: "textarea",
+            answer: upload_driving_liscense,
+          },
+          {
+            custom_module_id: "14669229",
+            label: "Upload Social Security Number",
+            mod_type: "textarea",
+            answer: upload_social_security,
+          },
+          {
+            custom_module_id: "13579507",
+            label: "Intake",
+          },
+          {
+            custom_module_id: "13579508",
+            label: "Hormone Type",
+            answer: "TRT", // HTML format for the intake
+          },
+          {
+            custom_module_id: "13579509",
+            label: "Patient Intake",
+            user_id: user.id,
+            answer: `<p>${Object.values(questionValues)
+              .map(
+                (item: any, index: number) =>
+                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)
+                    ? item?.map(
+                      (key: any, idx: number) => `${idx + 1}:${key}`
+                    )
+                    : item
+                  }<br/>`
+              )
+              .join("")}<b>Shipping Address</b>
+<br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
+              } ${user.location?.zip}</p>`, // HTML format for the intake
+          },
+          {
+            custom_module_id: "13579510",
+            label: "Photo Upload",
+            answer: "photo",
+            user_id: user.id, // HTML format for the intake
+          },
+          {
+            custom_module_id: "13579511",
+            label: "Labs will be ordered through",
+            answer: "At Home Labs ( at_home_labs_vital )",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085533",
+            label: "Sync/Async Visit",
+            mod_type: "dropdown",
+            answer: "Async ( async_visit )",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13579512",
+            label: "Charting",
+            answer: "Charting",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085531",
+            label: "Note Type",
+            answer: "Test Note Type",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085532",
+            label: "Visit Type",
+            answer: "Initial Visit ( visit_type_1 )",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085561",
+            label: "Patient Consent (Sync)",
+            answer: "Patient Consent (Sync)",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085559",
+            label: "Patient Consent (Async)",
+            answer: "Patient Consent (Async)",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085543",
+            label: "Visit Modality",
+            answer: "Test Visit Modality",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085567",
+            label: "What state is the patient located in at time of visit?",
+            answer: "Test",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085566",
+            label: null,
+            answer: "Test",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085569",
+            label: null,
+            answer: "Test",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085535",
+            label: "Name of Patient",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085537",
+            label: "Date of Birth",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085538",
+            label: "Gender",
+            answer: "Gender",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085562",
+            label: "Physical Location of Patient ",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085571",
+            label: "If Other, please explain:",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085586",
+            label: "BMI",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085539",
+            label: "Any known allergies? (Medication, Environmental, or Food)",
+            mod_type: "radio",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085572",
+            label: "Allergy",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085540",
+            label:
+              "Is patient currently taking any medications (prescription or over-the-counter)",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085573",
+            label: "List any medications you are taking",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085563",
+            label: "Chief Complaint",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085555",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085556",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085574",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085560",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085565",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085553",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085575",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085547",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085554",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085576",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085568",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085548",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085577",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085578",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085557",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085558",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085564",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085549",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085579",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085580",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085581",
+          },
+          {
+            custom_module_id: "13085545",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886268",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886261",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886262",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886263",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085584",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886264",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886265",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886266",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13886267",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085570",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085541",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085550",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085551",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085552",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085530",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085542",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085544",
+            label: "CPT Codes",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085546",
+            label: "Visit Status",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085585",
+            label:
+              "PF - Patient Education & Patient Plan (Patient Facing) - Not Prescribed DQ",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085534",
+            label: "DQ/No-Show/ReScheduled/Cancellation Status",
+            answer: "",
+            user_id: user.id,
+          },
+          {
+            custom_module_id: "13085536",
+            label: "Additional No-Show/Cancellation/Declined Care Information:",
+            answer: "",
+            user_id: user.id,
+          },
+        ],
+        name: "SP - Hormone SOAP Intake",
+        finished: true,
+        user_id: user.id, // Patiend ID from CreatePatient mutation response
+      },
     };
 
 
@@ -362,6 +814,7 @@ export default function ItakeForm() {
                       mode="multiple"
                       placeholder="Select options"
                       value={formData[question.name].selectedValues}
+                      disabled={formData[question.name].isDisable}
                       onChange={(values) =>
                         handleSelectChange(question.name, values)
                       }
@@ -385,6 +838,7 @@ export default function ItakeForm() {
                     <Input.TextArea
                       showCount
                       maxLength={100}
+                      disabled={formData[question.name].isDisable}
                       placeholder="Type here"
                     />
                   )}
@@ -396,7 +850,7 @@ export default function ItakeForm() {
                 label="Social Security Number"
                 rules={[{ required: true, message: `Social Security Number is required` }]}
               >
-                <Input placeholder="Social Security Number" />
+                <Input placeholder="Social Security Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
               <Form.Item
                 key={13}
@@ -404,12 +858,13 @@ export default function ItakeForm() {
                 label="Driving License Number"
                 rules={[{ required: true, message: `Driving License Number is required` }]}
               >
-                <Input placeholder="Driving License Number" />
+                <Input placeholder="Driving License Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
               <Form.Item
                 key={14}
                 name="upload_social_security"
                 label="Upload Social Security Number"
+                style={formData["q6"].isDisable ? {pointerEvents: `none`} : {}}
                 rules={[{ required: true, message: `Social Security Number is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
@@ -418,6 +873,7 @@ export default function ItakeForm() {
                 key={15}
                 name="upload_driving_liscense"
                 label="Upload Social Driving Liscense"
+                style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}
                 rules={[{ required: true, message: `Driving Liscense is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Social Driving Liscense" />
@@ -426,7 +882,8 @@ export default function ItakeForm() {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="w-full !bg-[#0c2345] mt-3"
+                  disabled={formData["q6"].isDisable}
+                  className={formData["q6"].isDisable ? "w-full !bg-[#0c2345] mt-3 !text-[#fff]" : "w-full !bg-[#0c2345] mt-3"}
                 >
                   Submit
                 </Button>

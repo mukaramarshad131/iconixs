@@ -5,11 +5,11 @@ export async function POST(req) {
     // Parse the incoming request
     const { query, variables } = await req.json();
   
-    const response = await fetch(process.env.OPEN_LOOP_URL_PRODUCTION, {
+    const response = await fetch(process.env.OPEN_LOOP_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
+        Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN}`,
         authorizationsource: "API",
       },
       body: JSON.stringify({

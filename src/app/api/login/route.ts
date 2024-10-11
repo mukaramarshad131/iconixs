@@ -12,10 +12,10 @@ const userSchema = z.object({
 });
 
   const client = new ApolloClient({
-     uri: process.env.OPEN_LOOP_URL_PRODUCTION,
+     uri: process.env.OPEN_LOOP_URL,
      cache: new InMemoryCache(),
      headers: {
-       Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
+       Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN}`,
        authorizationsource: "API",
      },
    });

@@ -10,7 +10,7 @@ import { DownOutlined } from '@ant-design/icons';
 
 export default function AccountDropdown() {
   const { clearUserInfoAndToken} = useUserActions();
-  const {first_name, last_name ,email} = useUserInfo();
+  const {first_name = "", last_name="" ,email=""} = useUserInfo();
   const menuStyle: React.CSSProperties = {
     boxShadow: 'none',
   };

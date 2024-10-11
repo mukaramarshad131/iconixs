@@ -12,10 +12,10 @@ const userSchema = z.object({
     password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
   });
   const client = new ApolloClient({
-    uri: process.env.OPEN_LOOP_URL_PRODUCTION,
+    uri: process.env.OPEN_LOOP_URL,
     cache: new InMemoryCache(),
     headers: {
-      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN_PRODUCTION}`,
+      Authorization: `Basic ${process.env.OPEN_LOOP_TOKEN}`,
       authorizationsource: "API",
     },
   });
@@ -39,7 +39,7 @@ export async function POST(req:NextRequest){
         email,
         skipped_email: false,
         dont_send_welcome: true,
-        dietitian_id: "5171717",
+        dietitian_id: process.env.DIETITIAN_ID,
         phone_number: json.phone,
       }},
     });
@@ -54,7 +54,7 @@ export async function POST(req:NextRequest){
       mutation: UPDATE_PATIENT,
       variables: { input:{
               id: user.id,
-              dietitian_id: "5171717",
+              dietitian_id: process.env.DIETITIAN_ID,
               dob: dayjs(json.dob).format("DD/MM/YYYY"),
               height: json.height,
               phone_number: json.phone_number,

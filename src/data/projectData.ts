@@ -3,31 +3,33 @@ export const businessPackages = [
     id: "ico-trt-cypionate-inj-28",
     discount: 24,
     backgroundColor: "#1B3352",
-    packageName: "Testosterone Cypionate Injection + Anastrozole - 28 days",
+    packageName: "Iconix TRT - Initial Labs + Consult Fee",
+    // packageName: "Testosterone Cypionate Injection + Anastrozole - 28 days",
     originalPrice: "$205.00 USD",
     description: "Description",
   },
-  {
-    id: "ico-trt-enclomiphene-28",
-    discount: 24,
-    backgroundColor: "#1B3352",
-    packageName: "Iconix TRT Enclomiphene Subscription - 28 days",
-    originalPrice: "$185.00 USD",
-    description: "Description",
-  },
-  {
-    id: "ico-trt-kyzatrex-oral-28",
-    discount: 24,
-    backgroundColor: "#1B3352",
-    packageName: "Iconix TRT Kyzatrex Oral Subscription - 28 days",
-    originalPrice: "$249.00 USD",
-    description: "Description",
-  },
+  // {
+  //   id: "ico-trt-enclomiphene-28",
+  //   discount: 24,
+  //   backgroundColor: "#1B3352",
+  //   packageName: "Iconix TRT Enclomiphene Subscription - 28 days",
+  //   originalPrice: "$185.00 USD",
+  //   description: "Description",
+  // },
+  // {
+  //   id: "ico-trt-kyzatrex-oral-28",
+  //   discount: 24,
+  //   backgroundColor: "#1B3352",
+  //   packageName: "Iconix TRT Kyzatrex Oral Subscription - 28 days",
+  //   originalPrice: "$249.00 USD",
+  //   description: "Description",
+  // },
 ];
 export const questions:any = [
   {
     name: "q1",
     label: "Do any of the following apply to you?",
+    isDisabled: false,
     options: [
       "Current, or suspected prostate cancer",
       "Breast cancer",
@@ -43,6 +45,7 @@ export const questions:any = [
   {
     name: "q2",
     label: "Do any of the following apply to you?",
+    isDisabled: false,
     options: [
       "Decreased sexual vigor and libido",
       "Decreased energy or increased fatigue",
@@ -62,6 +65,7 @@ export const questions:any = [
   {
     name: "q3",
     label: "Do any of the following conditions or situations apply to you?",
+    isDisabled: false,
     options: [
       "Past prostate cancer no injectable, topical, or oral testosterone unless specialist clearance is provided",
       "Liver disease no clomiphene/enclomiphene",
@@ -87,6 +91,7 @@ export const questions:any = [
   {
     name: "q4",
     label: "Do any of the following conditions or situations apply to you?",
+    isDisabled: false,
     options: [
       "Low levels of testosterone on prior labs",
       "Current or prior diagnosis of hypogonadism or low testosterone",
@@ -99,6 +104,7 @@ export const questions:any = [
     name: "q5",
     label:
       "If you have previously been or currently are on testosterone (or related) replacement therapy, which form were or are you on?",
+    isDisabled: false,
     options: [
       "Gel",
       "Cream",
@@ -113,11 +119,26 @@ export const questions:any = [
   },
   {
     name: "q6",
+    isDisabled: false,
     label:"Please list the name, strength, and date of the last dose of testosterone (or related) replacement therapy. If you have never been on any of the above, please list ‘N/A’."},
   {
     name: "q7",
+    isDisabled: false,
     label:"Please list your current prescription and over-the-counter medications. "},
   {
     name: "q8",
+    isDisabled: false,
     label:"Please list your allergies to medications, dyes, foods, and any other substances." },
+    {
+      name: "q9",
+      isDisabled: false,
+      label:
+        "Preferred medication",
+      options: [
+        "Testosterone Cypionate Injection + Anastrozole as merited",
+        "Testosterone Oral + Anastrozole as merited",
+        "Enclomiphene + Anastrozole as merited",
+        "Testosterone Transdermal Gel",
+      ],
+    },
 ];

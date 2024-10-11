@@ -13,10 +13,37 @@ import {
 } from "antd";
 import axios from "axios";
 import { useState } from "react";
+import moment, {Moment} from "moment";
 
 
 const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [form] = Form.useForm();
+
+  // Custom date validation rule
+  const validateDate = (_: any, value: Moment | null) => {
+    if (!value) {
+      return Promise.reject(new Error('Please select a date'));
+    }
+    // Calculate the minimum valid date (25 years from today)
+    const minDate = moment().subtract(25, 'years').startOf('day');
+    if (value.isAfter(minDate)) {
+      return Promise.reject(new Error('Date must be at least 25 years from today.'));
+    }
+    return Promise.resolve();
+  };
+  const handleDateChange = (dob: Moment | null) => {
+    // Update the date in form state
+    form.setFieldsValue({ dob });
+    
+    // Validate the date field
+    if (dob) {
+      form.validateFields(['dob']).catch((err) => {
+        // If there's a validation error, you can handle it here if needed
+        console.log(err);
+      });
+    }
+  };
 
   const onFinish = async (values: any) => {
     try {      
@@ -49,6 +76,7 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
       <div className="mb-4 text-2xl font-bold xl:text-3xl">Sign up</div>
       <Form
         name="normal_login"
+        form={form}
         size="large"
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -89,11 +117,13 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
               name="dob"
               rules={[
                 { required: true, message: "Please input date of birth" },
+                {validator: validateDate}
               ]}
             >
               <DatePicker
                 placeholder="Date of Birth"
-                format="DD/MM/YYYY"
+                format="YYYY-MM-DD"
+                onChange={handleDateChange}
                 style={{ width: "100%" }}
               />
             </Form.Item>
