@@ -24,3 +24,12 @@ model User {
 
   @@map("user")
 }
+
+model Comment {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+  createdAt DateTime @default(now())
+
+  @@map("comment")
+}
