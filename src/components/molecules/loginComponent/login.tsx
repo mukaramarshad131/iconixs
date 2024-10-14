@@ -28,7 +28,7 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
               setIsLoading(false)
               return;
             }
-            const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/summary", "/dashboard/update-password"]
+            const permissions=["/dashboard", "/dashboard/intake-form", "/dashboard/follow-up-form", "/dashboard/summary", "/dashboard/update-password"]
             setUserInfo(response.user);
             setUserPermissions(permissions);
             router.push('/dashboard')
