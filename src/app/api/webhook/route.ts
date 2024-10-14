@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 // import { INTAKE_FORM } from "@/graphql/query";
+import {  TEST_DATA } from '@/graphql/query';
 import prisma from "@/lib/prisma";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
@@ -17,12 +18,30 @@ export async function POST(req: NextRequest) {
   // Log the received data for debugging
   console.log('Received Healthie OpenLoop webhook:', json);
   try {
+    if(json.event_type === "form_answer_group.created") {
+      const { data } = await client.query({
+        query: TEST_DATA,
+        variables: {
+          id: json.resource_id
+        },
+      })
+      const userInfo = data?.formAnswerGroup?.user;
+      if(userInfo?.email) {
+        await prisma.formAnswerGroup.create({
+          data: {
+            content: JSON.stringify(data),
+            userId: userInfo.id,
+            email: userInfo.email,  
+          },
+        })
+      }
+    }
     await prisma.comment.create({
       data: {
         title: "MSK",
         content: JSON.stringify(json)
       },
-  })
+    })
     return NextResponse.json({ message: 'Login successful', user: json}, { status: 200 });
 
   } catch (error: any) {

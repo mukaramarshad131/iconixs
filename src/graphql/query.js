@@ -606,3 +606,49 @@ mutation createDocument(
     }
   }
 }`;
+
+
+export const TEST_DATA = gql`
+query FormAnswerGroup($id: ID!) {
+	formAnswerGroup(id: $id) {
+		id
+		updated_at
+		custom_module_form {
+			id
+			name
+		}
+		filler {
+			id
+			gender
+			email
+			npi
+			qualifications
+			full_name_preferred: full_legal_name_with_preferred
+			location {
+				state
+			}
+			phone: phone_number
+			dob
+		}
+		finished
+		form_answers {
+			id
+			label
+			answer
+		}
+		user {
+			id
+			gender
+			email
+			id
+			additional_record_identifier
+			full_name_preferred: full_legal_name_with_preferred
+			location {
+				state
+			}
+			phone: phone_number
+			dob
+		}
+	}
+}
+`;
