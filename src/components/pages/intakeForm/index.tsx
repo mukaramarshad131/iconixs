@@ -93,9 +93,10 @@ export default function ItakeForm() {
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
-    const {security_number,upload_driving_liscense, license_number, upload_social_security, ...questionValues} = values;
+    const {security_number,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
     console.log('upload_driving_liscense: ', upload_driving_liscense);
     console.log('upload_social_security: ', upload_social_security);
+    console.log('driver_license_state: ', driver_license_state);
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -109,6 +110,12 @@ export default function ItakeForm() {
             label: "Driver License Number (DL)",
             user_id: user.id,
             answer: license_number,
+          },
+          {
+            custom_module_id: "29797675",
+            label: "Driver License State",
+            user_id: user.id,
+            answer: driver_license_state,
           },
           {
             custom_module_id: "29460118",
@@ -345,6 +352,12 @@ export default function ItakeForm() {
             user_id: user.id,
             answer: license_number,
           },
+          // {
+          //   custom_module_id: "14669230",
+          //   label: "Driver License State",
+          //   user_id: user.id,
+          //   answer: driver_license_state,
+          // },
           {
             custom_module_id: "14669227",
             label: "Social Security Number (SSN)",
@@ -848,7 +861,15 @@ export default function ItakeForm() {
                 key={12}
                 name="security_number"
                 label="Social Security Number"
-                rules={[{ required: true, message: `Social Security Number is required` }]}
+                rules={[
+                  { required: true, message: `Social Security Number is required` },
+                  { min: 9, message: 'Social Security Number must be exactly 9 digits' },
+                  { max: 9, message: 'Social Security Number must be exactly 9 digits' },
+                  { 
+                    pattern: /^\d+$/, 
+                    message: 'It must be a number.' 
+                  }
+                ]}
               >
                 <Input placeholder="Social Security Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
@@ -856,12 +877,32 @@ export default function ItakeForm() {
                 key={13}
                 name="license_number"
                 label="Driving License Number"
-                rules={[{ required: true, message: `Driving License Number is required` }]}
+                rules={[
+                  { required: true, message: `Driving License Number is required` },
+                  { 
+                    pattern: /^[a-zA-Z0-9]+$/, 
+                    message: 'Input must be alphanumeric (letters and numbers only)' 
+                  },
+                ]}
               >
                 <Input placeholder="Driving License Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
               <Form.Item
                 key={14}
+                name="driver_license_state"
+                label="Driver License State"
+                rules={[
+                  { required: true, message: `Driver License State is required` },
+                  { 
+                    pattern: /^[a-zA-Z0-9]+$/, 
+                    message: 'Input must be alphanumeric (letters and numbers only)' 
+                  },
+                ]}
+              >
+                <Input placeholder="Driver License State" disabled={formData["q6"].isDisable} />
+              </Form.Item>
+              <Form.Item
+                key={15}
                 name="upload_social_security"
                 label="Upload Social Security Number"
                 style={formData["q6"].isDisable ? {pointerEvents: `none`} : {}}
@@ -870,7 +911,7 @@ export default function ItakeForm() {
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
               </Form.Item>
               <Form.Item
-                key={15}
+                key={16}
                 name="upload_driving_liscense"
                 label="Upload Social Driving Liscense"
                 style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}

@@ -229,7 +229,7 @@ console.log(userData?.user, initFormValues)
                   name="height"
                   rules={[{ required: true, message: "Please input Height" }]}
                 >
-                  <Input type="number" placeholder="Height" />
+                  <Input placeholder="Height" />
                 </Form.Item>
               </Col>
 

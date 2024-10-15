@@ -57,6 +57,7 @@ export async function POST(req:NextRequest){
               dietitian_id: process.env.DIETITIAN_ID,
               dob: dayjs(json.dob).format("DD/MM/YYYY"),
               height: json.height,
+              timezone: json.timezone,
               phone_number: json.phone_number,
               additional_record_identifier: "",
               gender: json.gender,

@@ -85,7 +85,9 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
           <Col span={12}>
             <Form.Item
               name="first_name"
-              rules={[{ required: true, message: "Please input First Name" }]}
+              rules={[{ required: true, message: "Please input First Name" },
+                { pattern: /^[a-zA-Z]+$/, message: 'Input must be alphabet' }
+              ]}
             >
               <Input placeholder="Enter First Name" />
             </Form.Item>
@@ -93,7 +95,9 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
           <Col span={12}>
             <Form.Item
               name="last_name"
-              rules={[{ required: true, message: "Please input Last Name" }]}
+              rules={[{ required: true, message: "Please input Last Name" },
+                { pattern: /^[a-zA-Z]+$/, message: 'Input must be alphabet' }
+              ]}
             >
               <Input placeholder="Enter Last Name" />
             </Form.Item>
@@ -142,15 +146,21 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
           <Col span={12}>
             <Form.Item
               name="height"
-              rules={[{ required: true, message: "Please input Height" }]}
+              rules={[{ required: true, message: "Please input Height" },
+                { 
+                  pattern: /^\d+$/, 
+                  message: 'Height must be a positive whole number representing inches (e.g., "63")' 
+                },
+              ]}
             >
-              <Input type="number" placeholder="Height" />
+              <Input placeholder="Height" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               name="metric_stat"
-              rules={[{ required: true, message: "Please input Weight" }]}
+              rules={[{ required: true, message: "Please input Weight" }
+              ]}
             >
               <Input type="number" placeholder="Weight" />
             </Form.Item>
@@ -160,7 +170,6 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
               name="password"
               rules={[
                 { required: true },
-
                 {
                   validator: (rule, value) => {
                     const hasUppercase = /[A-Z]/.test(value);
@@ -220,7 +229,7 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
         <div className="mb-2 text-xs text-gray">
           <span>By signing up, I agree to </span>
           <a
-            href="https://openloophealth.com/terms-of-use"
+            href="https://openloophealth.com/telehealth-consent"
             target="_blank"
             className="text-sm !underline text-blue-600"
           >
@@ -228,7 +237,7 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
           </a>
           {" & "}
           <a
-            href="https://openloophealth.com/notice-of-privacy-practices"
+            href="https://openloophealth.com/telehealth-consent"
             target="_blank"
             className="text-sm !underline text-blue-600"
           >

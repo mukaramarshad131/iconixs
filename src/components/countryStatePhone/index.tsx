@@ -55,7 +55,8 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
             placeholder="Select Country"
             value={selectedCountry}
             onChange={handleCountryChange}
-            optionFilterProp="children"
+            optionFilterProp="children" 
+            disabled
             defaultValue={'US'}
             filterOption={(input, option) =>
               (option?.children as unknown as string)
@@ -102,7 +103,9 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
         <Form.Item<FieldType>
           label={!noLabel ? "City" : undefined}
           name="city"
-          rules={[{ required: true, message: "Please input city" }]}
+          rules={[{ required: true, message: "Please input city" },
+            { pattern: /^[a-zA-Z]+$/, message: 'Input must be alphabet' }
+          ]}
         >
           <Input placeholder="City" />
         </Form.Item>

@@ -12,11 +12,6 @@ export const defaultMenu = [
     icon: <UserOutlined />,
     label: <Link href="/dashboard/intakeForm">IntakeForm</Link>,
   },
-  {
-    key: "3",
-    icon: <UserOutlined />,
-    label: <Link href="/dashboard/followUpForm">Follow Up Form</Link>,
-  },
 ];
 
 export const siderStyle: React.CSSProperties = {

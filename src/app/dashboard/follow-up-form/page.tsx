@@ -2,13 +2,13 @@ import FollowUpForm from '@/components/pages/followUpForm';
 import { Metadata } from 'next';
 import React from 'react'
 
-export const metadata:Metadata={title: "Follow Up Form| Iconix Medical"};
+export const metadata:Metadata={title: "Intake Form| Iconix Medical"};
 export const dynamic = 'force-dynamic';
 
-const FollowUpFormPage = () => {
+const IntakeFormPage = () => {
   return (
     <FollowUpForm />
   )
 }
 
-export default FollowUpFormPage
+export default IntakeFormPage
