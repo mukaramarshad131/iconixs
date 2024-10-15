@@ -10,6 +10,7 @@ import {
   DatePicker,
   Card,
   notification,
+  Alert,
 } from "antd";
 import { useEffect } from "react";
 import {
@@ -146,6 +147,13 @@ console.log(userData?.user, initFormValues)
     <div className="w-full mt-2">
       {!userLoading && (
         <Card style={{padding: '15px 24px' }}>
+    <Alert
+      message="Notes"
+      description="All patient profile details are currently read-only. For any updates or changes,please reach out to our Patient Support team at +1 (203) 951-0663 or iconix@openloophealthpartners.zohodesk.com."
+      type="info"
+      showIcon
+    />
+    <br />
           <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
             Patient Detail
           </h1>
@@ -154,6 +162,7 @@ console.log(userData?.user, initFormValues)
             initialValues={{ ...initFormValues }}
             labelCol={{ span: 8 }}
             className="!w-full ml-0"
+            disabled={true}
             onFinish={onFinish}
           >
             <Row gutter={16}>
@@ -248,7 +257,7 @@ console.log(userData?.user, initFormValues)
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full !bg-[#0c2345]"
+                className="w-full !bg-[#0c2345] !text-white"
                 loading={fetching}
               >
                 Submit
