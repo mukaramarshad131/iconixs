@@ -824,7 +824,21 @@ export default function ItakeForm() {
               className="container"
             >
               {questions.map((question: any, index: any) => (
-                <Form.Item
+                question.name ==='q1a'?
+                q1Ref.current ?<Form.Item
+                key={index}
+                name="explain"
+                label="Explain (Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients)"
+                rules={[{ required: true, message: `field is required` }]}>
+                 <Input.TextArea
+                      showCount
+                      maxLength={100}
+                      placeholder="Type here"
+                    />
+              
+              </Form.Item>
+                :<></>
+                :<Form.Item
                   key={index}
                   name={question.name}
                   label={question.label}
@@ -866,18 +880,6 @@ export default function ItakeForm() {
                   }
                 </Form.Item>
               ))}
-              {q1Ref.current &&<Form.Item
-                key={12}
-                name="explain"
-                label="Explain (Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients)"
-                rules={[{ required: true, message: `field is required` }]}>
-                 <Input.TextArea
-                      showCount
-                      maxLength={100}
-                      placeholder="Type here"
-                    />
-              
-              </Form.Item>}
               <Form.Item
                 key={13}
                 name="security_number"
