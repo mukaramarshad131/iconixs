@@ -806,9 +806,9 @@ export default function ItakeForm() {
   };
   return (
     <div>
-      {/* {intakeFormData?.formAnswerGroups?.length > 0 ? ( */}
+      {intakeFormData?.formAnswerGroups?.length > 0 ? (
         <IntakeListing />
-      {/* // ) : ( */}
+      ) : ( 
         <div className="w-full flex flex-col justify-center items-center mt-10">
           <Card bodyStyle={{ padding: "15px 24px" }}>
             <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
@@ -953,7 +953,7 @@ export default function ItakeForm() {
             </Form>
           </Card>
         </div>
-        {/* )}   */}
+      )}
     </div>
   );
 }
