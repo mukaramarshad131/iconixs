@@ -40,7 +40,7 @@ export default function ItakeForm() {
   // const [intakeFormFunction] = useMutation(INTAKE_FORM);
   const handleSelectChange = (questionName: any, values: any) => {
     console.log(questionName, values)
-    if( questionName === "q1" && values.includes("None of the above")) {
+    if( questionName === "q1" && !values.includes("None of the above")) {
       formData['q2'].isDisable = true;
       formData['q3'].isDisable = true;
       formData['q4'].isDisable = true;
@@ -804,13 +804,11 @@ export default function ItakeForm() {
     }
     // await mutateFunction({ variables: { ...updatePayload } });
   };
-
-  console.log(q1Ref.current)
   return (
     <div>
-      {intakeFormData?.formAnswerGroups?.length > 0 ? (
+      {/* {intakeFormData?.formAnswerGroups?.length > 0 ? ( */}
         <IntakeListing />
-      ) : (
+      {/* // ) : ( */}
         <div className="w-full flex flex-col justify-center items-center mt-10">
           <Card bodyStyle={{ padding: "15px 24px" }}>
             <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
@@ -955,7 +953,7 @@ export default function ItakeForm() {
             </Form>
           </Card>
         </div>
-        )}  
+        {/* )}   */}
     </div>
   );
 }

@@ -19,9 +19,9 @@ export default function IntakeListing() {
 
   const showModal = (payload:any) => {
     setIsModalOpen(true);
-    setCurrentRow(payload);
-    console.log(payload);
-    
+    const notshow = ['Patient Info','Photo Upload', 'Charting']
+    const newData= payload.form_answers?.filter((key:any)=>(!notshow.includes(key.label)))
+    setCurrentRow(newData);    
   };
 
   const handleOk = () => {
@@ -39,7 +39,6 @@ export default function IntakeListing() {
       filler_id: id,
     },
   });
-  console.log('intakeFormData: ', intakeFormData?.formAnswerGroups);
   const columns = [
     {
       title: 'Name',
@@ -76,7 +75,11 @@ export default function IntakeListing() {
           <Table columns={columns} dataSource={intakeFormData?.formAnswerGroups?.map((item:any, idx:number)=>({key:idx, ...item})) ?? []} scroll={{x: "700px"}} loading={loading}/>
       </main>
       <Modal title={currentRow.name} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <div className='rowHTML' dangerouslySetInnerHTML={{__html: currentRow?.form_answers[2]?.displayed_answer }} />
+        <div className='rowHTML' dangerouslySetInnerHTML={{__html: currentRow?.form_answers?.map(
+                (item: any) =>
+                   item?.displayed_answer??''
+                  +`<br/>`
+              ) }} />
       </Modal>
     </Card>
   );

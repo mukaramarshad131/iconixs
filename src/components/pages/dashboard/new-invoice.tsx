@@ -19,7 +19,7 @@ export default function NewInvoice() {
       with_all_statuses: true,
     },
   });
-
+  if (!!!id){ return };
   console.log(appointmentListing, 'appointment')
   const columns: ColumnsType<DataType> = [
     {

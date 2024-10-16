@@ -6,10 +6,13 @@ import React from 'react';
 import { useUserActions, useUserInfo } from '@/store/userStore';
 import Link from 'next/link';
 import { DownOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
+
 
 
 export default function AccountDropdown() {
   const { clearUserInfoAndToken} = useUserActions();
+  const router = useRouter()
   const {first_name = "", last_name="" ,email=""} = useUserInfo();
   const menuStyle: React.CSSProperties = {
     boxShadow: 'none',
@@ -23,6 +26,7 @@ export default function AccountDropdown() {
   const logout =async ()=>{
     clearUserInfoAndToken();
     await fetch('/api/logout',{method:'GET'})
+    router.replace('/')
   }
   const dropdownRender: DropdownProps['dropdownRender'] = (menu) => (
     <div style={contentStyle}>
@@ -40,7 +44,7 @@ export default function AccountDropdown() {
      key: '1' },
     { type: 'divider' },
     {
-      label: <Link href={'/'} className="font-bold text-red-600" onClick={logout}>Logout</Link>,
+      label: <span  className="font-bold text-red-600" onClick={logout}>Logout</span>,
       key: '3',
     },
   ];
