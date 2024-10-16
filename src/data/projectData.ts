@@ -39,9 +39,14 @@ export const questions:any = [
       "Hemoglobin > 18 g/dL, hematocrit > 50% (polycythemia) on prior lab tests or history of blood donation due to high blood counts",
       "Untreated and/or severe sleep apnea",
       "Desire to preserve fertility or have more children",
-      "Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients free text",
+      "Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients",
       "None of the above",
     ],
+  },
+  {
+    name: "q1a",
+    label: "Explain (Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients)",
+    isDisabled: false,
   },
   {
     name: "q2",

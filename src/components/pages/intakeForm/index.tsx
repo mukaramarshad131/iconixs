@@ -1,6 +1,6 @@
 "use client";
 // import { useMutation } from '@apollo/client';
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
 import { questions } from "@/data/projectData";
 import { INTAKE_FORM_QUERY } from "@/graphql/query";
@@ -12,7 +12,7 @@ import {
 } from "@/store/userStore";
 import { useQuery } from "@apollo/client";
 
-import { Select, Form, Input, Button, Card } from "antd";
+import { Select, Form, Input, Button, Card, notification } from "antd";
 import IntakeListing from "../dashboard/intake-Listing";
 import UploadDocs from "@/components/atom/uploadDoc";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ export default function ItakeForm() {
   const user = useUserInfo();
   const [form] = Form.useForm();
   const router = useRouter();
+  const q1Ref = useRef()
   const [formData, setFormData] = useState<any>(
     questions.reduce((acc: any, q: any) => {
       acc[q.name] = {
@@ -38,7 +39,8 @@ export default function ItakeForm() {
   // const [ mutateFunction, { loading } ] = useMutation(UPLOAD_DOCS);
   // const [intakeFormFunction] = useMutation(INTAKE_FORM);
   const handleSelectChange = (questionName: any, values: any) => {
-    if( questionName === "q1" && !values.includes("None of the above")) {
+    console.log(questionName, values)
+    if( questionName === "q1" && values.includes("None of the above")) {
       formData['q2'].isDisable = true;
       formData['q3'].isDisable = true;
       formData['q4'].isDisable = true;
@@ -66,6 +68,7 @@ export default function ItakeForm() {
       formData['q8'].isDisable = false;
       formData['q9'].isDisable = false;
     }
+    q1Ref.current = questionName === 'q1'&& values.includes('Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients')
     const isNoneSelected = values.includes("None of the above");
     if (isNoneSelected) {
       form.setFieldsValue({ [questionName]: ["None of the above"] });
@@ -88,15 +91,18 @@ export default function ItakeForm() {
       filler_id: user.id,
     },
   });
-  console.log('intakeFormData:', intakeFormData);
+
   const result = extractQuestionsAndAnswers(
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
+    if(!values.q1.includes('Desire to preserve fertility or have more children'))
+      {
+        notification.error({message:'Sorry, you do not currently qualify for Iconix Medical TRT Program.',duration:3})
+        router.replace("/dashboard/packages");
+        return;
+      }
     const {security_number,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
-    console.log('upload_driving_liscense: ', upload_driving_liscense);
-    console.log('upload_social_security: ', upload_social_security);
-    console.log('driver_license_state: ', driver_license_state);
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -798,6 +804,8 @@ export default function ItakeForm() {
     }
     // await mutateFunction({ variables: { ...updatePayload } });
   };
+
+  console.log(q1Ref.current)
   return (
     <div>
       {intakeFormData?.formAnswerGroups?.length > 0 ? (
@@ -847,18 +855,31 @@ export default function ItakeForm() {
                         </Select.Option>
                       ))}
                     </Select>
-                  ) : (
+                  ) :(
                     <Input.TextArea
                       showCount
                       maxLength={100}
                       disabled={formData[question.name].isDisable}
                       placeholder="Type here"
                     />
-                  )}
+                  )
+                  }
                 </Form.Item>
               ))}
-              <Form.Item
+              {q1Ref.current &&<Form.Item
                 key={12}
+                name="explain"
+                label="Explain (Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients)"
+                rules={[{ required: true, message: `field is required` }]}>
+                 <Input.TextArea
+                      showCount
+                      maxLength={100}
+                      placeholder="Type here"
+                    />
+              
+              </Form.Item>}
+              <Form.Item
+                key={13}
                 name="security_number"
                 label="Social Security Number"
                 rules={[
@@ -874,7 +895,7 @@ export default function ItakeForm() {
                 <Input placeholder="Social Security Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
               <Form.Item
-                key={13}
+                key={14}
                 name="license_number"
                 label="Driving License Number"
                 rules={[
@@ -888,7 +909,7 @@ export default function ItakeForm() {
                 <Input placeholder="Driving License Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
               <Form.Item
-                key={14}
+                key={15}
                 name="driver_license_state"
                 label="Driver License State"
                 rules={[
@@ -902,7 +923,7 @@ export default function ItakeForm() {
                 <Input placeholder="Driver License State" disabled={formData["q6"].isDisable} />
               </Form.Item>
               <Form.Item
-                key={15}
+                key={16}
                 name="upload_social_security"
                 label="Upload Social Security Number"
                 style={formData["q6"].isDisable ? {pointerEvents: `none`} : {}}
@@ -911,7 +932,7 @@ export default function ItakeForm() {
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
               </Form.Item>
               <Form.Item
-                key={16}
+                key={17}
                 name="upload_driving_liscense"
                 label="Upload Social Driving Liscense"
                 style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}
@@ -932,7 +953,7 @@ export default function ItakeForm() {
             </Form>
           </Card>
         </div>
-       )} 
+        )}  
     </div>
   );
 }
