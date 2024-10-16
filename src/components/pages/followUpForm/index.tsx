@@ -2,7 +2,7 @@
 // import { useMutation } from '@apollo/client';
 import React, { useState } from "react";
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
-import { questions } from "@/data/projectData";
+import { followUpQuestions } from "@/data/projectData";
 import { INTAKE_FORM_QUERY } from "@/graphql/query";
 
 import {
@@ -25,7 +25,7 @@ export default function FollowUpForm() {
   const [form] = Form.useForm();
   const router = useRouter();
   const [formData, setFormData] = useState<any>(
-    questions.reduce((acc: any, q: any) => {
+    followUpQuestions.reduce((acc: any, q: any) => {
       acc[q.name] = {
         options: q.options,
         isDisable: false,
@@ -75,7 +75,7 @@ export default function FollowUpForm() {
       [questionName]: {
         options: isNoneSelected
           ? ["None of the above"]
-          : questions?.find((q: any) => q.name === questionName).options,
+          : followUpQuestions?.find((q: any) => q.name === questionName).options,
         selectedValues: isNoneSelected ? ["None of the above"] : values,
       },
     }));
@@ -143,7 +143,7 @@ export default function FollowUpForm() {
             answer: `<p>${Object.values(questionValues)
               .map(
                 (item: any, index: number) =>
-                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)
+                  `<b>Question:${followUpQuestions[index].label}</b><br/>${Array.isArray(item)
                     ? item?.map(
                       (key: any, idx: number) => `${idx + 1}:${key}`
                     )
@@ -378,7 +378,7 @@ export default function FollowUpForm() {
             answer: `<p>${Object.values(questionValues)
               .map(
                 (item: any, index: number) =>
-                  `<b>Question:${questions[index].label}</b><br/>${Array.isArray(item)
+                  `<b>Question:${followUpQuestions[index].label}</b><br/>${Array.isArray(item)
                     ? item?.map(
                       (key: any, idx: number) => `${idx + 1}:${key}`
                     )
@@ -793,7 +793,7 @@ export default function FollowUpForm() {
         <div className="w-full flex flex-col justify-center items-center mt-10">
           <Card bodyStyle={{ padding: "15px 24px" }}>
             <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
-              Patient Intake Form
+              Follow Up Form
             </h1>
             <Form
               layout="vertical"
@@ -802,7 +802,7 @@ export default function FollowUpForm() {
               onFinish={OnFinish}
               className="container"
             >
-              {questions.map((question: any, index: any) => (
+              {followUpQuestions.map((question: any, index: any) => (
                 <Form.Item
                   key={index}
                   name={question.name}
