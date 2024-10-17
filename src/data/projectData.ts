@@ -134,18 +134,18 @@ export const questions:any = [
     name: "q8",
     isDisabled: false,
     label:"Please list your allergies to medications, dyes, foods, and any other substances." },
-    {
-      name: "q9",
-      isDisabled: false,
-      label:
-        "Preferred medication",
-      options: [
-        "Testosterone Cypionate Injection + Anastrozole as merited",
-        "Testosterone Oral + Anastrozole as merited",
-        "Enclomiphene + Anastrozole as merited",
-        "Testosterone Transdermal Gel",
-      ],
-    },
+    // {
+    //   name: "q9",
+    //   isDisabled: false,
+    //   label:
+    //     "Preferred medication",
+    //   options: [
+    //     "Testosterone Cypionate Injection + Anastrozole as merited",
+    //     "Testosterone Oral + Anastrozole as merited",
+    //     "Enclomiphene + Anastrozole as merited",
+    //     "Testosterone Transdermal Gel",
+    //   ],
+    // },
 ];
 
 

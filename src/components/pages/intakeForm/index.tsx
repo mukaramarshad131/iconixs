@@ -52,7 +52,7 @@ export default function ItakeForm() {
       formData['q6'].isDisable = true;
       formData['q7'].isDisable = true;
       formData['q8'].isDisable = true;
-      formData['q9'].isDisable = true;
+      // formData['q9'].isDisable = true;
     } else if(questionName === "q2" && values.includes("None of the above")) {
       formData['q1'].isDisable = true;
       formData['q3'].isDisable = true;
@@ -61,7 +61,7 @@ export default function ItakeForm() {
       formData['q6'].isDisable = true;
       formData['q7'].isDisable = true;
       formData['q8'].isDisable = true;
-      formData['q9'].isDisable = true;
+      // formData['q9'].isDisable = true;
     } else {
       formData['q2'].isDisable = false;
       formData['q3'].isDisable = false;
@@ -70,7 +70,7 @@ export default function ItakeForm() {
       formData['q6'].isDisable = false;
       formData['q7'].isDisable = false;
       formData['q8'].isDisable = false;
-      formData['q9'].isDisable = false;
+      // formData['q9'].isDisable = false;
     }
     q1Ref.current = questionName === 'q1'&& values.includes('Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients')
     const isNoneSelected = values.includes("None of the above") && questionName !== "q1";
@@ -108,7 +108,7 @@ export default function ItakeForm() {
         router.replace("/dashboard");
         return;
       }
-    const {security_number,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
+    const {security_number, q9,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -169,7 +169,9 @@ export default function ItakeForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Shipping Address</b>
+              .join("")}<b>Preferred medication</b>
+<br/>${q9}</p>
+<b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
           },
@@ -410,7 +412,10 @@ export default function ItakeForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Shipping Address</b>
+              .join("")}
+              <b>Preferred medication</b>
+<br/>${q9}</p>
+<b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
           },
@@ -884,6 +889,24 @@ export default function ItakeForm() {
                   }
                 </Form.Item>
               ))}
+              <Form.Item
+                key={24}
+                name="q9"
+                label="Preferred medication"
+                rules={[
+                  { required: true, message: `Preferred medication is required` }
+                ]}
+              >
+                <Select
+                  placeholder="Select options"
+                >
+                  <Select.Option value="Testosterone Cypionate Injection + Anastrozole as merited">Testosterone Cypionate Injection + Anastrozole as merited</Select.Option>
+                  <Select.Option value="Testosterone Oral + Anastrozole as merited">Testosterone Oral + Anastrozole as merited</Select.Option>
+                  <Select.Option value="Enclomiphene + Anastrozole as merited">Enclomiphene + Anastrozole as merited</Select.Option>
+                  {/* <Select.Option value="Testosterone Transdermal Gel">Testosterone Transdermal Gel</Select.Option> */}
+                  <Select.Option value="Not sure">Not sure</Select.Option>
+                </Select>
+              </Form.Item>
               <Form.Item
                 key={13}
                 name="security_number"
