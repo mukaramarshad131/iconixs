@@ -146,10 +146,11 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
           <Col span={12}>
             <Form.Item
               name="height"
-              rules={[{ required: true, message: "Please input Height" },
-                { 
-                  pattern: /^\d+$/, 
-                  message: 'Height must be a positive whole number representing inches (e.g., "63")' 
+              rules={[
+                { required: true, message: "Please input Height" },
+                {
+                  pattern: /^(\d+)ft\s(\d+)in$/,
+                  message: 'Height should be in the format Xft Yin (e.g., 7ft 7in)',
                 },
               ]}
             >

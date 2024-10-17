@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt'
 import { CREATE_PATIENT, UPDATE_PATIENT, UPDATE_WEIGHT } from "@/graphql/query";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import dayjs from "dayjs";
-
+import { convertHeight } from "@/components/funcitons";
 const userSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
     password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
@@ -56,7 +56,7 @@ export async function POST(req:NextRequest){
               id: user.id,
               dietitian_id: process.env.DIETITIAN_ID,
               dob: dayjs(json.dob).format("DD/MM/YYYY"),
-              height: json.height,
+              height: convertHeight(json.height),
               timezone: json.timezone,
               phone_number: json.phone_number,
               additional_record_identifier: "",
