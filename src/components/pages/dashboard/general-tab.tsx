@@ -252,7 +252,7 @@ console.log(userData?.user, initFormValues)
                 </Form.Item>
               </Col>
             </Row>
-            <CountryStateForm />
+            <CountryStateForm isDisabled={true} />
             <Form.Item>
               <Button
                 type="primary"

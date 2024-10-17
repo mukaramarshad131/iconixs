@@ -74,7 +74,7 @@ export const questions:any = [
     isDisabled: false,
     options: [
       "Past prostate cancer",
-      "Liver disease no clomiphene/enclomiphene",
+      "Liver disease",
       "Brain or pituitary (region of the brain) tumor",
       "Uncontrolled adrenal disease",
       "Uncontrolled thyroid disease",
@@ -85,7 +85,6 @@ export const questions:any = [
       "Controlled and treated sleep apnea",
       "History of a blood clot ",
       "Testicular cancer",
-      "Tumor in the pituitary gland",
       "Estrogen-dependent tumor ",
       "Early puberty ",
       "Gynecomastia (breast enlargement in men due to benign or non-cancerous breast tissue growth)",
@@ -194,7 +193,7 @@ export const followUpQuestions:any = [
     isDisabled: false,
     options: [
       "Past prostate cancer",
-      "Liver disease no clomiphene/enclomiphene",
+      "Liver disease",
       "Brain or pituitary (region of the brain) tumor",
       "Uncontrolled adrenal disease",
       "Uncontrolled thyroid disease",
@@ -205,7 +204,6 @@ export const followUpQuestions:any = [
       "Controlled and treated sleep apnea",
       "History of a blood clot ",
       "Testicular cancer",
-      "Tumor in the pituitary gland",
       "Estrogen-dependent tumor ",
       "Early puberty ",
       "Gynecomastia (breast enlargement in men due to benign or non-cancerous breast tissue growth)",
