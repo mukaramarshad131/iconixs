@@ -234,15 +234,7 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
             target="_blank"
             className="text-sm !underline text-blue-600"
           >
-            Terms of service
-          </a>
-          {" & "}
-          <a
-            href="https://openloophealth.com/telehealth-consent"
-            target="_blank"
-            className="text-sm !underline text-blue-600"
-          >
-            Privacy policy
+             Telehealth Consent
           </a>
         </div>
         <Button block type="link" onClick={() => setIsLogin(true)}>
