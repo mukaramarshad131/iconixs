@@ -17,18 +17,19 @@ export default function BannerCard() {
     size="small"
     current={0}
     items={[
-      { title: 'Complete Intake Form', description: 'Please fill out the intake form to begin' },
+      { title: 'Leave as is' },
       {
-        title: 'Select Package',
-        description: 'Choose a package that suits your needs',
+        title: 'Select Preferred TRT Package (subtext: “Choose between 3 different options)',
+      },
+      { title: 'Payment (subtext: “Pay for your initial consult and bloodwork)' },
+      {
+        title: 'Schedule Initial Consultation',
       },
       {
-        title: 'Payment',
-        description: 'Securely pay for your selected package',
+        title: 'Pay for Month 1 of Treatment',
       },
       {
-        title: 'Setup Appointments',
-        description: 'Schedule your appointments',
+        title: 'Self Administration of TRT',
       },
     ]}
   />
