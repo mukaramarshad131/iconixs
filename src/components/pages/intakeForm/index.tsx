@@ -17,7 +17,11 @@ import IntakeListing from "../dashboard/intake-Listing";
 import UploadDocs from "@/components/atom/uploadDoc";
 import { useRouter } from "next/navigation";
 
-
+const validSelections = [
+  "Desire to preserve fertility or have more children",
+  "Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients",
+  "None of the above"
+];
 export default function ItakeForm() {
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
@@ -69,7 +73,7 @@ export default function ItakeForm() {
       formData['q9'].isDisable = false;
     }
     q1Ref.current = questionName === 'q1'&& values.includes('Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients')
-    const isNoneSelected = values.includes("None of the above");
+    const isNoneSelected = values.includes("None of the above") && questionName !== "q1";
     if (isNoneSelected) {
       form.setFieldsValue({ [questionName]: ["None of the above"] });
     }
@@ -96,10 +100,12 @@ export default function ItakeForm() {
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
-    if(!values.q1.includes('Desire to preserve fertility or have more children'))
+    const invalidSelections = formData['q1']?.selectedValues?.filter((items:any) => !validSelections?.includes(items));
+    const q2Selections = formData['q2']?.selectedValues?.includes("None of the above");
+    if(q2Selections || invalidSelections?.length > 0)
       {
         notification.error({message:'Sorry, you do not currently qualify for Iconix Medical TRT Program.',duration:3})
-        router.replace("/dashboard/packages");
+        router.replace("/dashboard");
         return;
       }
     const {security_number,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
@@ -810,7 +816,7 @@ export default function ItakeForm() {
         <IntakeListing />
       ) : ( 
         <div className="w-full flex flex-col justify-center items-center mt-10">
-          <Card bodyStyle={{ padding: "15px 24px" }}>
+          <Card bodyStyle={{ padding: "15px 24px" }} style={{width: "100%"}}>
             <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
               Patient Intake Form
             </h1>
@@ -847,7 +853,7 @@ export default function ItakeForm() {
                       mode="multiple"
                       placeholder="Select options"
                       value={formData[question.name].selectedValues}
-                      disabled={formData[question.name].isDisable}
+                      // disabled={formData[question.name].isDisable}
                       onChange={(values) =>
                         handleSelectChange(question.name, values)
                       }
@@ -857,7 +863,7 @@ export default function ItakeForm() {
                           key={i}
                           value={option}
                           disabled={
-                            option !== "None of the above" &&
+                            option !== "None of the above" && question.name !=="q1" &&
                             formData[question.name].selectedValues.includes(
                               "None of the above"
                             )
@@ -871,7 +877,7 @@ export default function ItakeForm() {
                     <Input.TextArea
                       showCount
                       maxLength={100}
-                      disabled={formData[question.name].isDisable}
+                      // disabled={formData[question.name].isDisable}
                       placeholder="Type here"
                     />
                   )
@@ -892,7 +898,10 @@ export default function ItakeForm() {
                   }
                 ]}
               >
-                <Input placeholder="Social Security Number" disabled={formData["q6"].isDisable} />
+                <Input
+                  placeholder="Social Security Number"
+                  // disabled={formData["q6"].isDisable}
+                />
               </Form.Item>
               <Form.Item
                 key={14}
@@ -906,7 +915,10 @@ export default function ItakeForm() {
                   },
                 ]}
               >
-                <Input placeholder="Driving License Number" disabled={formData["q6"].isDisable} />
+                <Input
+                  placeholder="Driving License Number"
+                  // disabled={formData["q6"].isDisable}
+                />
               </Form.Item>
               <Form.Item
                 key={15}
@@ -920,13 +932,16 @@ export default function ItakeForm() {
                   },
                 ]}
               >
-                <Input placeholder="Driver License State" disabled={formData["q6"].isDisable} />
+                <Input
+                  placeholder="Driver License State"
+                  // disabled={formData["q6"].isDisable}
+                />
               </Form.Item>
               <Form.Item
                 key={16}
                 name="upload_social_security"
                 label="Upload Social Security Number"
-                style={formData["q6"].isDisable ? {pointerEvents: `none`} : {}}
+                // style={formData["q6"].isDisable ? {pointerEvents: `none`} : {}}
                 rules={[{ required: true, message: `Social Security Number is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
@@ -935,7 +950,7 @@ export default function ItakeForm() {
                 key={17}
                 name="upload_driving_liscense"
                 label="Upload Social Driving Liscense"
-                style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}
+                // style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}
                 rules={[{ required: true, message: `Driving Liscense is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Social Driving Liscense" />
@@ -944,8 +959,8 @@ export default function ItakeForm() {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  disabled={formData["q6"].isDisable}
-                  className={formData["q6"].isDisable ? "w-full !bg-[#0c2345] mt-3 !text-[#fff]" : "w-full !bg-[#0c2345] mt-3"}
+                  // disabled={formData["q6"].isDisable}
+                  className={"w-full !bg-[#0c2345] mt-3"}
                 >
                   Submit
                 </Button>
