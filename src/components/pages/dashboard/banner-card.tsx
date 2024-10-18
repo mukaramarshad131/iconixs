@@ -20,28 +20,31 @@ export default function BannerCard() {
           current={0}
           items={[
             {
-              title: 'Step 1 - Complete Intake Form',
+              title: 'Complete Intake Form',
               description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Fill out your medical intake form to begin</li></ul>,
             },
             {
-              title: ' Step 2 - Select Preferred Testosterone Therapy Package',
+              title: 'Select Preferred Testosterone Therapy Package',
               description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Choose between 3 different options of administration</li></ul>,
             },
             {
-              title: 'Step 3 - Payment',
+              title: 'Payment',
               description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
                 <li>Pay for your initial consult and bloodwork</li>
+                <li>Schedule Initial Consultation</li>
+                <li>Pay for Month 1 of Treatment</li>
+                <li>Self Administer Your TRT</li>
               </ul>,
             },
-            {
-              title: 'Step 4 - Schedule Initial Consultation',
-            },
-            {
-              title: 'Step 5 - Pay for Month 1 of Treatment',
-            },
-            {
-              title: 'Step 6 - Self Administer Your TRT',
-            },
+            // {
+            //   title: 'Schedule Initial Consultation',
+            // },
+            // {
+            //   title: 'Pay for Month 1 of Treatment',
+            // },
+            // {
+            //   title: 'Self Administer Your TRT',
+            // },
           ]}
         />
       </Col>

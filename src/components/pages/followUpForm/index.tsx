@@ -872,11 +872,11 @@ export default function FollowUpForm() {
               <Form.Item
                 key={15}
                 name="upload_driving_liscense"
-                label="Upload Social Driving Liscense"
+                label="Upload Image of Driver's License"
                 style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}
                 rules={[{ required: true, message: `Driving Liscense is required` }]}
               >
-                <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Social Driving Liscense" />
+                <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Image of Driver's License" />
               </Form.Item>
               <Form.Item>
                 <Button
