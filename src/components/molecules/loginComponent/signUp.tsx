@@ -230,6 +230,22 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
         <div className="mb-2 text-xs text-gray">
           <span>By signing up, I agree to </span>
           <a
+            href="https://openloophealth.com/terms-of-use"
+            target="_blank"
+            className="text-sm !underline text-blue-600"
+          >
+              Terms of Service
+          </a>
+          {", "}
+          <a
+            href="https://openloophealth.com/privacy-policy"
+            target="_blank"
+            className="text-sm !underline text-blue-600"
+          >
+             Privacy Policy  
+          </a>
+          <span> and </span>
+          <a
             href="https://openloophealth.com/telehealth-consent"
             target="_blank"
             className="text-sm !underline text-blue-600"
