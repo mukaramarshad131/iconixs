@@ -1,7 +1,9 @@
 "use client";
 import { Col, Row, Steps } from 'antd';
 import Character3 from '@/assets/images/characters/character_4.png';
+import bgImage from '@/assets/images/bg-01.png';
 import Greeting from './greeting';
+import Image from 'next/image';
 export default function BannerCard() {
   return (
     <Row
@@ -13,35 +15,46 @@ export default function BannerCard() {
       <Col span={24} md={12} xl={16} className="flex-1 text-center md:text-left">
         <Greeting />
         <Steps
-    direction="vertical"
-    size="small"
-    current={0}
-    items={[
-      { title: 'Leave as is' },
-      {
-        title: 'Select Preferred TRT Package (subtext: “Choose between 3 different options)',
-      },
-      { title: 'Payment (subtext: “Pay for your initial consult and bloodwork)' },
-      {
-        title: 'Schedule Initial Consultation',
-      },
-      {
-        title: 'Pay for Month 1 of Treatment',
-      },
-      {
-        title: 'Self Administration of TRT',
-      },
-    ]}
-  />
+          direction="vertical"
+          size="small"
+          current={0}
+          items={[
+            {
+              title: 'Step 1 - Complete Intake Form',
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Fill out your medical intake form to begin</li></ul>,
+            },
+            {
+              title: ' Step 2 - Select Preferred Testosterone Therapy Package',
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Choose between 3 different options of administration</li></ul>,
+            },
+            {
+              title: 'Step 3 - Payment',
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
+                <li>Pay for your initial consult and bloodwork</li>
+              </ul>,
+            },
+            {
+              title: 'Step 4 - Schedule Initial Consultation',
+            },
+            {
+              title: 'Step 5 - Pay for Month 1 of Treatment',
+            },
+            {
+              title: 'Step 6 - Self Administer Your TRT',
+            },
+          ]}
+        />
       </Col>
 
       <Col
         span={24}
         md={12}
         xl={8}
-        className="!md:max-w-[320px] mx-auto !max-w-[270px] flex-none items-center justify-center "
+        className="!md:max-w-[400px] mx-auto !max-w-[400px] flex flex-none items-center justify-center "
+        style={{display: "flex"}}
       >
-        <BannerSvg />
+        <Image alt="" width={450} height={600} src={bgImage} />
+        {/* <BannerSvg /> */}  
       </Col>
     </Row>
   );
