@@ -932,9 +932,9 @@ export default function ItakeForm() {
               <Form.Item
                 key={14}
                 name="license_number"
-                label="Driving License Number"
+                label="Driver's License Number"
                 rules={[
-                  { required: true, message: `Driving License Number is required` },
+                  { required: true, message: `Driver's License Number is required` },
                   { 
                     pattern: /^[a-zA-Z0-9]+$/, 
                     message: 'Input must be alphanumeric (letters and numbers only)' 
@@ -942,16 +942,16 @@ export default function ItakeForm() {
                 ]}
               >
                 <Input
-                  placeholder="Driving License Number"
+                  placeholder="Driver's License Number"
                   // disabled={formData["q6"].isDisable}
                 />
               </Form.Item>
               <Form.Item
                 key={15}
                 name="driver_license_state"
-                label="Driver License State"
+                label="Driver's License State"
                 rules={[
-                  { required: true, message: `Driver License State is required` },
+                  { required: true, message: `Driver's License State is required` },
                   { 
                     pattern: /^[a-zA-Z0-9]+$/, 
                     message: 'Input must be alphanumeric (letters and numbers only)' 
@@ -959,7 +959,7 @@ export default function ItakeForm() {
                 ]}
               >
                 <Input
-                  placeholder="Driver License State"
+                  placeholder="Driver's License State"
                   // disabled={formData["q6"].isDisable}
                 />
               </Form.Item>
