@@ -22,7 +22,6 @@ export default function IntakeListing() {
     const notshow = ['Patient Info','Photo Upload', 'Charting','Upload Social Driving Liscense', 'Upload Social Security Number']
     const {name = '', created_at = '', form_answers = [] }  = payload;
     const newData= form_answers?.filter((key:any)=>(!notshow.includes(key.label)))
-    console.log('newData: ', newData);
     setCurrentRow({name, created_at, form_answers });    
   };
 

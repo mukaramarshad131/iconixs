@@ -22,12 +22,12 @@ export default function AccountDropdown() {
     borderRadius: 8,
     boxShadow: "rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.05) 0px 9px 28px 8px"
   };
-
   const logout =async ()=>{
     clearUserInfoAndToken();
     await fetch('/api/logout',{method:'GET'})
     router.replace('/')
   }
+
   const dropdownRender: DropdownProps['dropdownRender'] = (menu) => (
     <div style={contentStyle}>
       <div className="flex flex-col items-start p-4">

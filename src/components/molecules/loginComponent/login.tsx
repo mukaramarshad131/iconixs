@@ -67,12 +67,12 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
               </Form.Item>
             </Col>
             <Col span={12} className="text-right">
-              <button
+              <span
                 className="!underline"
                 onClick={() => setIsForget(true)}
               >
                 Forget Password
-              </button>
+              </span>
             </Col>
           </Row>
         </Form.Item>
