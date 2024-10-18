@@ -43,7 +43,7 @@ function GenrateInvoice() {
       if (planId) {
         const res = await createInvoice({ variables: { ...input } });
         intakeDoc && await onFileChange(intakeDoc.upload_driving_liscense, true);
-        intakeDoc && await onFileChange(intakeDoc.upload_social_security, false);
+        // intakeDoc && await onFileChange(intakeDoc.upload_social_security, false);
         intakeForm && await intakeFormFunction({ variables: { ...intakeForm } });
         
         if (res) {

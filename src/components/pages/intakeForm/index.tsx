@@ -108,7 +108,7 @@ export default function ItakeForm() {
         router.replace("/dashboard");
         return;
       }
-    const {security_number, q9,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
+    const {security_number, q9,explain, upload_driving_liscense, license_number, driver_license_state, ...questionValues} = values;
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -169,7 +169,9 @@ export default function ItakeForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Preferred medication</b>
+              .join("")}<b>Explain</b>
+<br/>${explain}</p>
+<b>Preferred medication</b>
 <br/>${q9}</p>
 <b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
@@ -383,12 +385,12 @@ export default function ItakeForm() {
             mod_type: "textarea",
             answer: upload_driving_liscense,
           },
-          {
-            custom_module_id: "14669229",
-            label: "Upload Social Security Number",
-            mod_type: "textarea",
-            answer: upload_social_security,
-          },
+          // {
+          //   custom_module_id: "14669229",
+          //   label: "Upload Social Security Number",
+          //   mod_type: "textarea",
+          //   answer: upload_social_security,
+          // },
           {
             custom_module_id: "13579507",
             label: "Intake",
@@ -788,7 +790,7 @@ export default function ItakeForm() {
 
 
     // await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    setUserIntakeDoc({ upload_driving_liscense, upload_social_security });
+    setUserIntakeDoc({ upload_driving_liscense });
     setUserIntakeForm(intakeFormPayload);
     if (!permissions.includes("/dashboard/packages")) {
       setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
@@ -808,11 +810,12 @@ export default function ItakeForm() {
       form?.setFieldsValue({
         'upload_driving_liscense': value,
       });      
-    } else {
-      form?.setFieldsValue({
-        'upload_social_security': value,
-      });
-    }
+    } 
+    // else {
+    //   form?.setFieldsValue({
+    //     'upload_social_security': value,
+    //   });
+    // }
     // await mutateFunction({ variables: { ...updatePayload } });
   };
   return (
@@ -960,7 +963,7 @@ export default function ItakeForm() {
                   // disabled={formData["q6"].isDisable}
                 />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 key={16}
                 name="upload_social_security"
                 label="Upload Social Security Number"
@@ -968,7 +971,7 @@ export default function ItakeForm() {
                 rules={[{ required: true, message: `Social Security Number is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 key={17}
                 name="upload_driving_liscense"

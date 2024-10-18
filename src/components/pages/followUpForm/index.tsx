@@ -93,9 +93,8 @@ export default function FollowUpForm() {
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
-    const {security_number,upload_driving_liscense, license_number, upload_social_security, ...questionValues} = values;
+    const {security_number,upload_driving_liscense, license_number, ...questionValues} = values;
     console.log('upload_driving_liscense: ', upload_driving_liscense);
-    console.log('upload_social_security: ', upload_social_security);
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -350,18 +349,18 @@ export default function FollowUpForm() {
             label: "Social Security Number (SSN)",
             answer: security_number,
           },
-          {
-            custom_module_id: "14669228",
-            label: "Upload Social Driving Liscense",
-            mod_type: "textarea",
-            answer: upload_driving_liscense,
-          },
-          {
-            custom_module_id: "14669229",
-            label: "Upload Social Security Number",
-            mod_type: "textarea",
-            answer: upload_social_security,
-          },
+          // {
+          //   custom_module_id: "14669228",
+          //   label: "Upload Social Driving Liscense",
+          //   mod_type: "textarea",
+          //   answer: upload_driving_liscense,
+          // },
+          // {
+          //   custom_module_id: "14669229",
+          //   label: "Upload Social Security Number",
+          //   mod_type: "textarea",
+          //   answer: upload_social_security,
+          // },
           {
             custom_module_id: "13579507",
             label: "Intake",
@@ -758,7 +757,7 @@ export default function FollowUpForm() {
 
 
     // await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    setUserIntakeDoc({ upload_driving_liscense, upload_social_security });
+    setUserIntakeDoc({ upload_driving_liscense });
     setUserIntakeForm(intakeFormPayload);
     if (!permissions.includes("/dashboard/packages")) {
       setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
@@ -778,11 +777,12 @@ export default function FollowUpForm() {
       form?.setFieldsValue({
         'upload_driving_liscense': value,
       });      
-    } else {
-      form?.setFieldsValue({
-        'upload_social_security': value,
-      });
-    }
+    } 
+    // else {
+    //   form?.setFieldsValue({
+    //     'upload_social_security': value,
+    //   });
+    // }
     // await mutateFunction({ variables: { ...updatePayload } });
   };
   return (
@@ -860,7 +860,7 @@ export default function FollowUpForm() {
               >
                 <Input placeholder="Driving License Number" disabled={formData["q6"].isDisable} />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 key={14}
                 name="upload_social_security"
                 label="Upload Social Security Number"
@@ -868,7 +868,7 @@ export default function FollowUpForm() {
                 rules={[{ required: true, message: `Social Security Number is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 key={15}
                 name="upload_driving_liscense"

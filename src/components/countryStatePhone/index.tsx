@@ -106,7 +106,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           label={!noLabel ? "City" : undefined}
           name="city"
           rules={[{ required: true, message: "Please input city" },
-            { pattern: /^[a-zA-Z]+$/, message: 'Input must be alphabet' }
+            { pattern: /^[a-zA-Z]+( [a-zA-Z]+)*$/, message: 'Input must be alphabet' }
           ]}
         >
           <Input placeholder="City" />

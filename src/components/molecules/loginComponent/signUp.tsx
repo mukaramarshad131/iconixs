@@ -224,7 +224,7 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
             className="w-full !bg-[#0c2345]"
             loading={isLoading}
           >
-            Sign UP
+            Sign Up
           </Button>
         </Form.Item>
         <div className="mb-2 text-xs text-gray">
