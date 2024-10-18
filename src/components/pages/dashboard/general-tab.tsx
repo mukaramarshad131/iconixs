@@ -30,6 +30,7 @@ import { FieldType } from "@/types/types";
 import dayjs from "dayjs";
 import CountryStateForm from "@/components/countryStatePhone";
 import {  TEST_DATA } from '@/graphql/query';
+import { convertHeight } from "@/components/funcitons";
  
 export default function GeneralTab() {
   const { setUserPermissions, setUserInfo } = useUserActions();
@@ -74,7 +75,7 @@ export default function GeneralTab() {
     timezone: userData?.user?.timezone,
     dob: dayjs(userData?.user.dob),
     gender: userData?.user.gender,
-    height: userData?.user.height,
+    height: convertHeight(userData?.user.height),
     city: userData?.user?.location?.city,
     metric_stat: userData?.user?.weight,
     zip: userData?.user?.location?.zip,
@@ -100,7 +101,7 @@ console.log(userData?.user, initFormValues)
         first_name: payload.first_name,
         timezone: payload.timezone,
         last_name: payload.last_name,
-        height: `${payload.height}`,
+        height: convertHeight(payload.height),
         phone_number: payload.phone,
         additional_record_identifier: "",
         gender: payload.gender,
@@ -236,7 +237,13 @@ console.log(userData?.user, initFormValues)
                 <Form.Item<FieldType>
                   label="Height"
                   name="height"
-                  rules={[{ required: true, message: "Please input Height" }]}
+                  rules={[
+                    { required: true, message: "Please input Height" },
+                    {
+                      pattern: /^(\d+)ft\s(\d+)in$/,
+                      message: 'Height should be in the format Xft Yin (e.g., 7ft 7in)',
+                    },
+                  ]}
                 >
                   <Input placeholder="Height" />
                 </Form.Item>
@@ -252,7 +259,7 @@ console.log(userData?.user, initFormValues)
                 </Form.Item>
               </Col>
             </Row>
-            <CountryStateForm />
+            <CountryStateForm isDisabled={true} />
             <Form.Item>
               <Button
                 type="primary"

@@ -146,10 +146,11 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
           <Col span={12}>
             <Form.Item
               name="height"
-              rules={[{ required: true, message: "Please input Height" },
-                { 
-                  pattern: /^\d+$/, 
-                  message: 'Height must be a positive whole number representing inches (e.g., "63")' 
+              rules={[
+                { required: true, message: "Please input Height" },
+                {
+                  pattern: /^(\d+)ft\s(\d+)in$/,
+                  message: 'Height should be in the format Xft Yin (e.g., 7ft 7in)',
                 },
               ]}
             >
@@ -223,25 +224,33 @@ const SignUp = ({ setIsLogin }: { setIsLogin: (value: boolean) => void }) => {
             className="w-full !bg-[#0c2345]"
             loading={isLoading}
           >
-            Sign UP
+            Sign Up
           </Button>
         </Form.Item>
         <div className="mb-2 text-xs text-gray">
           <span>By signing up, I agree to </span>
           <a
-            href="https://openloophealth.com/telehealth-consent"
+            href="https://openloophealth.com/terms-of-use"
             target="_blank"
             className="text-sm !underline text-blue-600"
           >
-            Terms of service
+              Terms of Service
           </a>
-          {" & "}
+          {", "}
+          <a
+            href="https://openloophealth.com/privacy-policy"
+            target="_blank"
+            className="text-sm !underline text-blue-600"
+          >
+             Privacy Policy  
+          </a>
+          <span> and </span>
           <a
             href="https://openloophealth.com/telehealth-consent"
             target="_blank"
             className="text-sm !underline text-blue-600"
           >
-            Privacy policy
+             Telehealth Consent
           </a>
         </div>
         <Button block type="link" onClick={() => setIsLogin(true)}>

@@ -52,7 +52,7 @@ export default function ItakeForm() {
       formData['q6'].isDisable = true;
       formData['q7'].isDisable = true;
       formData['q8'].isDisable = true;
-      formData['q9'].isDisable = true;
+      // formData['q9'].isDisable = true;
     } else if(questionName === "q2" && values.includes("None of the above")) {
       formData['q1'].isDisable = true;
       formData['q3'].isDisable = true;
@@ -61,7 +61,7 @@ export default function ItakeForm() {
       formData['q6'].isDisable = true;
       formData['q7'].isDisable = true;
       formData['q8'].isDisable = true;
-      formData['q9'].isDisable = true;
+      // formData['q9'].isDisable = true;
     } else {
       formData['q2'].isDisable = false;
       formData['q3'].isDisable = false;
@@ -70,7 +70,7 @@ export default function ItakeForm() {
       formData['q6'].isDisable = false;
       formData['q7'].isDisable = false;
       formData['q8'].isDisable = false;
-      formData['q9'].isDisable = false;
+      // formData['q9'].isDisable = false;
     }
     q1Ref.current = questionName === 'q1'&& values.includes('Known hypersensitivity to testosterone, anastrozole, clomiphene/enclomiphene or any of its ingredients')
     const isNoneSelected = values.includes("None of the above") && questionName !== "q1";
@@ -108,7 +108,7 @@ export default function ItakeForm() {
         router.replace("/dashboard");
         return;
       }
-    const {security_number,upload_driving_liscense, license_number, driver_license_state, upload_social_security, ...questionValues} = values;
+    const {security_number, q9,explain, upload_driving_liscense, license_number, driver_license_state, ...questionValues} = values;
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -169,7 +169,11 @@ export default function ItakeForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Shipping Address</b>
+              .join("")}<b>Explain</b>
+<br/>${explain}</p>
+<b>Preferred medication</b>
+<br/>${q9}</p>
+<b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
           },
@@ -381,12 +385,12 @@ export default function ItakeForm() {
             mod_type: "textarea",
             answer: upload_driving_liscense,
           },
-          {
-            custom_module_id: "14669229",
-            label: "Upload Social Security Number",
-            mod_type: "textarea",
-            answer: upload_social_security,
-          },
+          // {
+          //   custom_module_id: "14669229",
+          //   label: "Upload Social Security Number",
+          //   mod_type: "textarea",
+          //   answer: upload_social_security,
+          // },
           {
             custom_module_id: "13579507",
             label: "Intake",
@@ -410,7 +414,10 @@ export default function ItakeForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Shipping Address</b>
+              .join("")}
+              <b>Preferred medication</b>
+<br/>${q9}</p>
+<b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
           },
@@ -783,7 +790,7 @@ export default function ItakeForm() {
 
 
     // await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    setUserIntakeDoc({ upload_driving_liscense, upload_social_security });
+    setUserIntakeDoc({ upload_driving_liscense });
     setUserIntakeForm(intakeFormPayload);
     if (!permissions.includes("/dashboard/packages")) {
       setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
@@ -803,11 +810,12 @@ export default function ItakeForm() {
       form?.setFieldsValue({
         'upload_driving_liscense': value,
       });      
-    } else {
-      form?.setFieldsValue({
-        'upload_social_security': value,
-      });
-    }
+    } 
+    // else {
+    //   form?.setFieldsValue({
+    //     'upload_social_security': value,
+    //   });
+    // }
     // await mutateFunction({ variables: { ...updatePayload } });
   };
   return (
@@ -885,6 +893,24 @@ export default function ItakeForm() {
                 </Form.Item>
               ))}
               <Form.Item
+                key={24}
+                name="q9"
+                label="Preferred medication"
+                rules={[
+                  { required: true, message: `Preferred medication is required` }
+                ]}
+              >
+                <Select
+                  placeholder="Select options"
+                >
+                  <Select.Option value="Testosterone Cypionate Injection + Anastrozole as merited">Testosterone Cypionate Injection + Anastrozole as merited</Select.Option>
+                  <Select.Option value="Testosterone Oral + Anastrozole as merited">Testosterone Oral + Anastrozole as merited</Select.Option>
+                  <Select.Option value="Enclomiphene + Anastrozole as merited">Enclomiphene + Anastrozole as merited</Select.Option>
+                  {/* <Select.Option value="Testosterone Transdermal Gel">Testosterone Transdermal Gel</Select.Option> */}
+                  <Select.Option value="Not sure">Not sure</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
                 key={13}
                 name="security_number"
                 label="Social Security Number"
@@ -906,9 +932,9 @@ export default function ItakeForm() {
               <Form.Item
                 key={14}
                 name="license_number"
-                label="Driving License Number"
+                label="Driver's License Number"
                 rules={[
-                  { required: true, message: `Driving License Number is required` },
+                  { required: true, message: `Driver's License Number is required` },
                   { 
                     pattern: /^[a-zA-Z0-9]+$/, 
                     message: 'Input must be alphanumeric (letters and numbers only)' 
@@ -916,16 +942,16 @@ export default function ItakeForm() {
                 ]}
               >
                 <Input
-                  placeholder="Driving License Number"
+                  placeholder="Driver's License Number"
                   // disabled={formData["q6"].isDisable}
                 />
               </Form.Item>
               <Form.Item
                 key={15}
                 name="driver_license_state"
-                label="Driver License State"
+                label="Driver's License State"
                 rules={[
-                  { required: true, message: `Driver License State is required` },
+                  { required: true, message: `Driver's License State is required` },
                   { 
                     pattern: /^[a-zA-Z0-9]+$/, 
                     message: 'Input must be alphanumeric (letters and numbers only)' 
@@ -933,11 +959,11 @@ export default function ItakeForm() {
                 ]}
               >
                 <Input
-                  placeholder="Driver License State"
+                  placeholder="Driver's License State"
                   // disabled={formData["q6"].isDisable}
                 />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 key={16}
                 name="upload_social_security"
                 label="Upload Social Security Number"
@@ -945,7 +971,7 @@ export default function ItakeForm() {
                 rules={[{ required: true, message: `Social Security Number is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 key={17}
                 name="upload_driving_liscense"

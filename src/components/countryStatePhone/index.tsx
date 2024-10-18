@@ -9,8 +9,9 @@ const { Option } = Select;
 
 interface CountrySelectProps {
   noLabel?: boolean; // Define noLabel prop
+  isDisabled?: boolean; 
 }
-const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
+const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabled = false}) => {
   // State hooks for form data
   const [countries] = useState<ICountry[]>(Country.getAllCountries());
   const [states, setStates] = useState<IState[]>([]);
@@ -33,7 +34,8 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
     const countryTimeZones = moment.tz.zonesForCountry(value);
     setTimezones(countryTimeZones || []);
   };
-
+  const isStateActive = isDisabled ===false ? !states.length: isDisabled;
+  const isTimeActive = isDisabled ===false ? !timezones.length: isDisabled;
   // Handler for state change
   const handleStateChange = (value: string) => {
     setSelectedState(value);
@@ -83,7 +85,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
             placeholder="Select State"
             value={selectedState}
             onChange={handleStateChange}
-            disabled={!states.length}
+            disabled={isStateActive}
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option?.children as unknown as string)
@@ -104,7 +106,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
           label={!noLabel ? "City" : undefined}
           name="city"
           rules={[{ required: true, message: "Please input city" },
-            { pattern: /^[a-zA-Z]+$/, message: 'Input must be alphabet' }
+            { pattern: /^[a-zA-Z]+( [a-zA-Z]+)*$/, message: 'Input must be alphabet' }
           ]}
         >
           <Input placeholder="City" />
@@ -157,7 +159,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false}) => {
         <Select
           showSearch
           placeholder="Select Time Zone"
-          disabled={!timezones.length}
+          disabled={isTimeActive}
           optionFilterProp="children"
           filterOption={(input, option) =>
             (option?.children as unknown as string).toLowerCase().includes(input.toLowerCase())
