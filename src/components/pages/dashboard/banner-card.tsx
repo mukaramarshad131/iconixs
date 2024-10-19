@@ -1,10 +1,14 @@
 "use client";
+import React, { useState, useEffect } from 'react';
 import { Col, Row, Steps } from 'antd';
 import Character3 from '@/assets/images/characters/character_4.png';
 import bgImage from '@/assets/images/bg-01.png';
 import Greeting from './greeting';
 import Image from 'next/image';
 export default function BannerCard() {
+
+  const [current, setCurrent] = useState(0);
+
   return (
     <Row
       className="!mx-0 rounded-2xl p-7"
@@ -17,7 +21,7 @@ export default function BannerCard() {
         <Steps
           direction="vertical"
           size="small"
-          current={0}
+          current={current}
           items={[
             {
               title: 'Complete Intake Form',
@@ -29,22 +33,22 @@ export default function BannerCard() {
             },
             {
               title: 'Payment',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
-                <li>Pay for your initial consult and bloodwork</li>
-                <li>Schedule Initial Consultation</li>
-                <li>Pay for Month 1 of Treatment</li>
-                <li>Self Administer Your TRT</li>
-              </ul>,
+              // description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
+              //   <li>Pay for your initial consult and bloodwork</li>
+              // </ul>,
             },
-            // {
-            //   title: 'Schedule Initial Consultation',
-            // },
-            // {
-            //   title: 'Pay for Month 1 of Treatment',
-            // },
-            // {
-            //   title: 'Self Administer Your TRT',
-            // },
+            {
+              title: 'Pay for your initial consult and bloodwork',
+            },
+            {
+              title: 'Schedule Initial Consultation',
+            },
+            {
+              title: 'Pay for Month 1 of Treatment',
+            },
+            {
+              title: 'Self Administer Your TRT',
+            },
           ]}
         />
       </Col>
