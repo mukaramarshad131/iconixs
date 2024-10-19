@@ -1,11 +1,11 @@
 export const businessPackages = [
   {
-    id: "ico-trt-cypionate-inj-28",
+    id: "ico-trt-initial-labs-consult-fee-USD",
     discount: 24,
     backgroundColor: "#1B3352",
     packageName: "Iconix TRT - Initial Labs + Consult Fee",
     // packageName: "Testosterone Cypionate Injection + Anastrozole - 28 days",
-    originalPrice: "$205.00 USD",
+    originalPrice: "$149.00 USD",
     description: "Description",
   },
   // {

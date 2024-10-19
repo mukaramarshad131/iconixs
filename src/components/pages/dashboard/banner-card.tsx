@@ -1,10 +1,35 @@
 "use client";
+import React, { useState, useEffect } from 'react';
 import { Col, Row, Steps } from 'antd';
 import Character3 from '@/assets/images/characters/character_4.png';
 import bgImage from '@/assets/images/bg-01.png';
 import Greeting from './greeting';
 import Image from 'next/image';
+import {
+  useUserInfo,
+} from "@/store/userStore";
+import { getFormAnswersGroups } from '@/lib/get-form-answers';
 export default function BannerCard() {
+  const user = useUserInfo();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const payload = {
+          email: user.email as string
+        };
+        const response = await getFormAnswersGroups(payload);
+        if(response !== null) {
+          setCurrent(4);
+        }
+      } catch (err) {
+       console.log('err 1234567890', err);
+      }
+    };
+
+    fetchData();
+  }, [user.email]);
   return (
     <Row
       className="!mx-0 rounded-2xl p-7"
@@ -17,7 +42,7 @@ export default function BannerCard() {
         <Steps
           direction="vertical"
           size="small"
-          current={0}
+          current={current}
           items={[
             {
               title: 'Complete Intake Form',
