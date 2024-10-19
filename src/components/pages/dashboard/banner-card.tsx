@@ -29,13 +29,29 @@ export default function BannerCard() {
             },
             {
               title: 'Payment',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
-                <li>Pay for your initial consult and bloodwork</li>
-                <li>Schedule Initial Consultation</li>
-                <li>Pay for Month 1 of Treatment</li>
-                <li>Self Administer Your TRT</li>
-              </ul>,
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Pay for your initial consult and bloodwork</li></ul>,
             },
+            {
+              title: 'Scheduling',
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Schedule Initial Consultation</li></ul>,
+            },
+            {
+              title: 'Payment',
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Pay for Month 1 of Treatment</li></ul>,
+            },
+            {
+              title: 'TRT',
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Self Administer Your TRT</li></ul>,
+            },
+            // {
+            //   title: 'Payment',
+            //   description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
+            //     <li>Pay for your initial consult and bloodwork</li>
+            //     <li>Schedule Initial Consultation</li>
+            //     <li>Pay for Month 1 of Treatment</li>
+            //     <li>Self Administer Your TRT</li>
+            //   </ul>,
+            // },
             // {
             //   title: 'Schedule Initial Consultation',
             // },

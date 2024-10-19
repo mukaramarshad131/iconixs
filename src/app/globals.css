@@ -40,3 +40,10 @@ body {
 .rowHTML br {
   display: none;
 }
+
+.ant-steps-item-title {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+.ant-steps-item-description {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
