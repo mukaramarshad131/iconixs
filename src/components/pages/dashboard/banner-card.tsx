@@ -12,7 +12,6 @@ import { getFormAnswersGroups } from '@/lib/get-form-answers';
 export default function BannerCard() {
   const user = useUserInfo();
   const [current, setCurrent] = useState(0);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,47 +44,25 @@ export default function BannerCard() {
           current={current}
           items={[
             {
-              title: 'Complete Intake Form',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Fill out your medical intake form to begin</li></ul>,
+              title: <div className={current == 0 ? 'active-step' : 'inactive-steps'} >Complete Intake Form</div>,
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}className={current == 0 ? 'active-step' : 'inactive-steps'}><li>Fill out your medical intake form to begin</li></ul>,
             },
             {
-              title: 'Select Preferred Testosterone Therapy Package',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Choose between 3 different options of administration</li></ul>,
+              title: <div  className={current == 1 ? 'active-step' : 'inactive-steps'}>Select Preferred Testosterone Therapy Package</div>,
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }} className={current == 1 ? 'active-step' : 'inactive-steps'}><li>Choose between 3 different options of administration</li></ul>,
             },
             {
-              title: 'Payment',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Pay for your initial consult and bloodwork</li></ul>,
+              title: <div  className={ current == 2 ? 'active-step' : 'inactive-steps'} >Pay for your initial consult and bloodwork</div>,
             },
             {
-              title: 'Scheduling',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Schedule Initial Consultation</li></ul>,
+              title: <div  className={ current == 3 ? 'active-step' : 'inactive-steps'} >Schedule Initial Consultation</div>,
+           },
+            {
+              title: <div className={ current == 4 ? 'active-step' : 'inactive-steps'} >Pay for Month 1 of Treatment</div>,
             },
             {
-              title: 'Payment',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Pay for Month 1 of Treatment</li></ul>,
+              title: <div  className={ current == 5 ? 'active-step' : 'inactive-steps'} >Self Administer Your TRT</div>,
             },
-            {
-              title: 'TRT',
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}><li>Self Administer Your TRT</li></ul>,
-            },
-            // {
-            //   title: 'Payment',
-            //   description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}>
-            //     <li>Pay for your initial consult and bloodwork</li>
-            //     <li>Schedule Initial Consultation</li>
-            //     <li>Pay for Month 1 of Treatment</li>
-            //     <li>Self Administer Your TRT</li>
-            //   </ul>,
-            // },
-            // {
-            //   title: 'Schedule Initial Consultation',
-            // },
-            // {
-            //   title: 'Pay for Month 1 of Treatment',
-            // },
-            // {
-            //   title: 'Self Administer Your TRT',
-            // },
           ]}
         />
       </Col>

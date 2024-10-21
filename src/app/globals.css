@@ -47,3 +47,13 @@ body {
 .ant-steps-item-description {
   color: rgba(0, 0, 0, 0.45) !important;
 }
+
+.active-step {
+  /* background-color: green; */
+  color: #1677FF;
+}
+
+.inactive-steps{
+  /* background-color: grey; */
+  color: grey;
+}
