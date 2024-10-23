@@ -29,7 +29,6 @@ import {
 import { FieldType } from "@/types/types";
 import dayjs from "dayjs";
 import CountryStateForm from "@/components/countryStatePhone";
-import {  TEST_DATA } from '@/graphql/query';
 import { convertHeight } from "@/components/funcitons";
  
 export default function GeneralTab() {
@@ -44,19 +43,6 @@ export default function GeneralTab() {
   const [updateFunction, {loading:fetching}] = useMutation(UPDATE_PATIENT);
   const [updateLocation, ] = useMutation(UPDATE_LOCATION);
   const [updateWeightFunction] = useMutation(UPDATE_WEIGHT);
-
-  const { data: testData } = useQuery(TEST_DATA, {
-    variables: {
-      id: "646892",
-    },
-  });
-  console.log("testData: ", testData?.formAnswerGroup?.user?.id);
-  const userInfo = testData?.formAnswerGroup?.user;
-
-  // const {id: userId, email:userEmail, ...rest} = testData;
-  console.log("userId: ", userInfo);
-  
-  
   
   useEffect(() => {
     if (
