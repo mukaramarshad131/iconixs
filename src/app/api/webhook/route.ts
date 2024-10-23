@@ -18,6 +18,9 @@ export async function POST(req: NextRequest) {
   // Log the received data for debugging
   console.log('Received Healthie OpenLoop webhook:', json);
   try {
+    if(json.event_type === "appointment.created") {
+      
+    }
     if(json.event_type === "form_answer_group.created") {
       const { data } = await client.query({
         query: TEST_DATA,
@@ -42,7 +45,7 @@ export async function POST(req: NextRequest) {
         content: JSON.stringify(json)
       },
     })
-    return NextResponse.json({ message: 'Login successful', user: json}, { status: 200 });
+    return NextResponse.json({ message: 'Successful', user: json}, { status: 200 });
 
   } catch (error: any) {
     // Improved error logging
