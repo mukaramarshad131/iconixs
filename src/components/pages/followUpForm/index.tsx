@@ -1,9 +1,9 @@
 "use client";
-// import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React, { useState } from "react";
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
 import { followUpQuestions } from "@/data/projectData";
-import { INTAKE_FORM_QUERY } from "@/graphql/query";
+import { INTAKE_FORM_QUERY, INTAKE_FORM } from "@/graphql/query";
 
 import {
   useUserActions,
@@ -16,7 +16,9 @@ import { Select, Form, Input, Button, Card } from "antd";
 import IntakeListing from "../dashboard/intake-Listing";
 import { useRouter } from "next/navigation";
 
-
+const useGetFieldValue = (fieldName:any, form:any) => {
+  return Form.useWatch(fieldName, form); // Custom hook following the naming convention
+};
 export default function FollowUpForm() {
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
@@ -33,53 +35,9 @@ export default function FollowUpForm() {
       return acc;
     }, {})
   );
-
-  // const [ mutateFunction, { loading } ] = useMutation(UPLOAD_DOCS);
-  // const [intakeFormFunction] = useMutation(INTAKE_FORM);
-  // const handleSelectChange = (questionName: any, values: any) => {
-  //   if( questionName === "q1" && !values.includes("None of the above")) {
-  //     formData['q2'].isDisable = true;
-  //     formData['q3'].isDisable = true;
-  //     formData['q4'].isDisable = true;
-  //     formData['q5'].isDisable = true;
-  //     formData['q6'].isDisable = true;
-  //     formData['q7'].isDisable = true;
-  //     formData['q8'].isDisable = true;
-  //     formData['q9'].isDisable = true;
-  //   } else if(questionName === "q2" && values.includes("None of the above")) {
-  //     formData['q1'].isDisable = true;
-  //     formData['q3'].isDisable = true;
-  //     formData['q4'].isDisable = true;
-  //     formData['q5'].isDisable = true;
-  //     formData['q6'].isDisable = true;
-  //     formData['q7'].isDisable = true;
-  //     formData['q8'].isDisable = true;
-  //     formData['q9'].isDisable = true;
-  //   } else {
-  //     formData['q2'].isDisable = false;
-  //     formData['q3'].isDisable = false;
-  //     formData['q4'].isDisable = false;
-  //     formData['q5'].isDisable = false;
-  //     formData['q6'].isDisable = false;
-  //     formData['q7'].isDisable = false;
-  //     formData['q8'].isDisable = false;
-  //     formData['q9'].isDisable = false;
-  //   }
-  //   const isNoneSelected = values.includes("None of the above");
-  //   if (isNoneSelected) {
-  //     form.setFieldsValue({ [questionName]: ["None of the above"] });
-  //   }
-  //   setFormData((prevFormData: any) => ({
-  //     ...prevFormData,
-  //     [questionName]: {
-  //       options: isNoneSelected
-  //         ? ["None of the above"]
-  //         : followUpQuestions?.find((q: any) => q.name === questionName).options,
-  //       selectedValues: isNoneSelected ? ["None of the above"] : values,
-  //     },
-  //   }));
-  // };
-
+  const questionValue1 = useGetFieldValue('question1', form);
+  const questionValue2 = useGetFieldValue('question2', form);
+  const [intakeFormFunction, { loading }] = useMutation(INTAKE_FORM);
   const { data: intakeFormData } = useQuery(INTAKE_FORM_QUERY, {
     variables: {
       custom_module_form_id: process.env.FORM_ID,
@@ -92,8 +50,8 @@ export default function FollowUpForm() {
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
-    const { security_number, upload_driving_liscense, license_number, ...questionValues } = values;
-    console.log('upload_driving_liscense: ', upload_driving_liscense);
+    console.log("OnFinish: ", values);
+    const { question1, question2, explain1,explain2, ...questionValues } = values;
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -101,17 +59,6 @@ export default function FollowUpForm() {
           {
             custom_module_id: "29460116",
             label: "Patient Info",
-          },
-          {
-            custom_module_id: "29460117",
-            label: "Driver License Number (DL)",
-            user_id: user.id,
-            answer: license_number,
-          },
-          {
-            custom_module_id: "29460118",
-            label: "Social Security Number (SSN)",
-            answer: security_number,
           },
           // {
           //   custom_module_id: "14669228",
@@ -148,9 +95,14 @@ export default function FollowUpForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Shipping Address</b>
-<br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
-              } ${user.location?.zip}</p>`, // HTML format for the intake
+              .join("")}
+              <b>Question:Since your last visit, are you taking the prescribed medication as scheduled?</b><br/>
+              ${question1}<br/>
+              ${explain1 && `<b>Explain</b><br/> ${explain1}<br/>`}
+              <b>How have your symptoms changed since your last visit?</b><br/>
+              ${question2}<br/>
+              ${explain2 && `<b>Explain</b><br/> ${explain2}<br/>`}
+            </p>`, // HTML format for the intake
           },
           {
             custom_module_id: "28756632",
@@ -186,7 +138,7 @@ export default function FollowUpForm() {
           {
             custom_module_id: "29460121",
             label: "Visit Type",
-            answer: "Initial Visit ( visit_type_1 )",
+            answer: "Follow Up ( visit_type_2 )",
             user_id: user.id,
           },
           {
@@ -337,17 +289,6 @@ export default function FollowUpForm() {
             custom_module_id: "14669225",
             label: "Patient Info",
           },
-          {
-            custom_module_id: "14669226",
-            label: "Driver License Number (DL)",
-            user_id: user.id,
-            answer: license_number,
-          },
-          {
-            custom_module_id: "14669227",
-            label: "Social Security Number (SSN)",
-            answer: security_number,
-          },
           // {
           //   custom_module_id: "14669228",
           //   label: "Upload Social Driving Liscense",
@@ -383,9 +324,14 @@ export default function FollowUpForm() {
                     : item
                   }<br/>`
               )
-              .join("")}<b>Shipping Address</b>
-<br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
-              } ${user.location?.zip}</p>`, // HTML format for the intake
+              .join("")}
+              <b>Question:Since your last visit, are you taking the prescribed medication as scheduled?</b><br/>
+              ${question1}<br/>
+              ${explain1 && `<b>Explain</b> ${explain1}<br/>`}
+              <b>How have your symptoms changed since your last visit?</b><br/>
+              ${question2}<br/>
+              ${explain2 && `<b>Explain</b> ${explain2}<br/>`}
+            </p>`, // HTML format for the intake
           },
           {
             custom_module_id: "13579510",
@@ -421,7 +367,7 @@ export default function FollowUpForm() {
           {
             custom_module_id: "13085532",
             label: "Visit Type",
-            answer: "Initial Visit ( visit_type_1 )",
+            answer: "Follow Up ( visit_type_2 )",
             user_id: user.id,
           },
           {
@@ -754,14 +700,14 @@ export default function FollowUpForm() {
       },
     };
 
-
-    // await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    setUserIntakeDoc({ upload_driving_liscense });
-    setUserIntakeForm(intakeFormPayload);
-    if (!permissions.includes("/dashboard/packages")) {
-      setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
-    }
-    router.replace("/dashboard/packages");
+console.log("intakeFormPayload: ", intakeFormPayload);
+    const msk = await intakeFormFunction({ variables: { ...intakeFormPayload } });
+    console.log("intakeFormResponse: msk", msk);
+    // setUserIntakeForm(intakeFormPayload);
+    // if (!permissions.includes("/dashboard/packages")) {
+    //   setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
+    // }
+    // router.replace("/dashboard/packages");
   };
 
 
@@ -782,28 +728,6 @@ export default function FollowUpForm() {
     }
   };
 
-
-  // const onFileChange = async (value: string, fieldType: boolean) => {
-  //   // const updatePayload = {
-  //   //   input: {
-  //   //     "file_string": value,
-  //   //     "display_name": fieldType ? "File Driving Liscense" : "File Social Security Number",
-  //   //     "rel_user_id": user.id,
-  //   //     "include_in_charting": true
-  //   //   },
-  //   // };
-  //   if(fieldType) {
-  //     form?.setFieldsValue({
-  //       'upload_driving_liscense': value,
-  //     });      
-  //   } 
-  //   // else {
-  //   //   form?.setFieldsValue({
-  //   //     'upload_social_security': value,
-  //   //   });
-  //   // }
-  //   // await mutateFunction({ variables: { ...updatePayload } });
-  // };
   return (
     <div>
       {intakeFormData?.formAnswerGroups?.length > 0 ? (
@@ -817,10 +741,50 @@ export default function FollowUpForm() {
             <Form
               layout="vertical"
               form={form}
-              initialValues={result}
               onFinish={OnFinish}
               className="container"
             >
+              <Form.Item name="question1" label="Since your last visit, are you taking the prescribed medication as scheduled?" rules={[{ required: true }]}>
+                <Select
+                  placeholder="Select a option and change input text above"
+                  onChange={onGenderChange}
+                  allowClear
+                >
+                  <Option value="Yes">Yes</Option>
+                  <Option value="No">No</Option>
+                  <Option value="I was not prescribed medication at my last visit">I was not prescribed medication at my last visit</Option>
+                </Select>
+              </Form.Item>
+              {questionValue1 ==="No" && 
+                <Form.Item name="explain1" label="Explain" rules={[{ required: true }]}>
+                  <Input.TextArea
+                    showCount
+                    maxLength={100}
+                    placeholder="Type here"
+                  />
+                </Form.Item>
+              }
+              <Form.Item name="question2" label="How have your symptoms changed since your last visit?" rules={[{ required: true }]}>
+                <Select
+                  placeholder="Select a option and change input text above"
+                  onChange={onGenderChange}
+                  allowClear
+                >
+                  <Option value="Improved">Improved</Option>
+                  <Option value="Resolved">Resolved</Option>
+                  <Option value="Unchanged">Unchanged</Option>
+                  <Option value="Worsened">Worsened</Option>
+                </Select>
+              </Form.Item>
+              {["Improved", "Resolved","Unchanged","Worsened"].includes(questionValue2) && 
+                <Form.Item name="explain2" label="Explain" rules={[{ required: true }]}>
+                  <Input.TextArea
+                    showCount
+                    maxLength={100}
+                    placeholder="Type here"
+                  />
+                </Form.Item>
+              }
               {followUpQuestions.map((question: any, index: any) => (
                 <Form.Item
                   key={index}
@@ -863,69 +827,11 @@ export default function FollowUpForm() {
                   )}
                 </Form.Item>
               ))}
-              <Form.Item name="Since your last visit, are you taking the prescribed medication as scheduled?" label="Since your last visit, are you taking the prescribed medication as scheduled?" rules={[{ required: true }]}>
-                <Select
-                  placeholder="Select a option and change input text above"
-                  onChange={onGenderChange}
-                  allowClear
-                >
-                  <Option value="Yes">Yes</Option>
-                  <Option value="No">No</Option>
-                  <Option value="I was not prescribed medication at my last visit">I was not prescribed medication at my last visit</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item name="How have your symptoms changed since your last visit?" label="How have your symptoms changed since your last visit?" rules={[{ required: true }]}>
-                <Select
-                  placeholder="Select a option and change input text above"
-                  onChange={onGenderChange}
-                  allowClear
-                >
-                  <Option value="Improved">Improved</Option>
-                  <Option value="Resolved">Resolved</Option>
-                  <Option value="Unchanged">Unchanged</Option>
-                  <Option value="Worsened">Worsened</Option>
-                </Select>
-              </Form.Item>
-              {/* <Form.Item
-                key={12}
-                name="security_number"
-                label="Social Security Number"
-                rules={[{ required: true, message: `Social Security Number is required` }]}
-              >
-                <Input placeholder="Social Security Number" disabled={formData["q6"].isDisable} />
-              </Form.Item>
-              <Form.Item
-                key={13}
-                name="license_number"
-                label="Driving License Number"
-                rules={[{ required: true, message: `Driving License Number is required` }]}
-              >
-                <Input placeholder="Driving License Number" disabled={formData["q6"].isDisable} />
-              </Form.Item> */}
-              {/* <Form.Item
-                key={14}
-                name="upload_social_security"
-                label="Upload Social Security Number"
-                style={formData["q6"].isDisable ? {pointerEvents: `none`} : {}}
-                rules={[{ required: true, message: `Social Security Number is required` }]}
-              >
-                <UploadDocs onHandleChange={(value: string)=> onFileChange(value, false)}  title="Upload Social Security Number" />
-              </Form.Item> */}
-              {/* <Form.Item
-                key={15}
-                name="upload_driving_liscense"
-                label="Upload Image of Driver's License"
-                style={formData["q6"].isDisable ?  {pointerEvents: `none`} : {}}
-                rules={[{ required: true, message: `Driving Liscense is required` }]}
-              >
-                <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Image of Driver's License" />
-              </Form.Item> */}
               <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
-                // disabled={formData["q6"].isDisable}
-                // className={formData["q6"].isDisable ? "w-full !bg-[#0c2345] mt-3 !text-[#fff]" : "w-full !bg-[#0c2345] mt-3"}
+                  loading={loading}
                 >
                   Submit
                 </Button>
