@@ -5,11 +5,7 @@ import { extractQuestionsAndAnswers } from "@/components/funcitons";
 import { followUpQuestions } from "@/data/projectData";
 import { INTAKE_FORM_QUERY, INTAKE_FORM } from "@/graphql/query";
 
-import {
-  useUserActions,
-  useUserInfo,
-  useUserPermissions,
-} from "@/store/userStore";
+import { useUserInfo } from "@/store/userStore";
 import { useQuery } from "@apollo/client";
 
 import { Select, Form, Input, Button, Card } from "antd";
@@ -17,11 +13,9 @@ import IntakeListing from "../dashboard/intake-Listing";
 import { useRouter } from "next/navigation";
 
 const useGetFieldValue = (fieldName:any, form:any) => {
-  return Form.useWatch(fieldName, form); // Custom hook following the naming convention
+  return Form.useWatch(fieldName, form);
 };
 export default function FollowUpForm() {
-  const permissions = useUserPermissions();
-  const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
   const user = useUserInfo();
   const [form] = Form.useForm();
   const router = useRouter();
@@ -45,12 +39,10 @@ export default function FollowUpForm() {
       filler_id: user.id,
     },
   });
-  console.log('intakeFormData:', intakeFormData);
   const result = extractQuestionsAndAnswers(
     intakeFormData?.formAnswerGroups[0]?.form_answers[2]?.displayed_answer
   );
   const OnFinish = async (values: any) => {
-    console.log("OnFinish: ", values);
     const { question1, question2, explain1, explain2, ...questionValues } = values;
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
