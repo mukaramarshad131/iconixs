@@ -51,7 +51,7 @@ export default function FollowUpForm() {
   );
   const OnFinish = async (values: any) => {
     console.log("OnFinish: ", values);
-    const { question1, question2, explain1,explain2, ...questionValues } = values;
+    const { question1, question2, explain1, explain2, ...questionValues } = values;
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -699,15 +699,7 @@ export default function FollowUpForm() {
         user_id: user.id, // Patiend ID from CreatePatient mutation response
       },
     };
-
-console.log("intakeFormPayload: ", intakeFormPayload);
-    const msk = await intakeFormFunction({ variables: { ...intakeFormPayload } });
-    console.log("intakeFormResponse: msk", msk);
-    // setUserIntakeForm(intakeFormPayload);
-    // if (!permissions.includes("/dashboard/packages")) {
-    //   setUserPermissions([...new Set([...permissions, "/dashboard/packages"])]);
-    // }
-    // router.replace("/dashboard/packages");
+    await intakeFormFunction({ variables: { ...intakeFormPayload } });
   };
 
 
