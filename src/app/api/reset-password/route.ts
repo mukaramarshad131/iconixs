@@ -22,7 +22,7 @@ export async function POST(req:NextRequest){
    userSchema.parse({ email});
    try {
     const hash = await bcrypt.hash(password, 10);
-    const alreadyExistEmail = await prisma.user.findUnique({
+    const alreadyExistEmail = await prisma.client.findUnique({
       where: { email},
     });
     if (alreadyExistEmail) {
@@ -40,7 +40,7 @@ export async function POST(req:NextRequest){
       html: mailText
     });
     if (response4?.messageId) {
-      const updateUser = await prisma.user.update({
+      const updateUser = await prisma.client.update({
         where: {
           email
         },

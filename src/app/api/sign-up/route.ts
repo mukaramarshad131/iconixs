@@ -25,7 +25,7 @@ export async function POST(req:NextRequest){
    userSchema.parse({ email, password});
    try {
     const hash = await bcrypt.hash(password, 10);
-    const alreadyExistEmail = await prisma.user.findUnique({
+    const alreadyExistEmail = await prisma.client.findUnique({
       where: { email},
     });
     if (alreadyExistEmail) {
@@ -78,14 +78,17 @@ export async function POST(req:NextRequest){
             user_id: user.id,
             created_at: dayjs().format("DD/MM/YYYY"),}, 
     });
-    const newUser = await prisma.user.create({
-        data: {
-          email,
-          password:hash, // Remember to hash passwords!
-          openLoopId:user.id
-        },
-      });
-          const {password:hashedPassword, ...rest} = newUser
+    const newClient = await prisma.client.create({
+      data: {
+        patientID: user.id,
+        name: `${user.first_name} ${user.last_name}`,
+        email,
+        password:hash,
+        openLoopId:user.id,
+        status: 'NEW'
+      },
+    });
+      const {password:hashedPassword, ...rest} = newClient
       return NextResponse.json({ user:rest, message:'User Created successfully.'}, {status:200});
    } catch (error:any) {
     if (error instanceof z.ZodError) {

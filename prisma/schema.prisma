@@ -28,7 +28,7 @@ model User {
 model Comment {
   id      Int    @id @default(autoincrement())
   title   String
-  content String
+  content String   @db.Text
   createdAt DateTime @default(now())
 
   @@map("comment")
@@ -43,4 +43,97 @@ model FormAnswerGroup {
   createdAt DateTime @default(now())
 
   @@map("formAnswerGroup")
+}
+model Client {
+  id                Int              @id @default(autoincrement())
+  patientID         String           @unique
+  openLoopId        String
+  name              String?
+  email             String           @unique
+  password          String
+  status            ClientStatus     @default(NEW)
+  
+  // One-to-Many relationship with multiple treatment cycles
+  treatmentCycles   TreatmentCycle[] @relation("AllCycles")
+  
+  // One-to-One relationship for the currently active cycle (add @unique)
+  currentCycleId    Int?    @unique
+  currentCycle      TreatmentCycle?  @relation("CurrentCycle", fields: [currentCycleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAT DateTime? 
+}
+
+model TreatmentCycle {
+  id           Int      @id @default(autoincrement())
+  startDate    DateTime @default(now())
+  endDate      DateTime?
+  
+  // Foreign key to the client for both all cycles and the current cycle
+  clientId     Int
+  client       Client   @relation("AllCycles", fields: [clientId], references: [id])
+
+  // The opposite side of the one-to-one relation for the current cycle
+  activeClient Client?  @relation("CurrentCycle")
+
+  orders       Order[]
+  followUps    FollowUpQuestionnaire[]
+  status       TreatmentCycleStatus @default(ACTIVE)
+}
+
+model Order {
+  id                    Int      @id @default(autoincrement())
+  orderNumber           String   @unique
+  orderDate             DateTime @default(now())
+  shippingAddress       String
+  medicationInstructions String
+  pharmacy              String
+  status                String
+  shippedDate           DateTime?
+  trackNumber           String?
+  treatmentCycleId      Int
+  treatmentCycle        TreatmentCycle @relation(fields: [treatmentCycleId], references: [id])
+
+  // The opposite side of the one-to-many relation with FollowUpQuestionnaire
+  followUps             FollowUpQuestionnaire[]
+}
+
+model FollowUpQuestionnaire {
+  id            Int      @id @default(autoincrement())
+  scheduledDate DateTime
+  completed     Boolean  @default(false)
+  completedAt   DateTime?
+  orderId       Int
+  order         Order    @relation(fields: [orderId], references: [id])
+  status       FollowUpStatus @default(PENDING)
+  treatmentCycleId Int
+  treatmentCycle   TreatmentCycle @relation(fields: [treatmentCycleId], references: [id])
+}
+
+enum FollowUpStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+}
+
+enum ClientStatus {
+  NEW
+  INTAKE_FORM_COMPLETED
+  PAID_INITIAL_CONSULT
+  WAITING_FOR_LABS
+  LABS_COMPLETED
+  LABS_PROCESSED
+  SCHEDULED_CONSULT
+  CONSULT_COMPLETED
+  RECEIVED_TREATMENT_PAYMENT_LINK
+  PAID_TREATMENT
+  FOLLOW_UP_PENDING
+  FOLLOW_UP_COMPLETED
+  TREATMENT_RESUMED
+}
+
+enum TreatmentCycleStatus {
+  ACTIVE
+  COMPLETED
+  PAUSED
 }

@@ -15,7 +15,7 @@ export async function sendPassword({
   
   try {
     const hash = await bcrypt.hash(password, 10);
-    const updateUser = await prisma.user.update({
+    const updateUser = await prisma.client.update({
       where: {
         email
       },

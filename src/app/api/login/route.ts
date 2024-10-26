@@ -25,12 +25,12 @@ export async function POST(req: NextRequest) {
   const { email, password } = validatedData;
 
   try {
-    const userExist = await prisma.user.findUnique({
+    const userExist = await prisma.client.findUnique({
       where: { email },
     });
 
     if (!userExist) {
-      return NextResponse.json({ message: `No user found.` }, { status: 404 });
+      return NextResponse.json({ message: `No Client found.` }, { status: 404 });
     }
 
     // Check if the password matches
