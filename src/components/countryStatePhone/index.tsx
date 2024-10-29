@@ -45,7 +45,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
   }, []);
   return (
     <Row gutter={16}>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
         <Form.Item
           label={!noLabel ? "Country" : undefined}
           name="country"
@@ -74,7 +74,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           </Select>
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
         <Form.Item
         label={!noLabel ? "State" : undefined}
           name="state"
@@ -101,7 +101,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           </Select>
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
         <Form.Item<FieldType>
           label={!noLabel ? "City" : undefined}
           name="city"
@@ -112,7 +112,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           <Input placeholder="City" />
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
         <Form.Item<FieldType>
           label={!noLabel ? "Street:" : undefined}
           name="line1"
@@ -121,7 +121,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           <Input placeholder="Street" />
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
         <Form.Item<FieldType>
           label={!noLabel ? "Zip Code:" : undefined}
           name="zip"
@@ -130,7 +130,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           <Input placeholder="Postal/Zip code" />
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
         <Form.Item
         label={!noLabel ? "Phone Number" : undefined}
           name="phone_number"
@@ -150,7 +150,7 @@ const CountryStateForm: React.FC<CountrySelectProps> = ({noLabel=false, isDisabl
           />
         </Form.Item>
       </Col>
-      <Col md={12} sm={24}>
+      <Col md={12} sm={24} xs={24}>
       <Form.Item
         label={noLabel?undefined:"Time Zone"}
         name="timezone"

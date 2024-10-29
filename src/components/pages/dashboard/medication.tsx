@@ -76,7 +76,7 @@ const showModal = (payload:any) => {
   ];
 
   return (
-    <Card className="flex-col" bodyStyle={{padding: '15px 24px' }}>
+    <Card className="padding-12 cardBody-0 flex-col" bodyStyle={{padding: '15px 24px' }}>
       <div className="self-start">
         <h1 className=" text-lg font-semibold text-[#0092B3] mb-5">
         Medication

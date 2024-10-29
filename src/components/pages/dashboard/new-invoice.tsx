@@ -69,8 +69,8 @@ export default function NewInvoice() {
 
   return (
     <Card className="flex-col" bodyStyle={{padding: '15px 24px' }}>
-      <header className=" mb-5">
-      <h1 className=" text-lg font-semibold text-[#0092B3] mb-5">
+      <header className="!xs:mb-5">
+      <h1 className=" text-lg font-semibold text-[#0092B3] !xs:mb-5">
       New Appointments
       </h1>
       </header>

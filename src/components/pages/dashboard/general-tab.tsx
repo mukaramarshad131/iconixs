@@ -133,7 +133,7 @@ console.log(userData?.user, initFormValues)
   return (
     <div className="w-full mt-2">
       {!userLoading && (
-        <Card style={{padding: '15px 24px' }}>
+    <Card className="padding-12 cardBody-0" style={{padding: '15px 24px' }}>
     <Alert
       message="Notes"
       description="All patient profile details are currently read-only. For any updates or changes,please reach out to our Patient Support team at +1 (203) 951-0663 or iconix@openloophealthpartners.zohodesk.com."
@@ -153,7 +153,7 @@ console.log(userData?.user, initFormValues)
             onFinish={onFinish}
           >
             <Row gutter={16}>
-              <Col md={12} sm={24}>
+              <Col md={12} sm={24} xs={24}>
                 <Form.Item<FieldType>
                   label="First Name"
                   name="first_name"
@@ -165,7 +165,7 @@ console.log(userData?.user, initFormValues)
                 </Form.Item>
               </Col>
 
-              <Col md={12} sm={24}>
+              <Col md={12} sm={24} xs={24}>
                 <Form.Item<FieldType>
                   label="Last Name"
                   name="last_name"
@@ -176,7 +176,7 @@ console.log(userData?.user, initFormValues)
                   <Input placeholder="Enter Last Name" />
                 </Form.Item>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={12} sm={24} xs={24}>
                 <Form.Item<FieldType>
                   label="Email:"
                   name="email"
@@ -191,7 +191,7 @@ console.log(userData?.user, initFormValues)
                   <Input type="email" placeholder="Email"  disabled={true} />
                 </Form.Item>
               </Col>
-              <Col md={12} sm={24}>
+              <Col md={12} sm={24} xs={24}>
                 <Form.Item
                   label="Date of Birth:"
                   name="dob"
@@ -219,7 +219,7 @@ console.log(userData?.user, initFormValues)
                   </Radio.Group>
                 </Form.Item>
               </Col>
-              <Col md={8} sm={12}>
+              <Col md={8} sm={12} xs={24}>
                 <Form.Item<FieldType>
                   label="Height"
                   name="height"
@@ -235,7 +235,7 @@ console.log(userData?.user, initFormValues)
                 </Form.Item>
               </Col>
 
-              <Col md={8} sm={12}>
+              <Col md={8} sm={12} xs={24}>
                 <Form.Item<FieldType>
                   label="Weight"
                   name="metric_stat"

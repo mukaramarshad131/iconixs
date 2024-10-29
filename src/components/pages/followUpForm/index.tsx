@@ -718,7 +718,7 @@ export default function FollowUpForm() {
         <IntakeListing />
       ) : (
         <div className="w-full flex flex-col justify-center items-center mt-10">
-          <Card bodyStyle={{ padding: "15px 24px" }}>
+          <Card bodyStyle={{ padding: "15px 24px" }} style={{width: "100%"}}>
             <h1 className="text-left text-lg font-semibold text-[#0092B3] mb-5">
               Follow Up Form
             </h1>

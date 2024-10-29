@@ -21,7 +21,7 @@ const LayoutAside = ({ children }: { children: ReactNode }) => {
           <AccountDropdown />
         </div>
       </div>
-      <div className="p-6 min-h-[360px] bg-[#fff] rounded-lg mt-[60px]">
+      <div className="!xs:p-6 min-h-[360px] bg-[#fff] rounded-lg mt-[60px]">
         {children}
       </div>
     </aside>

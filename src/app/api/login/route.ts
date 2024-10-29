@@ -48,7 +48,9 @@ export async function POST(req: NextRequest) {
      query: USER_QUERY,
      variables: { id: userExist.openLoopId }, // Pass the email as a variable
    });
-  
+   if(user=== null) {
+      return NextResponse.json({ error: `Server Error` }, { status: 500 });
+   }
     const response = NextResponse.json({ message: 'Login successful', user:user.user});
 
     // Set the token as an HTTP-only cookie

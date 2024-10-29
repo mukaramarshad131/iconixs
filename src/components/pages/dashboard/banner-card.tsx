@@ -31,12 +31,12 @@ export default function BannerCard() {
   }, [user.email]);
   return (
     <Row
-      className="!mx-0 rounded-2xl p-7"
+      className="!mx-0 rounded-2xl !xs:p-7 xs:p-3"
       gutter={[16, 16]}
       justify="space-between"
       style={{ background: 'linear-gradient(135deg, rgba(27, 51, 82, 0.2), rgba(12, 35, 69, 0.2)) rgb(255, 255, 255)' }}
     >
-      <Col span={24} md={12} xl={16} className="flex-1 text-center md:text-left">
+      <Col span={24} md={12} xl={16} className="flex-1 !xs:text-center md:text-left">
         <Greeting />
         <Steps
           direction="vertical"

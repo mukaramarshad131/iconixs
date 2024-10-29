@@ -16,7 +16,7 @@ const PatientDetails = () => {
         <BannerCard />
       </Col>
     </Row>
-    <Row gutter={[16, 16]} className="mt-4 container" justify="center">
+    <Row gutter={[16, 16]} className="mt-4 container xs:p-3" justify="center">
       <Col span={24} md={24} lg={24}>
         <NewInvoice />
       </Col>
