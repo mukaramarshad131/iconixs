@@ -1,7 +1,7 @@
 export const businessPackages = [
   {
-    // id: "ico-trt-initial-labs-consult-fee-USD",
-    id:"ico-mwl-sema-inj-28-USD-Every-28-days",
+    id: "ico-trt-initial-labs-consult-fee-USD",
+    // id:"ico-mwl-sema-inj-28-USD-Every-28-days",
     // https://iconix-test.chargebee.com/hosted_pages/checkout?subscription_items[item_price_id][0]=ico-mwl-sema-inj-28-USD-Every-28-days&utm_source=cb-app-copy
     discount: 24,
     backgroundColor: "#1B3352",
