@@ -1,5 +1,5 @@
 'use client'
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 import { useSidebarBtn } from "@/hook";
 import Sidebarbtn from "@/components/molecules/sidebar/sidebarbtn";
 import AccountDropdown from "@/components/molecules/accountDropdown";
@@ -7,7 +7,21 @@ import NavigationDrawer from "@/components/molecules/navigationDrawer";
 
 const LayoutAside = ({ children }: { children: ReactNode }) => {
     const { collapsed } = useSidebarBtn();
-    const [isSmallDevice, setIsSmallDevice] = useState(window?.innerWidth < 768);
+    const [isSmallDevice, setIsSmallDevice] = useState(false);
+    useEffect(() => {
+      const handleResize = () => {
+        setIsSmallDevice(window?.innerWidth < 768);
+      };
+  
+      // Attach event listener
+      window.addEventListener('resize', handleResize);
+  
+      // Initial check when component mounts
+      handleResize();
+  
+      // Clean up event listener on component unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
   return (
     <aside
       className="w-full overflow-x-hidden overflow-y-auto transition-all duration-200 ease-in-out mobile-layout"
