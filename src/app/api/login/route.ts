@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       maxAge: 2 * 24 * 60 * 60, // 2 days in seconds
       path: '/',
-      sameSite: 'strict',
+      sameSite: 'lax',
       secure: false, // Use secure cookie in production
     });
 
