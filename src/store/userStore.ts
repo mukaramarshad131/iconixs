@@ -23,7 +23,7 @@ export const getItem = <T>(key: StorageEnum, isString?:boolean): T | null => {
   }
   let value = null;
   try {
-    const result =  window.localStorage.getItem(key);
+    const result =  window?.localStorage.getItem(key);
     if (result) {
       value =isString?result:JSON.parse(result);
     }

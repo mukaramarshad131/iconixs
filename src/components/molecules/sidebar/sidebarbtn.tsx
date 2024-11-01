@@ -9,7 +9,7 @@ const Sidebarbtn = () => {
 
     useEffect(() => {
       const handleResize = () => {
-        setCollapsed(window.innerWidth < 768);
+        setCollapsed(window?.innerWidth < 768);
       };
   
       // Attach event listener

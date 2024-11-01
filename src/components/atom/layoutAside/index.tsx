@@ -7,7 +7,7 @@ import NavigationDrawer from "@/components/molecules/navigationDrawer";
 
 const LayoutAside = ({ children }: { children: ReactNode }) => {
     const { collapsed } = useSidebarBtn();
-    const [isSmallDevice, setIsSmallDevice] = useState(window.innerWidth < 768);
+    const [isSmallDevice, setIsSmallDevice] = useState(window?.innerWidth < 768);
   return (
     <aside
       className="w-full overflow-x-hidden overflow-y-auto transition-all duration-200 ease-in-out mobile-layout"
