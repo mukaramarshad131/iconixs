@@ -1,5 +1,5 @@
 import iconix from '@/assets/images/IconixLogo.png';
-import dashboardimg from '@/assets/images/loginPageImg.jpg';
+import dashboardimg from '@/assets/images/loginPageImage.jpg';
 import LoginComponent from '@/components/molecules/loginComponent';
 import Image from 'next/image';
 

@@ -57,11 +57,38 @@ body {
   /* background-color: grey; */
   color: grey;
 }
+
+
+
 @media only screen and (max-width: 600px) {
   .padding-12 {
     padding: 12px !important;
   }
   .cardBody-0 .ant-card-body{
     padding: 0 !important;
+  }
+  .mobile-hidden {
+    display: none !important;
+  }
+  .mobile-layout {
+    margin-inline-start: 0 !important;
+  }
+
+  .ant-drawer .ant-drawer-content{
+    /* background: #001529  !important; */
+    background: linear-gradient(to right, rgba(0, 5, 20, 0.75) 0%, rgba(0, 5, 20, 0.75) 75%, rgba(0, 5, 20, 0.75) 100%)  !important;
+  }
+  
+  .ant-menu-dark{
+    background: linear-gradient(to right, rgba(3, 12, 39, 0.75) 0%, rgba(3, 12, 39, 0.75) 75%, rgba(3, 12, 39, 0.75) 100%)  !important;
+    padding: 15px 0px  !important;
+  }
+  
+  .ant-drawer-top>.ant-drawer-content-wrapper{
+    height: auto !important;
+  }
+  
+  .ant-drawer .ant-drawer-body{
+    padding: 0px  !important;
   }
 }

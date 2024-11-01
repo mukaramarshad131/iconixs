@@ -17,7 +17,7 @@ const SideBar = () => {
 
   return (
     <Sider
-      className="!min-h-screen transition-all duration-200 ease-in-out z-[1101] bg-[#001529]"
+      className="!min-h-screen transition-all duration-200 ease-in-out z-[1101] bg-[#001529] mobile-hidden"
       breakpoint="lg"
       collapsedWidth={80}
       collapsed={collapsed}

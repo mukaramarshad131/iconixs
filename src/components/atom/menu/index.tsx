@@ -3,7 +3,10 @@ import { useSidebarItmes } from '@/hook';
 import { Menu } from 'antd'
 import React from 'react'
 
-const SidebarMenu = () => {
+interface SidebarMenuProps {
+  handleMenuClick?: (event: any) => void; // Optional handler
+}
+const SidebarMenu: React.FC<SidebarMenuProps> = ({ handleMenuClick }) => {
     const items = useSidebarItmes();
   return (
     <Menu
@@ -12,6 +15,7 @@ const SidebarMenu = () => {
         defaultSelectedKeys={["0"]}
         theme="dark"
         items={items}
+        onClick={handleMenuClick}
         suppressHydrationWarning
       />
   )
