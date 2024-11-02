@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 
 export default function AccountDropdown() {
-  const { clearUserInfoAndToken} = useUserActions();
+  const { clearUserInfoAndToken, setUserPermissions } = useUserActions();
   const router = useRouter()
   const {first_name = "", last_name="" ,email=""} = useUserInfo();
   const menuStyle: React.CSSProperties = {
@@ -24,8 +24,14 @@ export default function AccountDropdown() {
   };
   const logout =async ()=>{
     clearUserInfoAndToken();
-    await fetch('/api/logout',{method:'GET'})
-    router.replace('/')
+    const response = await fetch("/api/logout", { method: "GET" });
+    if (response.ok) {
+      // Redirect to the home page after successful logout
+      setUserPermissions([]);
+      window.location.href = "/";
+    } else {
+      console.error("Failed to log out");
+    }
   }
 
   const dropdownRender: DropdownProps['dropdownRender'] = (menu) => (

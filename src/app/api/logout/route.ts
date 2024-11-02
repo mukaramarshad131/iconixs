@@ -6,11 +6,8 @@ export async function GET() {
 
         // Set the token as an HTTP-only cookie
         response.cookies.set('jwt', '', {
-            maxAge: 0, // Expire immediately
-            httpOnly: true, // Ensure the cookie is only accessible via HTTP(S)
+            maxAge: -1, // Expire immediately
             path: '/', // Make sure the cookie is cleared across the entire app
-            sameSite: 'strict', // To ensure the cookie isn't sent with cross-site requests
-            secure: true, // Secure in production
           });
           
         return response
