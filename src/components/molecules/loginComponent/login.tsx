@@ -5,6 +5,8 @@ import { useUserActions } from '@/store/userStore';
 import { useMutation } from '@apollo/client';
 import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from 'antd'
 import { useRouter } from 'next/navigation';
+import dashboardimg from '@/assets/images/logo-12.svg';
+import Image from 'next/image';
 
 const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setIsForget:(value:boolean)=>void}) => {
       const { setUserInfo, setUserPermissions} = useUserActions();
@@ -41,6 +43,9 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
           }
   return (
     <section className='px-[16px] lg:px-[64px]'>
+      <div className='flex sm:flex md:hidden lg:hidden xl:hidden justify-center items-start'>
+      <Image src={dashboardimg} width={300} height={200}  alt='Iconix' className='block sm:block md:hidden lg:hidden xl:hidden max-w-[300px] w-[250px]' />
+      </div>
       <div className="mb-4 text-2xl font-bold xl:text-3xl">Sign In</div>
       <Form
         name="login"
