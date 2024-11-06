@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   // Log the received data for debugging
   console.log('Received Healthie OpenLoop webhook:', json);
   try {
-    if(json.type === "order_shipped") {
+    if(json?.type === "order_shipped") {
       await prisma.client.update({
         where: { patientID: json.patientID },
         data: {
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
         }
       });
     }
-    if(json.type === "order_confirmation") {
+    if(json?.type === "order_confirmation") {
       const userExist = await prisma.client.findUnique({
         where: { patientID: json.patientID },
       });
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
         },
       });
     }
-    if(json.event_type === "appointment.created") {
+    if(json?.event_type === "appointment.created") {
       const { data:userappoint } = await client.query({
         query: APPOINTMENT_QUERY,
         variables: {
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
       });
       }
     }
-    if(json.event_type === "form_answer_group.created") {
+    if(json?.event_type === "form_answer_group.created") {
       const { data } = await client.query({
         query: TEST_DATA,
         variables: {
@@ -163,7 +163,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const ism = await prisma.comment.findMany();
+  // const ism = await prisma.comment.findMany();
+  const ism = await prisma.formAnswerGroup.findMany();
   const data = { message: "Hello from API Route!" };
   return new Response(JSON.stringify(ism), {
     headers: { 'Content-Type': 'application/json' },
