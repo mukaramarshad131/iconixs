@@ -19,6 +19,15 @@ export async function POST(req: NextRequest) {
   // Log the received data for debugging
   console.log('Received Healthie OpenLoop webhook:', json);
   try {
+    if(json?.event_type === "subscription_created"){
+      await prisma.formAnswerGroup.create({
+        data: {
+          content: JSON.stringify(json.content.customer),
+          userId: json.content.customer.id,
+          email: json.content.customer.email,  
+        },
+      })
+    }
     if(json?.type === "order_shipped") {
       await prisma.client.update({
         where: { patientID: json.patientID },
