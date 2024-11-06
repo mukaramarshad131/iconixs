@@ -19,6 +19,8 @@ export default function BannerCard() {
           email: user.email as string
         };
         const response = await getFormAnswersGroups(payload);
+        console.log("response:", response);
+        
         if(response !== null) {
           setCurrent(4);
         }
@@ -28,7 +30,7 @@ export default function BannerCard() {
     };
 
     fetchData();
-  }, [user.email]);
+  }, []);
   return (
     <Row
       className="!mx-0 rounded-2xl !xs:p-7 xs:p-3"
