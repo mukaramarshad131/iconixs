@@ -379,12 +379,12 @@ export default function ItakeForm() {
             label: "Social Security Number (SSN)",
             answer: security_number,
           },
-          {
-            custom_module_id: "14669228",
-            label: "Upload Social Driving Liscense",
-            mod_type: "textarea",
-            answer: upload_driving_liscense,
-          },
+          // {
+          //   custom_module_id: "14669228",
+          //   label: "Upload Social Driving Liscense",
+          //   mod_type: "textarea",
+          //   answer: upload_driving_liscense,
+          // },
           // {
           //   custom_module_id: "14669229",
           //   label: "Upload Social Security Number",

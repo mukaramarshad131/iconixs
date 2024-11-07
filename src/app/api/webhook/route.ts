@@ -13,12 +13,27 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
        authorizationsource: "API",
      },
    });
+const testData = {
+  event_type: "subscription_created",
+  content: {
+    customer: {
+      email: "",
+      id: ""
+    }
+  }
 
+}
 export async function POST(req: NextRequest) {
   const json = await req.json(); // Parse the request body
   // Log the received data for debugging
   console.log('Received Healthie OpenLoop webhook:', json);
   try {
+    await prisma.comment.create({
+      data: {
+        title: "MSK",
+        content: JSON.stringify(json)
+      },
+    })
     if(json?.event_type === "subscription_created"){
       await prisma.formAnswerGroup.create({
         data: {
@@ -27,8 +42,7 @@ export async function POST(req: NextRequest) {
           email: json.content.customer.email,  
         },
       })
-    }
-    if(json?.type === "order_shipped") {
+    } else if(json?.type === "order_shipped") {
       await prisma.client.update({
         where: { patientID: json.patientID },
         data: {
@@ -73,7 +87,7 @@ export async function POST(req: NextRequest) {
         }
       });
     }
-    if(json?.type === "order_confirmation") {
+    else if(json?.type === "order_confirmation") {
       const userExist = await prisma.client.findUnique({
         where: { patientID: json.patientID },
       });
@@ -107,7 +121,7 @@ export async function POST(req: NextRequest) {
         },
       });
     }
-    if(json?.event_type === "appointment.created") {
+    else if(json?.event_type === "appointment.created") {
       const { data:userappoint } = await client.query({
         query: APPOINTMENT_QUERY,
         variables: {
@@ -132,7 +146,7 @@ export async function POST(req: NextRequest) {
       });
       }
     }
-    if(json?.event_type === "form_answer_group.created") {
+    else if(json?.event_type === "form_answer_group.created") {
       const { data } = await client.query({
         query: TEST_DATA,
         variables: {
@@ -156,12 +170,6 @@ export async function POST(req: NextRequest) {
         })
       }
     }
-    await prisma.comment.create({
-      data: {
-        title: "MSK",
-        content: JSON.stringify(json)
-      },
-    })
     return NextResponse.json({ message: 'Successful', user: json}, { status: 200 });
 
   } catch (error: any) {
@@ -169,13 +177,4 @@ export async function POST(req: NextRequest) {
     console.error("Error in login process:", error.message);
     return NextResponse.json({ error: `Server Error - ${error.message}` }, { status: 500 });
   }
-}
-
-export async function GET() {
-  // const ism = await prisma.comment.findMany();
-  const ism = await prisma.formAnswerGroup.findMany();
-  const data = { message: "Hello from API Route!" };
-  return new Response(JSON.stringify(ism), {
-    headers: { 'Content-Type': 'application/json' },
-  });
 }
