@@ -44,7 +44,7 @@ export default function BannerCard() {
         <Steps
           direction="vertical"
           size="small"
-          current={current}
+          current={ user.current_step === 'PAID_INITIAL_CONSULT' ? 3 : 0 }
           items={[
             {
               title: <div className={user.current_step == 'NEW' ? 'active-step' : 'inactive-steps'} >Complete Intake Form</div>,
