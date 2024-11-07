@@ -28,21 +28,21 @@ export async function POST(req: NextRequest) {
   // Log the received data for debugging
   console.log('Received Healthie OpenLoop webhook:', json);
   try {
-    await prisma.comment.create({
-      data: {
-        title: "MSK",
-        content: JSON.stringify(json)
-      },
-    })
-    if(json?.event_type === "subscription_created"){
+    if(json.event_type==="subscription_created"){
       await prisma.formAnswerGroup.create({
         data: {
-          content: JSON.stringify(json.content.customer),
-          userId: json.content.customer.id,
-          email: json.content.customer.email,  
+          content: JSON.stringify(json?.content?.customer),
+          userId: json?.content?.customer?.id,
+          email: json?.content?.customer?.email,  
         },
       })
-    } else if(json?.type === "order_shipped") {
+      await prisma.comment.create({
+        data: {
+          title: "Subscription Created Zee",
+          content: JSON.stringify(json)
+        },
+      })
+    } else if(json.event_type==="order_shipped") {
       await prisma.client.update({
         where: { patientID: json.patientID },
         data: {
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
         }
       });
     }
-    else if(json?.type === "order_confirmation") {
+    else if(json.event_type==="order_confirmation") {
       const userExist = await prisma.client.findUnique({
         where: { patientID: json.patientID },
       });
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
         },
       });
     }
-    else if(json?.event_type === "appointment.created") {
+    else if(json.event_type==="appointment.created") {
       const { data:userappoint } = await client.query({
         query: APPOINTMENT_QUERY,
         variables: {
@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
       });
       }
     }
-    else if(json?.event_type === "form_answer_group.created") {
+    else if(json.event_type==="form_answer_group.created") {
       const { data } = await client.query({
         query: TEST_DATA,
         variables: {
@@ -155,19 +155,29 @@ export async function POST(req: NextRequest) {
       })
       const userInfo = data?.formAnswerGroup?.user;
       if(userInfo?.email) {
-        await prisma.client.update({
+        const msk = await prisma.client.update({
           where: { patientID: userInfo.id },
           data: {
             status: 'PAID_INITIAL_CONSULT',
           },
         });
-        await prisma.formAnswerGroup.create({
-          data: {
-            content: JSON.stringify(data),
-            userId: userInfo.id,
-            email: userInfo.email,  
-          },
-        })
+        if(msk) {
+          const aa = await prisma.formAnswerGroup.create({
+            data: {
+              content: JSON.stringify(data),
+              userId: userInfo.id,
+              email: userInfo.email,  
+            },
+          })
+          if(aa) {
+            await prisma.comment.create({
+              data: {
+                title: "Form Answer Group Zee update user Zeesh",
+                content: JSON.stringify(aa)
+              },
+            })
+          }
+        }
       }
     }
     return NextResponse.json({ message: 'Successful', user: json}, { status: 200 });

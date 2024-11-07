@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
    if(user=== null) {
       return NextResponse.json({ error: `Server Error` }, { status: 500 });
    }
-    const response = NextResponse.json({ message: 'Login successful', user:user.user});
+    const response = NextResponse.json({ message: 'Login successful', user:{...user.user, current_step: userExist.status}});
 
     // Set the token as an HTTP-only cookie
     response.cookies.set('jwt', token, {

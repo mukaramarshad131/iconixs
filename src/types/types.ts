@@ -8,6 +8,7 @@ export interface UserInfo {
     password?: string;
     avatar?: string;
     status?: boolean;
+    current_step?: string;
     location?:any;
     zip?: string;
     state?: string;

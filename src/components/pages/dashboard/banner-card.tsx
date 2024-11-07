@@ -12,25 +12,26 @@ import { getFormAnswersGroups } from '@/lib/get-form-answers';
 export default function BannerCard() {
   const user = useUserInfo();
   const [current, setCurrent] = useState(0);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const payload = {
-          email: user.email as string
-        };
-        const response = await getFormAnswersGroups(payload);
-        console.log("response:", response);
+  // useEffect(() => {
+  //   console.log("Zees: ", user.current_step);
+  //   const fetchData = async () => {
+  //     try {
+  //       const payload = {
+  //         email: user.email as string
+  //       };
+  //       const response = await getFormAnswersGroups(payload);
+  //       console.log("response msd:", response);
         
-        if(response !== null) {
-          setCurrent(4);
-        }
-      } catch (err) {
-       console.log('err 1234567890', err);
-      }
-    };
+  //       if(response !== null) {
+  //         setCurrent(4);
+  //       }
+  //     } catch (err) {
+  //      console.log('err 1234567890', err);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   return (
     <Row
       className="!mx-0 rounded-2xl !xs:p-7 xs:p-3"
@@ -46,24 +47,24 @@ export default function BannerCard() {
           current={current}
           items={[
             {
-              title: <div className={current == 0 ? 'active-step' : 'inactive-steps'} >Complete Intake Form</div>,
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}className={current == 0 ? 'active-step' : 'inactive-steps'}><li>Fill out your medical intake form to begin</li></ul>,
+              title: <div className={user.current_step == 'NEW' ? 'active-step' : 'inactive-steps'} >Complete Intake Form</div>,
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }}className={user.current_step == 'NEW' ? 'active-step' : 'inactive-steps'}><li>Fill out your medical intake form to begin</li></ul>,
             },
             {
-              title: <div  className={current == 1 ? 'active-step' : 'inactive-steps'}>Select Preferred Testosterone Therapy Package</div>,
-              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }} className={current == 1 ? 'active-step' : 'inactive-steps'}><li>Choose between 3 different options of administration</li></ul>,
+              title: <div  className={user.current_step == 'INTAKE_FORM_COMPLETED' ? 'active-step' : 'inactive-steps'}>Select Preferred Testosterone Therapy Package</div>,
+              description: <ul style={{ listStyleType: 'lower-alpha', paddingLeft: '30px' }} className={user.current_step == 'INTAKE_FORM_COMPLETED' ? 'active-step' : 'inactive-steps'}><li>Choose between 3 different options of administration</li></ul>,
             },
             {
-              title: <div  className={ current == 2 ? 'active-step' : 'inactive-steps'} >Pay for your initial consult and bloodwork</div>,
+              title: <div  className={ user.current_step == 'INTAKE_FORM_COMPLETED' ? 'active-step' : 'inactive-steps'} >Pay for your initial consult and bloodwork</div>,
             },
             {
-              title: <div  className={ current == 3 ? 'active-step' : 'inactive-steps'} >Schedule Initial Consultation</div>,
+              title: <div  className={ user.current_step == 'PAID_INITIAL_CONSULT' ? 'active-step' : 'inactive-steps'} >Schedule Initial Consultation</div>,
            },
             {
-              title: <div className={ current == 4 ? 'active-step' : 'inactive-steps'} >Pay for Month 1 of Treatment</div>,
+              title: <div className={ user.current_step == 'FOLLOW_UP_PENDING' ? 'active-step' : 'inactive-steps'} >Pay for Month 1 of Treatment</div>,
             },
             {
-              title: <div  className={ current == 5 ? 'active-step' : 'inactive-steps'} >Self Administer Your TRT</div>,
+              title: <div  className={ user.current_step == 'FOLLOW_UP_COMPLETED' ? 'active-step' : 'inactive-steps'} >Self Administer Your TRT</div>,
             },
           ]}
         />

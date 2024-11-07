@@ -8,7 +8,7 @@ export async function getFormAnswersGroups({
 }) {
   
   try {
-    const response = await prisma.formAnswerGroup.findFirst({
+    const response = await prisma.client.findFirst({
       where: {
         email
       }
