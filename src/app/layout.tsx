@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ApolloClientProvider from "@/lib/apolloProvider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { GoogleAnalytics, GoogleTagManager  } from "@next/third-parties/google";
+import ChargebeeConfiguration from "@/components/atom/chargebeeConfiguration";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,6 +42,13 @@ export default function RootLayout({
           }}
         />
         {/* End Google Tag Manager */}
+        {/* <script
+          src="https://js.chargebee.com/v2/chargebee.js"
+          data-cb-site="https://iconix-test.chargebee.com"
+          data-cb-ga-enabled="true"
+        >
+        </script> */}
+        <ChargebeeConfiguration />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -47,6 +56,8 @@ export default function RootLayout({
         <AntdRegistry>
           <ApolloClientProvider>{children}</ApolloClientProvider>
         </AntdRegistry>
+        <GoogleAnalytics gaId="G-9E5P1YMYMY" />
+        <GoogleTagManager gtmId="GTM-5RKX9G3W"/>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
