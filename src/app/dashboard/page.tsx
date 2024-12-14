@@ -1,4 +1,4 @@
-import GAButton from '@/components/GAButton';
+// import GAButton from '@/components/GAButton';
 import BannerCard from '@/components/pages/dashboard/banner-card';
 import GeneralTab from '@/components/pages/dashboard/general-tab';
 import NewInvoice from '@/components/pages/dashboard/new-invoice';
@@ -17,7 +17,7 @@ const PatientDetails = () => {
         <BannerCard />
       </Col>
     </Row>
-    <GAButton />
+    {/* <GAButton /> */}
     <Row gutter={[16, 16]} className="mt-4 container xs:p-3" justify="center">
       <Col span={24} md={24} lg={24}>
         <NewInvoice />

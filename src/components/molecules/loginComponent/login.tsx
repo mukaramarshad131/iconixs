@@ -7,7 +7,7 @@ import { Button, Checkbox, Col, Divider, Form, Row, Input, notification } from '
 import { useRouter } from 'next/navigation';
 import dashboardimg from '@/assets/images/logo-12.svg';
 import Image from 'next/image';
-import PurchaseComponent from '@/components/PurchaseComponent';
+// import PurchaseComponent from '@/components/PurchaseComponent';
 
 const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setIsForget:(value:boolean)=>void}) => {
       const { setUserInfo, setUserPermissions} = useUserActions();
@@ -48,7 +48,7 @@ const Login = ({setIsLogin, setIsForget}:{setIsLogin:(value:boolean)=>void, setI
       <Image src={dashboardimg} width={300} height={200}  alt='Iconix' className='block sm:block md:hidden lg:hidden xl:hidden max-w-[300px] w-[250px]' />
       </div>
       <div className="mb-4 text-2xl font-bold xl:text-3xl">Sign In</div>
-      <PurchaseComponent />
+      {/* <PurchaseComponent /> */}
       <Form
         name="login"
         size="large"
