@@ -27,6 +27,7 @@ export default function ItakeForm() {
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
   const [ couponsData, setCouponsData ] = useState<any[]>([]);
+  const [isValid, setIsValid] = useState<boolean | null>(null);
   const user = useUserInfo();
   const [form] = Form.useForm();
   const router = useRouter();
@@ -41,7 +42,17 @@ export default function ItakeForm() {
       return acc;
     }, {})
   );
+  const validateCoupon = (value: string) => {
+    if (!value) {
+      setIsValid(null); // Reset validation state if field is empty
+      return;
+    }
 
+    const exists = couponsData.some(
+      (cpon) => cpon.coupon.name.toLowerCase() === value.toLowerCase()
+    );
+    setIsValid(exists);
+  };
   // const [ mutateFunction, { loading } ] = useMutation(UPLOAD_DOCS);
   // const [intakeFormFunction] = useMutation(INTAKE_FORM);
   const handleSelectChange = (questionName: any, values: any) => {
@@ -1012,16 +1023,19 @@ export default function ItakeForm() {
                 key={18}
                 name="coupon"
                 label="Enter your coupon (Optional)"
-                rules={[
-                  // { required: true, message: `Coupon is required` },
-                  
-                  { 
-                    message: 'Input must be alphanumeric (letters and numbers only)' 
-                  },
-                ]}
+                validateStatus={isValid === null ? "" : isValid ? "success" : "error"}
+                help={
+                  isValid === null
+                    ? ""
+                    : isValid
+                    ? "Coupon is valid!"
+                    : "Coupon is invalid."
+                }
               >
                 <Input
                   placeholder="Enter your coupon"
+                  onChange={(e) => validateCoupon(e.target.value)}
+                  allowClear
                   // disabled={formData["q6"].isDisable}
                 />
               </Form.Item>
