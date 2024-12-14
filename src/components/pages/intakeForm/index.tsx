@@ -1,6 +1,6 @@
 "use client";
 // import { useMutation } from '@apollo/client';
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { extractQuestionsAndAnswers } from "@/components/funcitons";
 import { questions } from "@/data/projectData";
 import { INTAKE_FORM_QUERY } from "@/graphql/query";
@@ -16,6 +16,7 @@ import { Select, Form, Input, Button, Card, notification } from "antd";
 import IntakeListing from "../dashboard/intake-Listing";
 import UploadDocs from "@/components/atom/uploadDoc";
 import { useRouter } from "next/navigation";
+import { FetchAllCoupons } from '@/app/actions/actions';
 
 const validSelections = [
   "Desire to preserve fertility or have more children",
@@ -25,6 +26,7 @@ const validSelections = [
 export default function ItakeForm() {
   const permissions = useUserPermissions();
   const { setUserPermissions, setUserIntakeForm, setUserIntakeDoc } = useUserActions();
+  const [ couponsData, setCouponsData ] = useState<any[]>([]);
   const user = useUserInfo();
   const [form] = Form.useForm();
   const router = useRouter();
@@ -108,7 +110,12 @@ export default function ItakeForm() {
         router.replace("/dashboard");
         return;
       }
-    const {security_number, q9,explain, upload_driving_liscense, license_number, driver_license_state, ...questionValues} = values;
+    const {security_number, q9,explain, upload_driving_liscense, license_number, driver_license_state, coupon , ...questionValues} = values;
+    
+    const result = couponsData.filter((cpon) =>  cpon.coupon.name == coupon);
+   console.log("result: ", result);
+    
+
     const intakeFormPayload = process.env.FORM_ID === "2174074" ? {
       input: {
         custom_module_form_id: "2174074", // Form id for staging
@@ -129,6 +136,13 @@ export default function ItakeForm() {
             user_id: user.id,
             answer: driver_license_state,
           },
+          {
+            custom_module_id: "29797676",
+            label: "Coupons",
+            user_id: user.id,
+            answer: coupon,
+          },
+
           {
             custom_module_id: "29460118",
             label: "Social Security Number (SSN)",
@@ -173,6 +187,7 @@ export default function ItakeForm() {
 <br/>${explain}</p>
 <b>Preferred medication</b>
 <br/>${q9}</p>
+<p>${result.length === 1 ? `<b>Coupons</b><p>${coupon}<p>` : ''}</p>
 <b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
@@ -417,6 +432,7 @@ export default function ItakeForm() {
               .join("")}
               <b>Preferred medication</b>
 <br/>${q9}</p>
+<p>${result.length === 1 ? `<b>Coupons</b><p>${coupon}<p>` : ''}</p>
 <b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
@@ -788,6 +804,8 @@ export default function ItakeForm() {
       },
     };
 
+    console.log("intakeFormPayload: ", intakeFormPayload);
+    
 
     // await intakeFormFunction({ variables: { ...intakeFormPayload } });
     setUserIntakeDoc({ upload_driving_liscense });
@@ -818,6 +836,15 @@ export default function ItakeForm() {
     // }
     // await mutateFunction({ variables: { ...updatePayload } });
   };
+  useEffect(() => {
+    const loadUsers = async () => {
+      console.log('Hekko');
+      const data: any = await FetchAllCoupons();
+      console.log("users: ", data.list);
+      setCouponsData(data.list)
+    }; 
+    loadUsers();
+  }, [])
   return (
     <div>
       {intakeFormData?.formAnswerGroups?.length > 0 ? (
@@ -980,6 +1007,23 @@ export default function ItakeForm() {
                 rules={[{ required: true, message: `Driving Liscense is required` }]}
               >
                 <UploadDocs onHandleChange={(value: string)=> onFileChange(value, true)}  title="Upload Image of Driver's License" />
+              </Form.Item>
+              <Form.Item
+                key={18}
+                name="coupon"
+                label="Enter your coupon (Optional)"
+                rules={[
+                  // { required: true, message: `Coupon is required` },
+                  
+                  { 
+                    message: 'Input must be alphanumeric (letters and numbers only)' 
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Enter your coupon"
+                  // disabled={formData["q6"].isDisable}
+                />
               </Form.Item>
               <Form.Item>
                 <Button
