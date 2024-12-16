@@ -49,7 +49,7 @@ export default function ItakeForm() {
     }
 
     const exists = couponsData.some(
-      (cpon) => cpon.coupon.name.toLowerCase() === value.toLowerCase()
+      (cpon) => cpon.coupon.id.toLowerCase() === value.toLowerCase()
     );
     setIsValid(exists);
   };
@@ -123,7 +123,7 @@ export default function ItakeForm() {
       }
     const {security_number, q9,explain, upload_driving_liscense, license_number, driver_license_state, coupon , ...questionValues} = values;
     
-    const result = couponsData.filter((cpon) =>  cpon.coupon.name == coupon);
+    const result = couponsData.filter((cpon) =>  cpon.coupon.id == coupon);
    console.log("result: ", result);
     
 
@@ -1022,18 +1022,18 @@ export default function ItakeForm() {
               <Form.Item
                 key={18}
                 name="coupon"
-                label="Enter your coupon (Optional)"
+                label="Enter your Coupon Id (Optional)"
                 validateStatus={isValid === null ? "" : isValid ? "success" : "error"}
                 help={
                   isValid === null
                     ? ""
                     : isValid
-                    ? "Coupon is valid!"
-                    : "Coupon is invalid."
+                    ? "Coupon Id is valid!"
+                    : "Coupon Id is invalid."
                 }
               >
                 <Input
-                  placeholder="Enter your coupon"
+                  placeholder="Enter your Coupon Id"
                   onChange={(e) => validateCoupon(e.target.value)}
                   allowClear
                   // disabled={formData["q6"].isDisable}
