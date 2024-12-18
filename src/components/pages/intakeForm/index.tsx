@@ -123,7 +123,7 @@ export default function ItakeForm() {
       }
     const {security_number, q9,explain, upload_driving_liscense, license_number, driver_license_state, coupon , ...questionValues} = values;
     
-    const result = couponsData.filter((cpon) =>  cpon.coupon.id == coupon);
+    const result = couponsData.filter((cpon) =>  cpon.coupon.id.toLowerCase() === coupon.toLowerCase());
    console.log("result: ", result);
     
 
