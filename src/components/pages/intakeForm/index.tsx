@@ -151,7 +151,7 @@ export default function ItakeForm() {
             custom_module_id: "29797676",
             label: "Coupons",
             user_id: user.id,
-            answer: coupon,
+            answer: result.length === 1 ? coupon : '',
           },
 
           {
@@ -198,7 +198,7 @@ export default function ItakeForm() {
 <br/>${explain}</p>
 <b>Preferred medication</b>
 <br/>${q9}</p>
-<p>${result.length === 1 ? `<b>Coupons</b><p>${coupon}<p>` : ''}</p>
+
 <b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
@@ -408,7 +408,7 @@ export default function ItakeForm() {
           {
             custom_module_id: "18010059",
             label: "Coupons",
-            answer: coupon,
+            answer: result.length === 1 ? coupon : '',
           },
           // {
           //   custom_module_id: "14669228",
@@ -448,7 +448,6 @@ export default function ItakeForm() {
               .join("")}
               <b>Preferred medication</b>
 <br/>${q9}</p>
-<p>${result.length === 1 ? `<b>Coupons</b><p>${coupon}<p>` : ''}</p>
 <b>Shipping Address</b>
 <br/>Address:${user.location?.line1}, ${user.location?.country}, ${user.location?.state
               } ${user.location?.zip}</p>`, // HTML format for the intake
