@@ -405,6 +405,11 @@ export default function ItakeForm() {
             label: "Social Security Number (SSN)",
             answer: security_number,
           },
+          {
+            custom_module_id: "18010059",
+            label: "Coupons",
+            answer: coupon,
+          },
           // {
           //   custom_module_id: "14669228",
           //   label: "Upload Social Driving Liscense",
@@ -813,7 +818,7 @@ export default function ItakeForm() {
         finished: true,
         user_id: user.id, // Patiend ID from CreatePatient mutation response
       },
-    };
+    }; 
 
     console.log("intakeFormPayload: ", intakeFormPayload);
     
