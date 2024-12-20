@@ -15,7 +15,7 @@ function Packages() {
           return (
             <div
               key={data.id}
-              style={{ padding: "0px", height: 400, width: 330 }}
+              style={{ padding: "0px", height: 400, width: 350 }}
               className="relative z-0 rounded bg-[#F3F4F5] shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]"
             >
               <Ribon data={data}/>
