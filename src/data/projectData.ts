@@ -5,7 +5,7 @@ export const businessPackages = [
     // https://iconix-test.chargebee.com/hosted_pages/checkout?subscription_items[item_price_id][0]=ico-mwl-sema-inj-28-USD-Every-28-days&utm_source=cb-app-copy
     discount: 24,
     backgroundColor: "#1B3352",
-    packageName: "Iconix TRT - Initial Labs + Consult Fee 2",
+    packageName: "Iconix TRT - Initial Labs + Consult Fee",
     // packageName: "Testosterone Cypionate Injection + Anastrozole - 28 days",
     originalPrice: "$149.00 USD",
     description: "Description",
